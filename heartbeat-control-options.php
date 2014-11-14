@@ -1,8 +1,6 @@
 <?php
 $heartbeat_control_options = array (
-	'Disable everywhere'            => 'disable-heartbeat-everywhere',
-	'Disable on dashboard page'                 => '@paging.acswireless.com',
-	'Allow only on post edit pages'                       => '@message.alltel.com',
-	'AT&T'                         => '@txt.att.net'
-
+	'Disable everywhere'                        => 'disable-heartbeat-everywhere',
+	'Disable on dashboard page'                 => 'disable-heartbeat-dashboard',
+	'Allow only on post edit pages'             => 'allow-heartbeat-post-edit'
 )
