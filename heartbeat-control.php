@@ -12,4 +12,4 @@
 $directory            = plugin_dir_path( __FILE__ );
 
 require_once $directory . '/heartbeat-control-menu.php';
-require_once $directory . '/heartbeat_control_actions.php';
+require_once $directory . '/heartbeat-control-actions.php';
