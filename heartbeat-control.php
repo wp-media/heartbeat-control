@@ -8,7 +8,7 @@
  * Author URI: http://jeffmatson.net
  * License: GPL2
  */
-if ( is_admin() && current_user_can( 'manage_options' ) ) {
+
 	add_action('admin_menu', 'heartbeat_control_menu');
 	/**
 	 * heartbeat_control_menu function.
@@ -29,5 +29,26 @@ if ( is_admin() && current_user_can( 'manage_options' ) ) {
 			99
 		);
 	}
+	function heartbeat_control_menu() { ?>
 
-}
+		<div class="wrap" >
+
+			<h1> Heartbeat Control configuration </h1>
+
+				<form method = "post" action = "<?php admin_url( 'tools.php?page=heartbeat-control' ); ?>" >
+
+					<table class="form-table">
+						<tr valign="top">
+							<th scope="row"></th>
+							<td>
+								<label>
+
+								</label>
+							</td>
+						</tr>
+					</table>
+					<?php submit_button(); ?>
+				</form>
+
+
+	<?php }
