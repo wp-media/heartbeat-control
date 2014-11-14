@@ -1,5 +1,4 @@
 <?php
-if ( current_user_can('manage_options') ) {
 	add_action( 'admin_menu', 'heartbeat_control_menu_page' );
 	/**
 	 * heartbeat_control_menu function.
@@ -91,6 +90,3 @@ if ( current_user_can('manage_options') ) {
 		</form>
 	<?php
 	}
-} else {
-	return false;
-}
