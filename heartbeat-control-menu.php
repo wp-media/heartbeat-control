@@ -19,20 +19,20 @@ function heartbeat_control_menu_page()
 		99
 	);
 }
-function heartbeat_control_menu() { ?>
-	<?php $current_menu = get_current_screen();
-//		if ($current_menu->base == 'tools_page_heartbeat-control') {
+function heartbeat_control_menu() {
+
 	$directory            = plugin_dir_path( __FILE__ );
 
 	require_once $directory . '/heartbeat-control-options.php';
-
-//		} ?>
+	?>
 
 	<?php if (isset($_POST['heartbeat_location']) && in_array( $_POST['heartbeat_location'], $heartbeat_control_options) ) {
 		update_option( 'heartbeat_location', $_POST['heartbeat_location'] );
-	} else {
-		return false;
-	} ?>
+	}?>
+
+	<?php if (isset($_POST['heartbeat_frequency']) && in_array( $_POST['heartbeat_frequency'], $heartbeat_frequency_options) ) {
+		update_option( 'heartbeat_frequency', $_POST['heartbeat_frequency'] );
+	}?>
 
 	<div class="wrap" >
 
@@ -47,17 +47,42 @@ function heartbeat_control_menu() { ?>
 				<?php $heartbeat_setting = get_option('heartbeat_location') ?>
 
 				<td>
-					<select name="heartbeat_location">
+					<label>
+						<select name="heartbeat_location">
 
-						<?php foreach ($heartbeat_control_options as $options => $setting_value ) : ?>
+							<?php foreach ($heartbeat_control_options as $options => $setting_value ) : ?>
 
 							<option value="<?php echo $setting_value ?>"
-								<?php selected( $setting_value, $heartbeat_setting ); ?>>
-								<?php echo esc_html( $options ); ?>
+							<?php selected( $setting_value, $heartbeat_setting ); ?>>
+							<?php echo esc_html( $options ); ?>
 							</option>
 
-						<?php endforeach; ?>
-					</select>
+							<?php endforeach; ?>
+
+						</select>
+					</label>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row">Override heartbeat frequency:</th>
+
+				<?php $heartbeat_frequency = get_option('heartbeat_frequency') ?>
+
+				<td>
+					<label>
+						<select name="heartbeat_frequency">
+
+							<?php foreach ($heartbeat_frequency_options as $options => $setting_value ) : ?>
+
+							<option value="<?php echo $setting_value ?>"
+							<?php selected( $setting_value, $heartbeat_frequency ); ?>>
+							<?php echo esc_html( $options ); ?>
+							</option>
+
+							<?php endforeach; ?>
+
+						</select>
+					</label>
 				</td>
 			</tr>
 		</table>
