@@ -9,14 +9,14 @@
  * License: GPL2
  */
 
-	add_action('admin_menu', 'heartbeat_control_menu');
+	add_action('admin_menu', 'heartbeat_control_menu_page');
 	/**
 	 * heartbeat_control_menu function.
 	 *
 	 * @access public
 	 * @return void
 	 */
-	function heartbeat_control_menu()
+	function heartbeat_control_menu_page()
 	{
 
 		add_submenu_page(
@@ -30,7 +30,10 @@
 		);
 	}
 	function heartbeat_control_menu() { ?>
-
+		<?php $current_menu = get_current_screen();
+		if ($current_menu->base == 'tools_page_heartbeat-control') {
+			require_once('heartbeat-control-options.php');
+		} ?>
 		<div class="wrap" >
 
 			<h1> Heartbeat Control configuration </h1>
@@ -42,7 +45,6 @@
 							<th scope="row"></th>
 							<td>
 								<label>
-
 								</label>
 							</td>
 						</tr>
