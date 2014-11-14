@@ -1,4 +1,11 @@
 <?php
+
+if(!function_exists('wp_get_current_user')) {
+	include(ABSPATH . "wp-includes/pluggable.php");
+}
+
+if ( current_user_can('manage_options') ) {
+
 	add_action( 'admin_menu', 'heartbeat_control_menu_page' );
 	/**
 	 * heartbeat_control_menu function.
@@ -90,3 +97,6 @@
 		</form>
 	<?php
 	}
+} else {
+	return false;
+}
