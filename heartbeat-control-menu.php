@@ -1,92 +1,96 @@
 <?php
-add_action('admin_menu', 'heartbeat_control_menu_page');
-/**
- * heartbeat_control_menu function.
- *
- * @access public
- * @return void
- */
-function heartbeat_control_menu_page()
-{
+if ( current_user_can('manage_options') ) {
+	add_action( 'admin_menu', 'heartbeat_control_menu_page' );
+	/**
+	 * heartbeat_control_menu function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	function heartbeat_control_menu_page() {
 
-	add_submenu_page(
-		'tools.php',
-		__('Heartbeat Control', 'heartbeat-control'),
-		__('Heartbeat Control', 'heartbeat-control'),
-		'manage_options',
-		'heartbeat-control',
-		'heartbeat_control_menu',
-		99
-	);
-}
-function heartbeat_control_menu() {
+		add_submenu_page(
+			'tools.php',
+			__( 'Heartbeat Control', 'heartbeat-control' ),
+			__( 'Heartbeat Control', 'heartbeat-control' ),
+			'manage_options',
+			'heartbeat-control',
+			'heartbeat_control_menu',
+			99
+		);
+	}
 
-	$directory            = plugin_dir_path( __FILE__ );
+	function heartbeat_control_menu() {
 
-	require_once $directory . '/heartbeat-control-options.php';
-	?>
+		$directory = plugin_dir_path( __FILE__ );
 
-	<?php if (isset($_POST['heartbeat_location']) && in_array( $_POST['heartbeat_location'], $heartbeat_control_options) ) {
-		update_option( 'heartbeat_location', $_POST['heartbeat_location'] );
-	}?>
+		require_once $directory . '/heartbeat-control-options.php';
+		?>
 
-	<?php if (isset($_POST['heartbeat_frequency']) && in_array( $_POST['heartbeat_frequency'], $heartbeat_frequency_options) ) {
-		update_option( 'heartbeat_frequency', $_POST['heartbeat_frequency'] );
-	}?>
+		<?php if ( isset( $_POST['heartbeat_location'] ) && in_array( $_POST['heartbeat_location'], $heartbeat_control_options ) ) {
+			update_option( 'heartbeat_location', $_POST['heartbeat_location'] );
+		}?>
 
-	<div class="wrap" >
+		<?php if ( isset( $_POST['heartbeat_frequency'] ) && in_array( $_POST['heartbeat_frequency'], $heartbeat_frequency_options ) ) {
+			update_option( 'heartbeat_frequency', $_POST['heartbeat_frequency'] );
+		}?>
 
-	<h1> Heartbeat Control configuration </h1>
+		<div class="wrap">
 
-	<form method = "post" action = "<?php admin_url( 'tools.php?page=heartbeat-control' ); ?>" >
+		<h1> Heartbeat Control configuration </h1>
 
-		<table class="form-table">
-			<tr valign="top">
-				<th scope="row">Control heartbeat locations:</th>
+		<form method="post" action="<?php admin_url( 'tools.php?page=heartbeat-control' ); ?>">
 
-				<?php $heartbeat_setting = get_option('heartbeat_location') ?>
+			<table class="form-table">
+				<tr valign="top">
+					<th scope="row">Control heartbeat locations:</th>
 
-				<td>
-					<label>
-						<select name="heartbeat_location">
+					<?php $heartbeat_setting = get_option( 'heartbeat_location' ) ?>
 
-							<?php foreach ($heartbeat_control_options as $options => $setting_value ) : ?>
+					<td>
+						<label>
+							<select name="heartbeat_location">
 
-							<option value="<?php echo $setting_value ?>"
-							<?php selected( $setting_value, $heartbeat_setting ); ?>>
-							<?php echo esc_html( $options ); ?>
-							</option>
+								<?php foreach ( $heartbeat_control_options as $options => $setting_value ) : ?>
 
-							<?php endforeach; ?>
+									<option value="<?php echo $setting_value ?>"
+										<?php selected( $setting_value, $heartbeat_setting ); ?>>
+										<?php echo esc_html( $options ); ?>
+									</option>
 
-						</select>
-					</label>
-				</td>
-			</tr>
-			<tr valign="top">
-				<th scope="row">Override heartbeat frequency:</th>
+								<?php endforeach; ?>
 
-				<?php $heartbeat_frequency = get_option('heartbeat_frequency') ?>
+							</select>
+						</label>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">Override heartbeat frequency:</th>
 
-				<td>
-					<label>
-						<select name="heartbeat_frequency">
+					<?php $heartbeat_frequency = get_option( 'heartbeat_frequency' ) ?>
 
-							<?php foreach ($heartbeat_frequency_options as $options => $setting_value ) : ?>
+					<td>
+						<label>
+							<select name="heartbeat_frequency">
 
-							<option value="<?php echo $setting_value ?>"
-							<?php selected( $setting_value, $heartbeat_frequency ); ?>>
-							<?php echo esc_html( $options ); ?>
-							</option>
+								<?php foreach ( $heartbeat_frequency_options as $options => $setting_value ) : ?>
 
-							<?php endforeach; ?>
+									<option value="<?php echo $setting_value ?>"
+										<?php selected( $setting_value, $heartbeat_frequency ); ?>>
+										<?php echo esc_html( $options ); ?>
+									</option>
 
-						</select>
-					</label>
-				</td>
-			</tr>
-		</table>
-		<?php submit_button(); ?>
-	</form>
-<?php
+								<?php endforeach; ?>
+
+							</select>
+						</label>
+					</td>
+				</tr>
+			</table>
+			<?php submit_button(); ?>
+		</form>
+	<?php
+	}
+} else {
+	return false;
 }
