@@ -2,7 +2,7 @@
 $heartbeat_location  = get_option('heartbeat_location');
 $heartbeat_frequency = get_option('heartbeat_frequency');
 
-if (      $heartbeat_location == 'disable-heartbeat-everywhere') {
+if ( $heartbeat_location == 'disable-heartbeat-everywhere') {
 
 	add_action( 'init', 'stop_heartbeat', 1 );
 

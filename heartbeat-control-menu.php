@@ -1,11 +1,5 @@
 <?php
 
-if(!function_exists('wp_get_current_user')) {
-	include(ABSPATH . "wp-includes/pluggable.php");
-}
-
-if ( current_user_can('manage_options') ) {
-
 	add_action( 'admin_menu', 'heartbeat_control_menu_page' );
 	/**
 	 * heartbeat_control_menu function.
@@ -16,7 +10,7 @@ if ( current_user_can('manage_options') ) {
 	function heartbeat_control_menu_page() {
 
 		add_submenu_page(
-			'tools.php',
+			'options-general.php',
 			__( 'Heartbeat Control', 'heartbeat-control' ),
 			__( 'Heartbeat Control', 'heartbeat-control' ),
 			'manage_options',
@@ -97,6 +91,3 @@ if ( current_user_can('manage_options') ) {
 		</form>
 	<?php
 	}
-} else {
-	return false;
-}
