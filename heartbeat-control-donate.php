@@ -1,6 +1,6 @@
 <?php
 
-if( empty( get_option( 'heartbeat_control_donate_dismissed' ) ) ) {
+if( get_option( 'heartbeat_control_donate_dismissed' == '1' ) ) {
     add_action( 'admin_notices', 'heartbeat_control_donate_notice' );
 }
 
