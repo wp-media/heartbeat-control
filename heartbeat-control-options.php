@@ -16,5 +16,9 @@ $heartbeat_frequency_options = array(
 	'40 seconds'    => '40',
 	'45 seconds'    => '45',
 	'50 seconds'    => '50',
-	'60 seconds'    => '60',
+	'1 minute'      => '60',
+	'2 minutes'     => '120',
+	'3 minutes'     => '180',
+	'4 minutes'     => '240',
+	'5 minutes'     => '300',
 );

@@ -16,7 +16,7 @@ Allows you to easily manage the frequency of the WordPress heartbeat API with ju
 
 The heartbeat API can be disabled entirely and allowed for only specific dashboard locations.
 
-Heartbeat intervals can be modified between 15 and 60 seconds between requests, saving on server resources.
+Heartbeat intervals can be modified between 15 and 300 seconds between requests, saving on server resources.
 
 == Installation ==
 
