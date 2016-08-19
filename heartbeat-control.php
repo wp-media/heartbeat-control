@@ -3,14 +3,20 @@
  * Plugin Name: Heartbeat Control
  * Plugin URI: http://jeffmatson.net/heartbeat-control
  * Description: Completely controls the WordPress heartbeat.
- * Version: 1.0.3
+ * Version: 2.0.0
  * Author: Jeff Matson
  * Author URI: http://jeffmatson.net
  * License: GPL2
  */
 
-$directory            = plugin_dir_path( __FILE__ );
+if ( ! defined( 'HEARTBEAT_CONTROL_DIR' ) ) {
+	define( 'HEARTBEAT_CONTROL_DIR', plugin_dir_path( __FILE__ ) );
+}
 
-require_once $directory . '/heartbeat-control-menu.php';
-require_once $directory . '/heartbeat-control-actions.php';
-require_once $directory . '/heartbeat-control-donate.php';
+require_once HEARTBEAT_CONTROL_DIR . '/autoloader.php';
+
+add_action( 'init', 'heartbeat_control_init' );
+
+function heartbeat_control_init() {
+	\Heartbeat_Control\Core::get_instance()->init();
+}
