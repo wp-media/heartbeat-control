@@ -33,14 +33,6 @@ class Settings {
 		// Save settings if needed.
 		$this->maybe_save_settings();
 
-		// @todo Revisit this
-		if ( isset( $_POST['hbc_disable_interval'] ) ) {
-			delete_option( 'hbc_interval' );
-
-		} elseif ( isset( $_POST['hbc_enable_interval'] ) ) {
-			update_option( 'hbc_interval', 'enabled' );
-		}
-
 		// Display the Settings page
 		$this->display();
 	}
@@ -50,16 +42,12 @@ class Settings {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 *
-	 * @return bool Returns true if it was clicked and the nonce is fine. Otherwise, false.
 	 */
 	public function maybe_save_settings() {
-		if ( isset( $_POST['hbc_save_settings'] ) ) {
-			$nonce = check_admin_referer( 'hbc_settings_sent' );
-			return $nonce;
+		if ( filter_input( INPUT_POST, 'hbc_settings_sent', FILTER_SANITIZE_STRING ) !== null ) {
+			check_admin_referer( 'hbc_settings_sent', 'hbc_settings_sent' );
+			$this->save_settings();
 		}
-
-		return false;
 	}
 
 	/**
@@ -75,7 +63,7 @@ class Settings {
 		<div id="heartbeat-control-settings">
 
 			<form action="options-general.php?page=heartbeat-control" method="post">
-				<?php wp_nonce_field( 'hbc_settings_sent' ); ?>
+				<?php wp_nonce_field( 'hbc_settings_sent', 'hbc_settings_sent' ); ?>
 
 				<h2>Global Settings</h2>
 				<?php do_action('hbc_start_global_settings'); ?>
@@ -149,34 +137,51 @@ class Settings {
 	<?php
 	}
 
+	/**
+	 * Saves any settings submitted.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * @todo Move accepted values (allow/deny) into an array.
+	 * @todo Make a filter for the above todo.
+	 */
 	public function save_settings() {
 
-		if ( is_string( hbc_post('hbc_frontend_allowed') ) ) {
-			update_option( 'hbc_frontend_allowed', hbc_post('hbc_frontend_allowed') );
+		$frontend_allowed     = filter_input( INPUT_POST, 'hbc_frontend_allowed', FILTER_SANITIZE_STRING );
+		$admin_allowed        = filter_input( INPUT_POST, 'hbc_admin_allowed', FILTER_SANITIZE_STRING );
+		$hbc_interval         = filter_input( INPUT_POST, 'hbc_interval', FILTER_SANITIZE_NUMBER_INT );
+		$hbc_disable_interval = filter_input( INPUT_POST, 'hbc_disable_interval' );
+		$hbc_enable_interval  = filter_input( INPUT_POST, 'hbc_enable_interval' );
+		$hbc_post_listing     = filter_input( INPUT_POST, 'hbc_post_listing', FILTER_SANITIZE_STRING );
+		$hbc_post_edit        = filter_input( INPUT_POST, 'hbc_post_edit', FILTER_SANITIZE_STRING );
+
+		if ( $frontend_allowed == ( 'allowed' || 'denied' ) ) {
+			update_option( 'hbc_frontend_allowed', $frontend_allowed );
 		}
 
-		if ( is_string( hbc_post('hbc_admin_allowed') ) ) {
-			update_option( 'hbc_admin_allowed', hbc_post('hbc_admin_allowed') );
+		if ( $admin_allowed == ( 'allowed' || 'denied' ) ) {
+			update_option( 'hbc_admin_allowed', $admin_allowed );
 		}
 
-		if ( is_numeric( hbc_post('hbc_interval') ) ) {
-			update_option( 'hbc_interval', hbc_post('hbc_interval') );
+		$hbc_interval = intval( $hbc_interval );
+		if ( ( $hbc_interval >= 15 ) && ( $hbc_interval <= 300 ) ) {
+			update_option( 'hbc_interval', $hbc_interval );
 		}
 
-		if ( hbc_post('hbc_disable_interval') ) {
+		if ( $hbc_disable_interval !== null ) {
 			delete_option( 'hbc_interval' );
 		}
 
-		if ( hbc_post('hbc_enable_interval') ) {
-			add_option( 'hbc_interval' );
+		if ( $hbc_enable_interval !== null ) {
+			update_option( 'hbc_interval', 'enabled' );
 		}
 
-		if ( is_string( hbc_post('hbc_post_listing') ) ) {
-			update_option( 'hbc_post_listing', hbc_post('hbc_post_listing') );
+		if ( $hbc_post_listing == ( 'allowed' || 'denied' ) ) {
+			update_option( 'hbc_post_listing', $hbc_post_listing );
 		}
 
-		if ( is_string( hbc_post('hbc_post_edit') ) ) {
-			update_option( 'hbc_post_edit', hbc_post('hbc_post_listing') );
+		if ( $hbc_post_edit == ( 'allowed' || 'denied' ) ) {
+			update_option( 'hbc_post_edit', $hbc_post_edit );
 		}
 
 	}
