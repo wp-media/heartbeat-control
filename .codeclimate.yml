@@ -21,6 +21,9 @@ engines:
     enabled: true
     config:
       standard: "WordPress"
+    checks:
+          WordPress PHP YodaConditions NotYoda:
+            enabled: false
 ratings:
   paths:
   - "**.css"
