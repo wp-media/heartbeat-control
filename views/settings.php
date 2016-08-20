@@ -92,7 +92,7 @@ class Settings {
 
 				<div class="column-right">
 					<?php if ( get_option( 'hbc_interval' ) ) : ?>
-						<input name="hbc_interval" type="number" min="15" max="300" <?php if ( is_numeric( get_option('hbc_interval') ) ) { echo 'value="' . get_option('hbc_interval') . '"'; } ?>>
+						<input title="" name="hbc_interval" type="number" min="15" max="300" <?php if ( is_numeric( get_option('hbc_interval') ) ) { echo 'value="' . get_option('hbc_interval') . '"'; } ?>>
 						<input type="submit" name="hbc_disable_interval" id="submit" class="button button-secondary" value="Remove Custom Interval"  />
 					<?php else : ?>
 						<input type="submit" name="hbc_enable_interval" id="submit" class="button button-secondary" value="Enable Custom Interval"  />
