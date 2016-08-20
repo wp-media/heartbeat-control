@@ -231,13 +231,15 @@ class Core {
 	/**
 	 * Determines if the heartbeat is fired on the front-end.
 	 *
-	 * Uses global defaults.  Could be overwritten later.
+	 * Uses global defaults. Could be overwritten later.
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @todo
+	 * @todo Cleanup
+	 * @todo Validation
+	 * @todo Hooks
 	 *
-	 * @return mixed|string|void
+	 * @return string Returns 'allowed' or 'denied' based on global settings set.
 	 */
 	public function admin_default_enabled() {
 
@@ -251,9 +253,22 @@ class Core {
 
 	}
 
+	/**
+	 * Gets the interval set globally
+	 *
+	 * Uses global defaults. Could be overwritten later.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * @todo Cleanup
+	 * @todo Validation
+	 * @todo Hooks
+	 *
+	 * @return int|bool Returns number of seconds between requests. False if not set.
+	 */
 	public function default_interval() {
 
-		$global_default = get_option( 'hbc_default_interval' );
+		$global_default = get_option( 'hbc_interval' );
 
 		if ( $global_default && is_numeric( $global_default ) ) {
 			return $global_default;
@@ -263,6 +278,21 @@ class Core {
 
 	}
 
+	/**
+	 * Modifies the heartbeat interval.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * @todo Is this needed?
+	 * @todo Cleanup
+	 * @todo Validation
+	 * @todo Hook?
+	 *
+	 * @param array $settings Current heartbeat settings.
+	 * @param bool  $interval If the interval should be modified when passing through. Defaults to false.
+	 *
+	 * @return array Heartbeat settings after modification.
+	 */
 	public function modify_heartbeat( $settings, $interval = false ) {
 
 		if ( $interval ) {
@@ -273,6 +303,16 @@ class Core {
 
 	}
 
+	/**
+	 * Determines if post edit pages are enabled.
+	 *
+	 * Likely to be removed later, but keeping to avoid removing functionality for non-premium users.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @return string|bool Returns 'allowed' or 'denied' based on heartbeat configuration.
+	 */
 	public function allowed_post_edit_pages() {
 
 		$allowed = get_option( 'hbc_post_edit' );
@@ -285,6 +325,16 @@ class Core {
 
 	}
 
+	/**
+	 * Determines if post listing pages are enabled.
+	 *
+	 * Likely to be removed later, but keeping for backwards compatibility.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @return string|bool Returns 'allowed' or 'denied' based on heartbeat configuration.
+	 */
 	public function allowed_post_listing_pages() {
 		$allowed = get_option( 'hbc_post_listing' );
 
