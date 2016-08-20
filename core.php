@@ -62,11 +62,15 @@ class Core {
 	 * @todo Add hook
 	 */
 	public function enqueue_actions() {
+		do_action( 'hbc_before_enqueue_actions' );
+
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_kill_heartbeat' ), 100 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'maybe_kill_heartbeat' ), 100 );
 		add_filter( 'heartbeat_settings', array( $this, 'modify_heartbeat' ) );
+
+		do_action( 'hbc_after_enqueue_actions' );
 	}
 
 	/**
