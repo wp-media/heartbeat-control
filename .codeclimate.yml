@@ -14,6 +14,9 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+    checks:
+          Controversial/CamelCaseVariableName:
+            enabled: false
   phpcodesniffer:
     enabled: true
     config:
