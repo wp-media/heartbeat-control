@@ -59,7 +59,6 @@ class Core {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @todo Add hook
 	 */
 	public function enqueue_actions() {
 		do_action( 'hbc_before_enqueue_actions' );
@@ -83,9 +82,13 @@ class Core {
 	 * @param null|string $hook Reflects the page being accessed. Defaults to null.
 	 */
 	public function enqueue_scripts( $hook = null ) {
+		do_action( 'hbc_before_enqueue_scripts', $hook );
+
 		if ( 'settings_page_heartbeat-control' == $hook ) {
 			wp_enqueue_style( 'heartbeat-control-settings', plugin_dir_url( __FILE__ ) . 'css/settings.css' );
 		}
+
+		do_action( 'hbc_after_enqueue_scripts', $hook );
 	}
 
 	/**
