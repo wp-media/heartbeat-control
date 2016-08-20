@@ -21,6 +21,11 @@ require_once HEARTBEAT_CONTROL_DIR . '/autoloader.php';
 
 add_action( 'init', 'heartbeat_control_init' );
 
+/**
+ * Initializes Heartbeat Control
+ *
+ * @since 2.0.0
+ */
 function heartbeat_control_init() {
 	\Heartbeat_Control\Core::get_instance()->init();
 }
