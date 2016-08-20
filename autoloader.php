@@ -1,7 +1,8 @@
 <?php
-
 /**
  * Handles the automatic loading of classes.
+ *
+ * @package \Heartbeat_Control
  * @since 2.0.0
  */
 
@@ -9,11 +10,11 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
- * Callback function for spl_autoload_register
+ * Callback function for spl_autoload_register.
  *
  * @since 2.0.0
  *
- * @param string $classname The name of the class to load
+ * @param string $classname The name of the class to load.
  */
 function heartbeat_control_autoloader( $classname ) {
 
