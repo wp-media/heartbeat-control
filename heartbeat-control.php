@@ -16,6 +16,8 @@ if ( ! defined( 'HEARTBEAT_CONTROL_DIR' ) ) {
 	define( 'HEARTBEAT_CONTROL_DIR', plugin_dir_path( __FILE__ ) );
 }
 
+require_once HEARTBEAT_CONTROL_DIR . '/functions.php';
+
 require_once HEARTBEAT_CONTROL_DIR . '/autoloader.php';
 
 add_action( 'init', 'heartbeat_control_init' );

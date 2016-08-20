@@ -123,32 +123,32 @@ class Settings {
 
 	public function save_settings() {
 
-		if ( is_string( $_POST['hbc_frontend_allowed'] ) ) {
-			update_option( 'hbc_frontend_allowed', $_POST['hbc_frontend_allowed'] );
+		if ( is_string( hbc_post('hbc_frontend_allowed') ) ) {
+			update_option( 'hbc_frontend_allowed', hbc_post('hbc_frontend_allowed') );
 		}
 
-		if ( is_string( $_POST['hbc_admin_allowed'] ) ) {
-			update_option( 'hbc_admin_allowed', $_POST['hbc_admin_allowed'] );
+		if ( is_string( hbc_post('hbc_admin_allowed') ) ) {
+			update_option( 'hbc_admin_allowed', hbc_post('hbc_admin_allowed') );
 		}
 
-		if ( is_numeric( $_POST['hbc_interval'] ) ) {
-			update_option( 'hbc_interval', intval( $_POST['hbc_interval'] ) );
+		if ( is_numeric( hbc_post('hbc_interval') ) ) {
+			update_option( 'hbc_interval', hbc_post('hbc_interval') );
 		}
 
-		if ( isset( $_POST['hbc_disable_interval'] ) ) {
+		if ( hbc_post('hbc_disable_interval') ) {
 			delete_option( 'hbc_interval' );
 		}
 
-		if ( isset( $_POST['hbc_enable_interval'] ) ) {
+		if ( hbc_post('hbc_enable_interval') ) {
 			add_option( 'hbc_interval' );
 		}
 
-		if ( is_string( $_POST['hbc_post_listing'] ) ) {
-			update_option( 'hbc_post_listing', $_POST['hbc_post_listing'] );
+		if ( is_string( hbc_post('hbc_post_listing') ) ) {
+			update_option( 'hbc_post_listing', hbc_post('hbc_post_listing') );
 		}
 
-		if ( is_string( $_POST['hbc_post_edit'] ) ) {
-			update_option( 'hbc_post_edit', $_POST['hbc_post_edit'] );
+		if ( is_string( hbc_post('hbc_post_edit') ) ) {
+			update_option( 'hbc_post_edit', hbc_post('hbc_post_listing') );
 		}
 
 	}
