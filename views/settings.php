@@ -62,6 +62,12 @@ class Settings {
 		return false;
 	}
 
+	/**
+	 * Displays the Settings page content.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 */
 	public function display() { ?>
 
 		<h1>Heartbeat Control Settings</h1>
