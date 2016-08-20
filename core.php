@@ -9,10 +9,13 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 class Core {
 
 	/**
-	 * @var object $instance Holds an instance of this class
+	 * Holds an instance of this class
+	 *
 	 * @since 2.0.0
 	 * @static
 	 * @access public
+	 *
+	 * @var object $instance Holds an instance of this class
 	 */
 	public static $instance;
 
