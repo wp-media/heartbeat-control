@@ -6,6 +6,14 @@ use Heartbeat_Control\Views\Settings;
 // Bail if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
+/**
+ * Class Core
+ *
+ * Contains core Heartbeat Control functionality
+ *
+ * @package Heartbeat_Control
+ * @since 2.0.0
+ */
 class Core {
 
 	/**
