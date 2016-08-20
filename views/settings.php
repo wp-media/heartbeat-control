@@ -2,6 +2,9 @@
 
 namespace Heartbeat_Control\Views;
 
+// Bail if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
 class Settings {
 
 	public function init() {

@@ -1,8 +1,10 @@
 <?php
 
 namespace Heartbeat_Control;
-
 use Heartbeat_Control\Views\Settings;
+
+// Bail if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 class Core {
 

@@ -1,5 +1,6 @@
 <?php
 
+// Bail if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function heartbeat_control_autoloader( $classname ) {

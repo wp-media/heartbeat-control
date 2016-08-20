@@ -9,6 +9,9 @@
  * License: GPL2
  */
 
+// Bail if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
 if ( ! defined( 'HEARTBEAT_CONTROL_DIR' ) ) {
 	define( 'HEARTBEAT_CONTROL_DIR', plugin_dir_path( __FILE__ ) );
 }
