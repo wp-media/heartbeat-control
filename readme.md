@@ -1,5 +1,6 @@
+**Note:** This repo reflects the current development version of Heartbeat Control and may not be stable. It is highly recommended not to run this in production environments. For production, take a look at [Heartbeat Control on WordPress.org](https://wordpress.org/plugins/heartbeat-control/).
+
 ## Heartbeat Control
-**Note:** This repo reflects the current development version of Heartbeat Control and may not be stable. It is highly recommended not to run this in production environments. For production, take a look at [Heartbeat Control on WordPress.org](https://wordpress.org/plugins/heartbeat-control/).  
 **Contributors:** JeffMatson  
 **Donate link:** http://jeffmatson.net/donate  
 **Tags:** heartbeat, admin-ajax, server resources  
