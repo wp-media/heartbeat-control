@@ -1,13 +1,13 @@
 ## Heartbeat Control
-**Note:** This repo reflects the current development version of Heartbeat Control and may not be stable. It is highly recommended not to run this in production environments. For production, take a look at [Heartbeat Control on WordPress.org](https://wordpress.org/plugins/heartbeat-control/).
-**Contributors:** JeffMatson
-**Donate link:** http://jeffmatson.net/donate
-**Tags:** heartbeat, admin-ajax, server resources
-**Requires at least:** 2.8
-**Tested up to:** 4.6
-**Stable tag:** 1.0.3
-**License:** GPLv2 or later
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+**Note:** This repo reflects the current development version of Heartbeat Control and may not be stable. It is highly recommended not to run this in production environments. For production, take a look at [Heartbeat Control on WordPress.org](https://wordpress.org/plugins/heartbeat-control/).  
+**Contributors:** JeffMatson  
+**Donate link:** http://jeffmatson.net/donate  
+**Tags:** heartbeat, admin-ajax, server resources  
+**Requires at least:** 2.8  
+**Tested up to:** 4.6  
+**Stable tag:** 1.0.3  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 Allows you to easily manage the frequency of the WordPress heartbeat API.
 
