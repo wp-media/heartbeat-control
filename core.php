@@ -77,7 +77,6 @@ class Core {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @todo Add hook
 	 *
 	 * @param null|string $hook Reflects the page being accessed. Defaults to null.
 	 */
@@ -146,34 +145,41 @@ class Core {
 
 		if ( is_admin() ) {
 			$current_screen = get_current_screen();
-			$default_enabled = $this->admin_default_enabled();
-		} else {
-			$default_enabled = $this->frontend_default_enabled();
-		}
+			$default_enabled = $this->default_enabled();
 
-		if ( $default_enabled == 'denied' ) {
-			$kill_heartbeat = true;
+			if ( $default_enabled == 'denied' ) {
+				$kill_heartbeat = true;
+			}
+
+			if ( $current_screen->id == 'post' ) {
+				$allowed_post_edit_pages = $this->allowed_post_edit_pages();
+
+				if ( $allowed_post_edit_pages == 'allowed' ) {
+					$kill_heartbeat = false;
+				} elseif ( $allowed_post_edit_pages == 'denied' ) {
+					$kill_heartbeat = true;
+				}
+			}
+
+			if ( $current_screen->id == 'edit-post' ) {
+				$allowed_post_listing_pages = $this->allowed_post_listing_pages();
+
+				if ( $allowed_post_listing_pages == 'allowed' ) {
+					$kill_heartbeat = false;
+				} elseif ( $allowed_post_listing_pages == 'denied' ) {
+					$kill_heartbeat = true;
+				}
+			}
+
+		} else {
+			$default_enabled = $this->default_enabled();
+
+			if ( $default_enabled == 'denied' ) {
+				$kill_heartbeat = true;
+			}
 		}
 
 		$kill_heartbeat = apply_filters( 'hbc_kill_heartbeat', $kill_heartbeat );
-
-		if ( is_admin() && $current_screen->id == 'post' ) {
-			$allowed_post_edit_pages = $this->allowed_post_edit_pages();
-
-			if ( $allowed_post_edit_pages == 'allowed' ) {
-				$kill_heartbeat = false;
-			} elseif ( $allowed_post_edit_pages == 'denied' ) {
-				$kill_heartbeat = true;
-			}
-		} elseif ( is_admin() && $current_screen->id == 'edit-post' ) {
-			$allowed_post_listing_pages = $this->allowed_post_listing_pages();
-
-			if ( $allowed_post_listing_pages == 'allowed' ) {
-				$kill_heartbeat = false;
-			} elseif ( $allowed_post_listing_pages == 'denied' ) {
-				$kill_heartbeat = true;
-			}
-		}
 
 		if ( $kill_heartbeat === true ) {
 			$this->kill_heartbeat();
@@ -187,10 +193,11 @@ class Core {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @todo Hook here?
 	 */
 	public function kill_heartbeat() {
+		do_action( 'hbc_before_kill_heartbeat' );
 		wp_deregister_script( 'heartbeat' );
+		do_action( 'hbc_after_kill_heartbeat' );
 	}
 
 	/**
@@ -198,8 +205,6 @@ class Core {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @todo Clean this up
-	 * @todo Add hooks
 	 *
 	 * @param array $settings Existing heartbeat settings
 	 *
@@ -207,68 +212,35 @@ class Core {
 	 */
 	public function maybe_modify_heartbeat( $settings ) {
 
-		$modify_heartbeat = false;
+		$interval = get_option( 'hbc_interval' );
 
-		if ( is_numeric( $this->default_interval() ) ) {
-			$modify_heartbeat = $this->default_interval();
-		}
-
-		$modify_heartbeat = apply_filters( 'hbc_modify_heartbeat', $modify_heartbeat );
-
-		if ( $modify_heartbeat ) {
-			return $this->modify_heartbeat( $settings, $modify_heartbeat );
+		if ( apply_filters( 'hbc_modify_heartbeat', $interval ) ) {
+			return $this->modify_heartbeat( $settings, $interval );
 		}
 
 		return $settings;
 	}
 
 	/**
-	 * Determines if the heartbeat should be fired on the front-end
+	 * Determines if the heartbeat should be fired.
 	 *
 	 * Uses global defaults.  Could be overridden later.
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @todo Hooks
-	 * @todo Cleanup
 	 *
 	 * @return string Returns 'allowed' or 'denied' based on global settings set
 	 */
-	public function frontend_default_enabled() {
+	public function default_enabled() {
 
-		$global_default = get_option( 'hbc_frontend_allowed' );
-
-		if ( $global_default && ( $global_default == ( 'allowed' || 'denied' ) ) ) {
-			return $global_default;
+		if ( is_admin() ) {
+			$global_default = get_option( 'hbc_admin_allowed' );
 		} else {
-			return 'allowed';
+			$global_default = get_option( 'hbc_frontend_allowed' );
 		}
 
-	}
-
-	/**
-	 * Determines if the heartbeat is fired on the front-end.
-	 *
-	 * Uses global defaults. Could be overwritten later.
-	 *
-	 * @since 2.0.0
-	 * @access public
-	 * @todo Cleanup
-	 * @todo Validation
-	 * @todo Hooks
-	 *
-	 * @return string Returns 'allowed' or 'denied' based on global settings set.
-	 */
-	public function admin_default_enabled() {
-
-		$global_default = get_option( 'hbc_admin_allowed' );
-
-		if ( $global_default && ( $global_default == ( 'allowed' || 'denied' ) ) ) {
-			return $global_default;
-		} else {
-			return 'allowed';
-		}
-
+		$global_default = apply_filters( 'hbc_default_enabled', $global_default );
+		return $global_default;
 	}
 
 	/**
@@ -287,12 +259,7 @@ class Core {
 	public function default_interval() {
 
 		$global_default = get_option( 'hbc_interval' );
-
-		if ( $global_default && is_numeric( $global_default ) ) {
-			return $global_default;
-		} else {
-			return false;
-		}
+		return $global_default;
 
 	}
 

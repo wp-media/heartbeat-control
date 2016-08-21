@@ -9,6 +9,37 @@
  * License: GPL2
  */
 
+// Freemius helper function
+function hbc_fs() {
+	global $hbc_fs;
+
+	if ( ! isset( $hbc_fs ) ) {
+		// Include Freemius SDK.
+		require_once dirname(__FILE__) . '/freemius/start.php';
+
+		$hbc_fs = fs_dynamic_init( array(
+			'id'                => '375',
+			'slug'              => 'heartbeat-control',
+			'type'              => 'plugin',
+			'public_key'        => 'pk_704c21f74d1bea18f4aff700f9159',
+			'is_premium'        => false,
+			'has_addons'        => false,
+			'has_paid_plans'    => false,
+			'menu'              => array(
+				'slug'       => 'heartbeat-control',
+				'parent'     => array(
+					'slug' => 'options-general.php',
+				),
+			),
+		) );
+	}
+
+	return $hbc_fs;
+}
+
+// Init Freemius.
+hbc_fs();
+
 // Bail if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
