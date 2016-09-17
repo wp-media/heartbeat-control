@@ -47,7 +47,6 @@ if ( ! defined( 'HEARTBEAT_CONTROL_DIR' ) ) {
 	define( 'HEARTBEAT_CONTROL_DIR', plugin_dir_path( __FILE__ ) );
 }
 
-require_once HEARTBEAT_CONTROL_DIR . '/functions.php';
 require_once HEARTBEAT_CONTROL_DIR . '/autoloader.php';
 
 add_action( 'init', 'heartbeat_control_init' );
@@ -60,3 +59,11 @@ add_action( 'init', 'heartbeat_control_init' );
 function heartbeat_control_init() {
 	\Heartbeat_Control\Core::get_instance()->init();
 }
+
+add_action( 'wp_ajax_hbc_update_admin_allowed', array( 'Heartbeat_Control\Ajax', 'update_admin_allowed' ) );
+add_action( 'wp_ajax_hbc_update_admin_interval', array( 'Heartbeat_Control\Ajax', 'update_admin_interval' ) );
+add_action( 'wp_ajax_hbc_update_frontend_allowed', array( 'Heartbeat_Control\Ajax', 'update_frontend_allowed' ) );
+add_action( 'wp_ajax_hbc_update_frontend_interval', array( 'Heartbeat_Control\Ajax', 'update_frontend_interval' ) );
+add_action( 'wp_ajax_hbc_update_override', array( 'Heartbeat_Control\Ajax', 'update_override' ) );
+add_action( 'wp_ajax_hbc_disable_admin_interval', array( 'Heartbeat_Control\Ajax', 'disable_admin_interval' ) );
+add_action( 'wp_ajax_hbc_disable_frontend_interval', array( 'Heartbeat_Control\Ajax', 'disable_frontend_interval' ) );

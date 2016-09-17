@@ -50,6 +50,58 @@ class Settings {
 		}
 	}
 
+	public static function get_overrides( $interface = null ) {
+
+		$locations = array(
+			'admin' => array(
+				'posts' => array(
+					'label' => 'Posts',
+					'items' => array(
+						'edit-post' => array(
+							'label'   => 'Post Listing',
+							'type'    => 'select',
+							'options' => array(
+								'wp_default' => 'WordPress Defaults',
+								'allowed'    => 'Allowed',
+								'denied'     => 'Denied',
+							),
+						),
+						'post' => array(
+							'label'   => 'Post Editor',
+							'type'    => 'select',
+							'options' => array(
+								'wp_default' => 'WordPress Defaults',
+								'allowed'    => 'Allowed',
+								'denied'     => 'Denied',
+							),
+						),
+						'edit-category' => array(
+							'label'   => 'Category Manager',
+							'type'    => 'select',
+							'options' => array(
+								'wp_default' => 'WordPress Defaults',
+								'allowed'    => 'Allowed',
+								'denied'     => 'Denied',
+							),
+						),
+						'edit-post_tag' => array(
+							'label'   => 'Tag Manager',
+							'type'    => 'select',
+							'options' => array(
+								'wp_default' => 'WordPress Defaults',
+								'allowed'    => 'Allowed',
+								'denied'     => 'Denied',
+							),
+						),
+					),
+				),
+			),
+		);
+
+		return $locations;
+
+	}
+
 	/**
 	 * Displays the Settings page content.
 	 *
@@ -62,75 +114,125 @@ class Settings {
 
 		<div id="heartbeat-control-settings">
 
-			<form action="options-general.php?page=heartbeat-control" method="post">
+<!--			<form action="options-general.php?page=heartbeat-control" method="post">-->
 				<?php wp_nonce_field( 'hbc_settings_sent', 'hbc_settings_sent' ); ?>
 
 				<h2>Global Settings</h2>
 				<?php do_action('hbc_start_global_settings'); ?>
 
+				<h3>Frontend Locations</h3>
+
 				<div class="column-left">Frontend Heartbeat:</div>
 
 				<div class="column-right">
-					<select title="" name="hbc_frontend_allowed">
+					<select title="" name="hbc_frontend_allowed" class="hbc_frontend_allowed">
 						<option value="wp_default" <?php selected( get_option( 'hbc_frontend_allowed' ), 'wp_default' )?>>WordPress Defaults</option>
 						<option value="allowed" <?php selected( get_option( 'hbc_frontend_allowed' ), 'allowed' )?>>Allowed</option>
 						<option value="denied" <?php selected( get_option( 'hbc_frontend_allowed' ), 'denied' )?>>Denied</option>
 					</select>
 				</div>
 
+				<div id="hbc_frontend_interval_container" style="display:none">
+					<div class="column-left">Frontend Interval (in seconds):</div>
+
+					<div class="column-right">
+						<div id="hbc_frontend_interval_settings" style="display:none;">
+							<input  id="hbc_frontend_interval_entry" title="" name="hbc_frontend_interval" type="number" min="15" max="300" <?php if ( is_numeric( get_option('hbc_frontend_interval') ) ) { echo 'value="' . get_option('hbc_frontend_interval') . '"'; } ?>>
+							<button id="hbc_save_frontend_interval" class="button button-primary" style="display:none;">Save</button>
+							<button id="hbc_disable_frontend_interval" class="button button-secondary" value="Remove Custom Interval">Disable Custom Interval</button>
+						</div>
+						<div id="hbc_enable_frontend_interval" style="display:none;">
+							<button id="hbc_enable_frontend_interval_button" class="button button-secondary">Enable Custom Interval</button>
+						</div>
+					</div>
+				</div>
+
+				<h3>Admin Locations</h3>
+
 				<div class="column-left">Admin Heartbeat:</div>
 
 				<div class="column-right">
-					<select title="" name="hbc_admin_allowed">
+					<select title="" name="hbc_admin_allowed" class="hbc_admin_allowed">
 						<option value="wp_default" <?php selected( get_option( 'hbc_admin_allowed' ), 'wp_default' )?>>WordPress Defaults</option>
 						<option value="allowed" <?php selected( get_option( 'hbc_admin_allowed' ), 'allowed' )?>>Allowed</option>
 						<option value="denied" <?php selected( get_option( 'hbc_admin_allowed' ), 'denied' )?>>Denied</option>
 					</select>
 				</div>
 
-				<div class="column-left">Interval (in seconds):</div>
+				<div id="hbc_admin_interval_container" style="display:none">
+					<div class="column-left">Admin Interval (in seconds):</div>
 
-				<div class="column-right">
-					<?php if ( get_option( 'hbc_interval' ) ) : ?>
-						<input title="" name="hbc_interval" type="number" min="15" max="300" <?php if ( is_numeric( get_option('hbc_interval') ) ) { echo 'value="' . get_option('hbc_interval') . '"'; } ?>>
-						<input type="submit" name="hbc_disable_interval" id="submit" class="button button-secondary" value="Remove Custom Interval"  />
-					<?php else : ?>
-						<input type="submit" name="hbc_enable_interval" id="submit" class="button button-secondary" value="Enable Custom Interval"  />
-					<?php endif; ?>
+					<div class="column-right">
+						<div id="hbc_admin_interval_settings" style="display:none;">
+							<input  id="hbc_admin_interval_entry" title="" name="hbc_admin_interval" type="number" min="15" max="300" <?php if ( is_numeric( get_option('hbc_admin_interval') ) ) { echo 'value="' . get_option('hbc_admin_interval') . '"'; } ?>>
+							<button id="hbc_save_admin_interval" class="button button-primary" style="display:none;">Save</button>
+							<button id="hbc_disable_admin_interval" class="button button-secondary" value="Remove Custom Interval">Disable Custom Interval</button>
+						</div>
+						<div id="hbc_enable_admin_interval" style="display:none;">
+							<button id="hbc_enable_admin_interval_button" class="button button-secondary">Enable Custom Interval</button>
+						</div>
+					</div>
+
 				</div>
+					<?php if ( get_option( 'hbc_admin_interval' ) && get_option( 'hbc_admin_allowed' ) !== 'denied' ) : ?>
+						<script>
+							jQuery('#hbc_admin_interval_container').show();
+							jQuery('#hbc_admin_interval_settings').show();
+						</script>
+					<?php elseif ( get_option( 'hbc_admin_allowed' ) !== 'denied' ) : ?>
+						<script>
+							jQuery('#hbc_admin_interval_container').show();
+							jQuery('#hbc_enable_admin_interval').show();
+						</script>
+					<?php endif; ?>
+
+			<?php if ( get_option( 'hbc_frontend_interval' ) && get_option( 'hbc_frontend_allowed' ) !== 'denied' ) : ?>
+				<script>
+					jQuery('#hbc_frontend_interval_container').show();
+					jQuery('#hbc_frontend_interval_settings').show();
+				</script>
+			<?php elseif ( get_option( 'hbc_frontend_allowed' ) !== 'denied' ) : ?>
+				<script>
+					jQuery('#hbc_frontend_interval_container').show();
+					jQuery('#hbc_enable_frontend_interval').show();
+				</script>
+			<?php endif; ?>
+
+
+
+
+
 
 				<?php do_action('hbc_end_global_settings'); ?>
 
 				<h2>Overrides</h2>
+
 				<?php do_action('hbc_start_overrides_settings'); ?>
 
 				<h3>Admin Locations</h3>
 
-				<div class="column-left">Post Listing:</div>
+				<?php foreach ( self::get_overrides()['admin'] as $section_key => $section_data ) : ?>
 
-				<div class="column-right">
-					<select title="" name="hbc_post_listing">
-						<option value="wp_default" <?php selected( get_option( 'hbc_post_listing' ), 'wp_default' )?>>Use Global Settings</option>
-						<option value="allowed" <?php selected( get_option( 'hbc_post_listing' ), 'allowed' )?>>Allowed</option>
-						<option value="denied" <?php selected( get_option( 'hbc_post_listing' ), 'denied' )?>>Denied</option>
-					</select>
-				</div>
+					<?php foreach ( $section_data['items'] as $item_id => $item ) : ?>
 
-				<div class="column-left">Post Edit:</div>
+						<div class="column-left"><?php esc_html_e( $item['label'] ) ?></div>
 
-				<div class="column-right">
-					<select title="" name="hbc_post_edit">
-						<option value="wp_default" <?php selected( get_option( 'hbc_post_edit' ), 'wp_default' )?>>Use Global Settings</option>
-						<option value="allowed" <?php selected( get_option( 'hbc_post_edit' ), 'allowed' )?>>Allowed</option>
-						<option value="denied" <?php selected( get_option( 'hbc_post_edit' ), 'denied' )?>>Denied</option>
-					</select>
-				</div>
+						<div class="column-right">
+
+							<select title="" name="<?php esc_attr_e( $item_id ); ?>" data-subheader="<?php esc_attr_e( $section_key ); ?>" class="hbc_overrides">
+								<?php foreach ( $item['options'] as $option => $label ) : ?>
+									<?php $db_option_id = get_option( 'hbc_override_' . $item_id ); ?>
+									<option value="<?php esc_attr_e( $option ); ?>" <?php selected( $db_option_id, $option ) ?>><?php esc_html_e( $label ); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					<?php endforeach; ?>
+
+				<?php endforeach; ?>
 
 				<?php do_action('hbc_end_overrides_settings'); ?>
 
-				<?php submit_button( 'Save Settings', 'primary', 'hbc_save_settings' ); ?>
-
-			</form>
+<!--			</form>-->
 
 		</div>
 

@@ -85,6 +85,8 @@ class Core {
 
 		if ( 'settings_page_heartbeat-control' == $hook ) {
 			wp_enqueue_style( 'heartbeat-control-settings', plugin_dir_url( __FILE__ ) . 'css/settings.css' );
+			wp_enqueue_script( 'heartbeat-control-settings', plugin_dir_url( __FILE__ ) . 'js/settings.js' );
+			wp_localize_script( 'heartbeat-control-settings', 'hbc_plugin_url', plugin_dir_url( __FILE__ ) );
 		}
 
 		do_action( 'hbc_after_enqueue_scripts', $hook );
@@ -129,6 +131,30 @@ class Core {
 	 */
 	public function maybe_migrate_db_options() {
 
+		$pre_2_0_heartbeat_location  = get_option( 'heartbeat_location' );
+		$pre_2_0_heartbeat_frequency = get_option( 'heartbeat_frequency' );
+
+		if ( $pre_2_0_heartbeat_location ) {
+
+			if ( $pre_2_0_heartbeat_location == 'use_default' ) {
+				update_option( 'hbc_admin_allowed', 'allowed' );
+
+			} elseif ( $pre_2_0_heartbeat_location == ( 'disable-heartbeat-everywhere' || 'disable-heartbeat-dashboard' ) ) {
+				update_option( 'hbc_admin_allowed', 'denied' );
+			} elseif ( $pre_2_0_heartbeat_location == 'allow-heartbeat-post-edit' ) {
+				update_option( 'hbc_admin_allowed', 'denied' );
+				update_option( 'hbc_override_post', 'allowed' );
+				update_option( 'hbc_override_post-edit', 'allowed' );
+			}
+
+			delete_option( 'heartbeat_location' );
+		}
+
+		if ( $pre_2_0_heartbeat_frequency ) {
+			update_option( 'hbc_interval', $pre_2_0_heartbeat_frequency );
+			delete_option( 'heartbeat_frequency' );
+		}
+
 	}
 
 	/**
@@ -144,39 +170,24 @@ class Core {
 		$kill_heartbeat = false;
 
 		if ( is_admin() ) {
-			$current_screen = get_current_screen();
+			$current_screen = get_current_screen()->id;
 			$default_enabled = $this->default_enabled();
 
 			if ( $default_enabled == 'denied' ) {
 				$kill_heartbeat = true;
-			}
-
-			if ( $current_screen->id == 'post' ) {
-				$allowed_post_edit_pages = $this->allowed_post_edit_pages();
-
-				if ( $allowed_post_edit_pages == 'allowed' ) {
-					$kill_heartbeat = false;
-				} elseif ( $allowed_post_edit_pages == 'denied' ) {
-					$kill_heartbeat = true;
-				}
-			}
-
-			if ( $current_screen->id == 'edit-post' ) {
-				$allowed_post_listing_pages = $this->allowed_post_listing_pages();
-
-				if ( $allowed_post_listing_pages == 'allowed' ) {
-					$kill_heartbeat = false;
-				} elseif ( $allowed_post_listing_pages == 'denied' ) {
-					$kill_heartbeat = true;
-				}
 			}
 
 		} else {
 			$default_enabled = $this->default_enabled();
+			$current_screen = false;
 
 			if ( $default_enabled == 'denied' ) {
 				$kill_heartbeat = true;
 			}
+		}
+
+		if ( get_option( 'hbc_override_' . $current_screen ) ) {
+			$kill_heartbeat = true;
 		}
 
 		$kill_heartbeat = apply_filters( 'hbc_kill_heartbeat', $kill_heartbeat );
