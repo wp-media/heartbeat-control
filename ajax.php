@@ -4,8 +4,12 @@
 // @todo Consolidation
 
 namespace Heartbeat_Control;
-
 use Heartbeat_Control\Views\Settings;
+
+if ( ! current_user_can( 'manage_options' ) ) {
+	echo 'error';
+	wp_die();
+}
 
 class Ajax {
 
