@@ -87,6 +87,7 @@ class Core {
 			wp_enqueue_style( 'heartbeat-control-settings', plugin_dir_url( __FILE__ ) . 'css/settings.css' );
 			wp_enqueue_script( 'heartbeat-control-settings', plugin_dir_url( __FILE__ ) . 'js/settings.js' );
 			wp_localize_script( 'heartbeat-control-settings', 'hbc_plugin_url', plugin_dir_url( __FILE__ ) );
+			wp_localize_script( 'heartbeat-control-settings', 'hbc_settings_nonce', wp_create_nonce( 'hbc_settings_nonce' ) );
 		}
 
 		do_action( 'hbc_after_enqueue_scripts', $hook );

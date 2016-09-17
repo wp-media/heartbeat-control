@@ -23,6 +23,7 @@ jQuery( document ).ready( function() {
 
         var data = {
             'action': 'hbc_update_override',
+            'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'override_name':      override_name,
                 'override_subheader': subheader,
@@ -48,8 +49,9 @@ jQuery( document ).ready( function() {
 
         var data = {
             'action': 'hbc_update_frontend_allowed',
+            'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
-                'location'        : 'frontend',
+                'location':         'frontend',
                 'frontend_allowed': this.value
             }
         };
@@ -84,6 +86,7 @@ jQuery( document ).ready( function() {
 
         var data = {
             'action': 'hbc_update_admin_allowed',
+            'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location':      'admin',
                 'admin_allowed': this.value
@@ -133,6 +136,7 @@ jQuery( document ).ready( function() {
 
         var data = {
             'action': 'hbc_disable_admin_interval',
+            'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location': 'admin'
             }
@@ -160,9 +164,11 @@ jQuery( document ).ready( function() {
 
         var data = {
             'action': 'hbc_disable_frontend_interval',
+            'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location': 'admin'
             }
+
         };
 
         jQuery.post( ajaxurl, data, function( response ) {
@@ -189,6 +195,7 @@ jQuery( document ).ready( function() {
 
         var data = {
             'action': 'hbc_update_admin_interval',
+            'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location':       'admin',
                 'admin_interval': interval
@@ -218,8 +225,9 @@ jQuery( document ).ready( function() {
 
         var data = {
             'action': 'hbc_update_frontend_interval',
+            'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
-                'location':       'frontend',
+                'location':          'frontend',
                 'frontend_interval': interval
             }
         };

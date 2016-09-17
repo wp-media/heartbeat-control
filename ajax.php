@@ -6,7 +6,7 @@
 namespace Heartbeat_Control;
 use Heartbeat_Control\Views\Settings;
 
-if ( ! current_user_can( 'manage_options' ) ) {
+if ( ! current_user_can( 'manage_options' ) && ! check_ajax_referer( 'hbc_settings_nonce', 'hbc_settings_nonce' ) ) {
 	echo 'error';
 	wp_die();
 }
