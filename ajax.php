@@ -1,6 +1,5 @@
 <?php
 
-// @todo Nonces
 // @todo Consolidation
 
 namespace Heartbeat_Control;
