@@ -34,4 +34,7 @@ ratings:
   - "**.php"
   - "**.py"
   - "**.rb"
-exclude_paths: []
+exclude_paths:
+  - "freemius/"
+  - "css/includes/"
+  - "dev-lib/"
