@@ -1,7 +1,5 @@
 <?php
 
-// @todo Consolidation
-
 namespace Heartbeat_Control;
 use Heartbeat_Control\Views\Settings;
 
@@ -32,6 +30,8 @@ class Ajax {
 			$response = 'error';
 		}
 
+		$response = apply_filters( 'hbc_after_convert_boolean_response', $response );
+
 		if ( $echo == true ) {
 			echo $response;
 		} else {
@@ -59,98 +59,66 @@ class Ajax {
 		wp_die();
 	}
 
-	public static function update_frontend_allowed() {
+	public static function update_allowed() {
 		ob_clean();
 
-		$allowed = $_POST['hbc_data']['frontend_allowed'];
+		$location = $_POST['hbc_data']['location'];
 
-		if ( $allowed == ( 'allowed' || 'denied' || 'wp_default' ) ) {
-			$success = update_option( 'hbc_frontend_allowed', $_POST['hbc_data']['frontend_allowed'] );
-
-			self::convert_boolean_response( $success );
-
-		} else {
-			echo 'error';
+		switch ( $location ) {
+			case 'admin':
+				$success = update_option( 'hbc_admin_allowed', $_POST['hbc_data']['allowed'] );
+				break;
+			case 'frontend':
+				$success = update_option( 'hbc_frontend_allowed', $_POST['hbc_data']['allowed'] );
+				break;
+			default:
+				$success = false;
 		}
 
-		wp_die();
+		self::convert_boolean_response( $success );
 
+		wp_die();
 	}
 
-	public static function update_admin_allowed() {
+	public static function update_interval() {
 		ob_clean();
 
-		$allowed = $_POST['hbc_data']['admin_allowed'];
+		$interval = intval( $_POST['hbc_data']['interval'] );
+		$location = esc_attr( $_POST['hbc_data']['location'] );
 
-		if ( $allowed == ( 'allowed' || 'denied' || 'wp_default' ) ) {
-			$success = update_option( 'hbc_admin_allowed', $_POST['hbc_data']['admin_allowed'] );
-
-			self::convert_boolean_response( $success );
-
-		} else {
-			echo 'error';
+		switch ( $location ) {
+			case 'admin':
+				$success = update_option( 'hbc_admin_interval', $interval );
+				break;
+			case 'frontend':
+				$success = update_option( 'hbc_frontend_interval', $interval );
+				break;
+			default:
+				$success = false;
 		}
 
-		wp_die();
+		self::convert_boolean_response( $success );
 
+		wp_die();
 	}
 
-	public static function update_frontend_interval() {
+	public static function disable_interval() {
 		ob_clean();
 
-		$interval = $_POST['hbc_data']['frontend_interval'];
+		$location = esc_attr( $_POST['hbc_data']['location'] );
 
-		if ( is_numeric( $interval ) ) {
-			$success = update_option( 'hbc_frontend_interval', $_POST['hbc_data']['frontend_interval'] );
-
-			self::convert_boolean_response( $success );
-
-		} else {
-			echo 'error';
+		switch ( $location ) {
+			case 'admin':
+				delete_option( 'hbc_admin_interval' );
+				break;
+			case 'frontend':
+				delete_option( 'hbc_frontend_interval' );
+				break;
 		}
-
-		wp_die();
-
-	}
-
-	public static function update_admin_interval() {
-		ob_clean();
-
-		$interval = $_POST['hbc_data']['admin_interval'];
-
-		if ( is_numeric( $interval ) ) {
-			$success = update_option( 'hbc_admin_interval', intval( $_POST['hbc_data']['admin_interval'] ) );
-
-			self::convert_boolean_response( $success );
-
-		} else {
-			echo 'error';
-		}
-
-		wp_die();
-
-	}
-
-	public static function disable_admin_interval() {
-		ob_clean();
-
-		delete_option( 'hbc_admin_interval' );
 
 		echo 'success';
 
 		wp_die();
-
-	}
-
-	public static function disable_frontend_interval() {
-		ob_clean();
-
-		delete_option( 'hbc_frontend_interval' );
-
-		echo 'success';
-
-		wp_die();
-
 	}
 
 }

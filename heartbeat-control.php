@@ -60,10 +60,7 @@ function heartbeat_control_init() {
 	\Heartbeat_Control\Core::get_instance()->init();
 }
 
-add_action( 'wp_ajax_hbc_update_admin_allowed', array( 'Heartbeat_Control\Ajax', 'update_admin_allowed' ) );
-add_action( 'wp_ajax_hbc_update_admin_interval', array( 'Heartbeat_Control\Ajax', 'update_admin_interval' ) );
-add_action( 'wp_ajax_hbc_update_frontend_allowed', array( 'Heartbeat_Control\Ajax', 'update_frontend_allowed' ) );
-add_action( 'wp_ajax_hbc_update_frontend_interval', array( 'Heartbeat_Control\Ajax', 'update_frontend_interval' ) );
+add_action( 'wp_ajax_hbc_update_allowed', array( 'Heartbeat_Control\Ajax', 'update_allowed' ) );
+add_action( 'wp_ajax_hbc_update_interval', array( 'Heartbeat_Control\Ajax', 'update_interval' ) );
 add_action( 'wp_ajax_hbc_update_override', array( 'Heartbeat_Control\Ajax', 'update_override' ) );
-add_action( 'wp_ajax_hbc_disable_admin_interval', array( 'Heartbeat_Control\Ajax', 'disable_admin_interval' ) );
-add_action( 'wp_ajax_hbc_disable_frontend_interval', array( 'Heartbeat_Control\Ajax', 'disable_frontend_interval' ) );
+add_action( 'wp_ajax_hbc_disable_interval', array( 'Heartbeat_Control\Ajax', 'disable_interval' ) );

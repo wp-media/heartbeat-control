@@ -32,8 +32,6 @@ jQuery( document ).ready( function() {
         };
 
         jQuery.post( ajaxurl, data, function( response ) {
-            console.log(response);
-
             if ( response == 'success' ) {
                 processing_to_complete( self );
             }
@@ -48,11 +46,11 @@ jQuery( document ).ready( function() {
         show_processing( this );
 
         var data = {
-            'action': 'hbc_update_frontend_allowed',
+            'action': 'hbc_update_allowed',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location':         'frontend',
-                'frontend_allowed': this.value
+                'allowed': this.value
             }
         };
 
@@ -85,11 +83,11 @@ jQuery( document ).ready( function() {
         show_processing( this );
 
         var data = {
-            'action': 'hbc_update_admin_allowed',
+            'action': 'hbc_update_allowed',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location':      'admin',
-                'admin_allowed': this.value
+                'allowed': this.value
             }
         };
 
@@ -135,7 +133,7 @@ jQuery( document ).ready( function() {
         show_processing( this );
 
         var data = {
-            'action': 'hbc_disable_admin_interval',
+            'action': 'hbc_disable_interval',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location': 'admin'
@@ -163,7 +161,7 @@ jQuery( document ).ready( function() {
         show_processing( this );
 
         var data = {
-            'action': 'hbc_disable_frontend_interval',
+            'action': 'hbc_disable_interval',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location': 'admin'
@@ -194,11 +192,11 @@ jQuery( document ).ready( function() {
         var interval = jQuery('#hbc_admin_interval_entry').val();
 
         var data = {
-            'action': 'hbc_update_admin_interval',
+            'action': 'hbc_update_interval',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location':       'admin',
-                'admin_interval': interval
+                'interval': interval
             }
         };
 
@@ -224,11 +222,11 @@ jQuery( document ).ready( function() {
         var interval = jQuery('#hbc_frontend_interval_entry').val();
 
         var data = {
-            'action': 'hbc_update_frontend_interval',
+            'action': 'hbc_update_interval',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
                 'location':          'frontend',
-                'frontend_interval': interval
+                'interval': interval
             }
         };
 
