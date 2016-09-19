@@ -27,3 +27,7 @@ script:
 
 after_script:
     - source $DEV_LIB_PATH/travis.after_script.sh
+
+addons:
+  code_climate:
+    repo_token: da4965aa889df156842b73559c3e6624a13aaab60d81d908938dc6229dee1352
