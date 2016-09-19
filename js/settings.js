@@ -1,12 +1,13 @@
 jQuery( document ).ready( function() {
 
     function show_processing( element ) {
-        var icon = '<img class="hbc-settings-processing" style="height:20px; width: 20px; vertical-align: middle" src="' + hbc_plugin_url + 'views/spin.svg">';
+        var icon = '<i class="hbc-settings-processing fa fa-spinner" style="vertical-align: middle;"></i>';
         jQuery( element ).after( icon );
     }
 
     function processing_to_complete( element ) {
-        jQuery( element ).siblings('.hbc-settings-processing').attr( 'src', hbc_plugin_url + 'views/complete.svg' );
+        jQuery( element ).siblings('.hbc-settings-processing').addClass( 'fa-check-circle' );
+        jQuery( element ).siblings('.hbc-settings-processing').removeClass( 'fa-spinner' );
         jQuery( element ).siblings('.hbc-settings-processing').fadeOut( 5000, function() {
             jQuery( this ).remove();
         });
@@ -25,9 +26,9 @@ jQuery( document ).ready( function() {
             'action': 'hbc_update_override',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
-                'override_name':      override_name,
+                'override_name': override_name,
                 'override_subheader': subheader,
-                'override_value':     this.value
+                'override_value': this.value
             }
         };
 
@@ -49,7 +50,7 @@ jQuery( document ).ready( function() {
             'action': 'hbc_update_allowed',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
-                'location':         'frontend',
+                'location': 'frontend',
                 'allowed': this.value
             }
         };
@@ -86,7 +87,7 @@ jQuery( document ).ready( function() {
             'action': 'hbc_update_allowed',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
-                'location':      'admin',
+                'location': 'admin',
                 'allowed': this.value
             }
         };
@@ -103,6 +104,7 @@ jQuery( document ).ready( function() {
                 jQuery('#hbc_disable_admin_interval').hide();
                 jQuery('#hbc_admin_interval_container').show();
                 jQuery('#hbc_admin_interval_settings').show();
+                jQuery('#hbc_enable_admin_interval').show();
                 jQuery('#hbc_enable_admin_interval_button').show();
 
             } else if( response == 'success' && self.value == 'denied' ) {
@@ -195,7 +197,7 @@ jQuery( document ).ready( function() {
             'action': 'hbc_update_interval',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
-                'location':       'admin',
+                'location': 'admin',
                 'interval': interval
             }
         };
@@ -225,7 +227,7 @@ jQuery( document ).ready( function() {
             'action': 'hbc_update_interval',
             'hbc_settings_nonce': hbc_settings_nonce,
             'hbc_data': {
-                'location':          'frontend',
+                'location': 'frontend',
                 'interval': interval
             }
         };

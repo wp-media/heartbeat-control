@@ -85,6 +85,7 @@ class Core {
 
 		if ( 'settings_page_heartbeat-control' == $hook ) {
 			wp_enqueue_style( 'heartbeat-control-settings', plugin_dir_url( __FILE__ ) . 'css/settings.css' );
+			wp_enqueue_style( 'font-awesome', plugin_dir_url( __FILE__ ) . 'css/includes/font-awesome.min.css' );
 			wp_enqueue_script( 'heartbeat-control-settings', plugin_dir_url( __FILE__ ) . 'js/settings.js' );
 			wp_localize_script( 'heartbeat-control-settings', 'hbc_plugin_url', plugin_dir_url( __FILE__ ) );
 			wp_localize_script( 'heartbeat-control-settings', 'hbc_settings_nonce', wp_create_nonce( 'hbc_settings_nonce' ) );
@@ -128,7 +129,6 @@ class Core {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @todo Write database migration
 	 */
 	public function maybe_migrate_db_options() {
 
