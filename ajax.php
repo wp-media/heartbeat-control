@@ -62,7 +62,7 @@ class Ajax {
 	public static function update_allowed() {
 		ob_clean();
 
-		$location = $_POST['hbc_data']['location'];
+		$location = esc_attr( $_POST['hbc_data']['location'] );
 
 		switch ( $location ) {
 			case 'admin':
