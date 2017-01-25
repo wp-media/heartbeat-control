@@ -209,6 +209,7 @@ class Core {
 	public function kill_heartbeat() {
 		do_action( 'hbc_before_kill_heartbeat' );
 		wp_deregister_script( 'heartbeat' );
+		wp_register_script( 'heartbeat', null );
 		do_action( 'hbc_after_kill_heartbeat' );
 	}
 
