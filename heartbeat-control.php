@@ -9,24 +9,26 @@
  * License: GPL2
  * Text Domain: heartbeat-control
  * Domain Path: /languages
+ *
+ * @package Heartbeat_Control
  */
 
 namespace Heartbeat_Control;
 
 /**
- * Undocumented class
+ * The primary Heartbeat Control class.
  */
 class Heartbeat_Control {
 
 	/**
-	 * Undocumented variable
+	 * The current version.
 	 *
 	 * @var string
 	 */
 	public $version = '1.2.4';
 
 	/**
-	 * Undocumented function
+	 * Heartbeat_Control Constructor.
 	 */
 	public function __construct() {
 		$this->maybe_upgrade();
@@ -37,6 +39,11 @@ class Heartbeat_Control {
 		new Heartbeat();
 	}
 
+	/**
+	 * Enqueue additional scrips if needed.
+	 *
+	 * @return void
+	 */
 	public function maybe_enqueue_scripts() {
 		if ( get_option( 'heartbeat_control_update_notice' ) ) {
 			wp_enqueue_script( 'heartbeat-control-notices', plugins_url( '/assets/js/bundle.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
@@ -44,12 +51,25 @@ class Heartbeat_Control {
 		}
 	}
 
+	/**
+	 * Register additional plugin dependencies.
+	 *
+	 * @return void
+	 */
 	public function register_dependencies() {
+		// Main plugin autoloader.
 		require_once dirname( __FILE__ ) . '/autoloader.php';
+
+		// Initialize CMB2 for settings pages.
 		require_once dirname( __FILE__ ) . '/vendor/webdevstudios/cmb2/init.php';
 		add_action( 'cmb2_admin_init', array( new Settings(), 'init_metaboxes' ) );
 	}
 
+	/**
+	 * Check the version and update as needed.
+	 *
+	 * @return void
+	 */
 	public function maybe_upgrade() {
 		add_action( 'admin_notices', array( $this, 'heartbeat_control_updated' ) );
 		$db_version = get_option( 'heartbeat_control_version', '1.0' );
@@ -59,9 +79,9 @@ class Heartbeat_Control {
 	}
 
 	/**
-	 * Undocumented function
+	 * Upgrades the database from older versions.
 	 *
-	 * @param [type] $version
+	 * @param string $version The current DB version.
 	 * @return void
 	 */
 	public function upgrade_db( $version ) {
@@ -100,21 +120,31 @@ class Heartbeat_Control {
 		update_option( 'heartbeat_control_update_notice', true );
 	}
 
+	/**
+	 * Displays the update notice.
+	 *
+	 * @return void
+	 */
 	public function heartbeat_control_updated() {
 		if ( get_option( 'heartbeat_control_update_notice' ) ) {
-		?>
+			?>
 			<div id="heartbeat_control_update_notice" class="notice notice-success is-dismissible">
-				<p><?php _e( 'Heartbeat Control has updated to a new version!', 'heartbeat-control' ); ?></p>
-				<p><?php _e( 'Love it? Does it save you money and valuable server resources? Consider <a href="https://paypal.me/JeffMatson">sending me a donation</a>. The plugin is entirely developed in my spare time and every little bit helps to motivate me to add more features and bug fixes.', 'heartbeat-control' ); ?></p>
+				<p><?php esc_html_e( 'Heartbeat Control has updated to a new version!', 'heartbeat-control' ); ?></p>
+				<p><?php esc_html_e( 'Love it? Does it save you money and valuable server resources? Consider <a href="https://paypal.me/JeffMatson">sending me a donation</a>. The plugin is entirely developed in my spare time and every little bit helps to motivate me to add more features and bug fixes.', 'heartbeat-control' ); ?></p>
 			</div>
-		<?php
+			<?php
 		}
 	}
 
+	/**
+	 * Dismisses the update notice.
+	 *
+	 * @return void
+	 */
 	public function dismiss_update_notice() {
 		delete_option( 'heartbeat_control_update_notice' );
 	}
 
 }
 
-new Heartbeat_Control;
+new Heartbeat_Control();

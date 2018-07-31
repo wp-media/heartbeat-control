@@ -1,13 +1,41 @@
 <?php
+/**
+ * Contains the Heartbeat_Control\Heartbeat class.
+ *
+ * @package Heartbeat_Control
+ */
 
 namespace Heartbeat_Control;
 
+/**
+ * Primary Hearbeat class.
+ */
 class Heartbeat {
 
+	/**
+	 * The current screen being accessed.
+	 *
+	 * @var string
+	 */
 	public $current_screen;
+
+	/**
+	 * The current query string being accessed.
+	 *
+	 * @var string
+	 */
 	public $current_query_string;
+
+	/**
+	 * Stores heartbeat settings across class methods.
+	 *
+	 * @var array
+	 */
 	public $settings = array();
 
+	/**
+	 * Just a regular ole constructor.
+	 */
 	public function __construct() {
 
 		if ( ! empty( $_SERVER['QUERY_STRING'] ) ) {
