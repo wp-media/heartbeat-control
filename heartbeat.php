@@ -37,6 +37,10 @@ class Heartbeat {
 	}
 
 	public function check_location( $locations ) {
+		if ( ! isset( $locations ) || ! is_array( $locations ) ) {
+			return false;
+		}
+
 		if ( in_array( $this->current_screen['path'], $locations ) ) {
 			return true;
 		} elseif ( ( ! is_admin() ) && ( in_array( 'frontend', $locations ) ) ) {
