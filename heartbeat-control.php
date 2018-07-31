@@ -68,7 +68,7 @@ class Heartbeat_Control {
 
 			$updated_options = array();
 
-			if ( $old_location = get_option('heartbeat_location') ) {
+			if ( $old_location === get_option( 'heartbeat_location' ) ) {
 				if ( $old_location === 'disable-heartbeat-everywhere' ) {
 					$updated_options['heartbeat_control_behavior'] = 'disable';
 					$updated_options['heartbeat_control_location'] = array( 'frontend', 'admin', '/wp-admin/post.php' );
