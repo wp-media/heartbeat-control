@@ -16,9 +16,9 @@ class Heartbeat {
 			$current_url = $_SERVER['REQUEST_URI'];
 		}
 
-		$this->current_screen = parse_url( $current_url );
+		$this->current_screen = wp_parse_url( $current_url );
 
-		if ( $this->current_screen == '/wp-admin/admin-ajax.php' ) {
+		if ( $this->current_screen === '/wp-admin/admin-ajax.php' ) {
 			return;
 		}
 
