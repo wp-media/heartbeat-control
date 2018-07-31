@@ -33,20 +33,21 @@ class Heartbeat_Control {
 		$this->register_dependencies();
 		add_action( 'wp_ajax_dismiss_heartbeat_control_update_notice', array( $this, 'dismiss_update_notice' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'maybe_enqueue_scripts' ) );
-		new Heartbeat;
+
+		new Heartbeat();
 	}
 
 	public function maybe_enqueue_scripts() {
 		if ( get_option( 'heartbeat_control_update_notice' ) ) {
-			wp_enqueue_script( 'heartbeat-control-notices', plugins_url( '/assets/js/bundle.js' , __FILE__ ), array('jquery'), '1.0.0', true);
+			wp_enqueue_script( 'heartbeat-control-notices', plugins_url( '/assets/js/bundle.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
 			wp_localize_script( 'heartbeat-control-notices', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		}
 	}
 
 	public function register_dependencies() {
-		require_once( dirname( __FILE__ ) . '/autoloader.php' );
-		require_once( dirname( __FILE__ ) . '/vendor/webdevstudios/cmb2/init.php' );
-		add_action( 'cmb2_admin_init', array( new Settings, 'init_metaboxes' ) );
+		require_once dirname( __FILE__ ) . '/autoloader.php';
+		require_once dirname( __FILE__ ) . '/vendor/webdevstudios/cmb2/init.php';
+		add_action( 'cmb2_admin_init', array( new Settings(), 'init_metaboxes' ) );
 	}
 
 	public function maybe_upgrade() {
