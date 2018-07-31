@@ -64,6 +64,13 @@ class Heartbeat {
 		add_filter( 'heartbeat_settings', array( $this, 'maybe_modify' ), 99, 1 );
 	}
 
+	/**
+	 * Checks if the current location has a rule.
+	 *
+	 * @param array $locations Locations that have rules.
+	 *
+	 * @return bool
+	 */
 	public function check_location( $locations ) {
 		if ( ! isset( $locations ) || ! is_array( $locations ) ) {
 			return false;
@@ -80,9 +87,14 @@ class Heartbeat {
 		return false;
 	}
 
+	/**
+	 * Disable the heartbeat, if needed.
+	 *
+	 * @return void
+	 */
 	public function maybe_disable() {
 		foreach ( $this->settings as $rule ) {
-			if ( array_key_exists( 'heartbeat_control_behavior', $rule ) && $rule['heartbeat_control_behavior']  === 'disable' ) {
+			if ( array_key_exists( 'heartbeat_control_behavior', $rule ) && $rule['heartbeat_control_behavior'] === 'disable' ) {
 
 				if ( ! array_key_exists( 'heartbeat_control_location', $rule ) ) {
 					return;
@@ -97,6 +109,13 @@ class Heartbeat {
 
 	}
 
+	/**
+	 * Modify the heartbeat, if needed.
+	 *
+	 * @param array $settings The settings.
+	 *
+	 * @return array
+	 */
 	public function maybe_modify( $settings ) {
 
 		foreach ( $this->settings as $rule ) {
