@@ -25,7 +25,7 @@ class Settings {
 			return;
 		}
 
-		wp_enqueue_script('heartbeat-control-settings', plugins_url( '/assets/js/bundle.js' , __FILE__ ), array('jquery', 'jquery-ui-slider'), '1.0.0', true);
+		wp_enqueue_script( 'heartbeat-control-settings', plugins_url( '/assets/js/bundle.js' , __FILE__ ), array('jquery', 'jquery-ui-slider'), '1.0.0', true );
 		wp_localize_script( 'heartbeat-control-settings', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		wp_register_style( 'slider_ui', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css', array(), '1.0' );
 		wp_enqueue_style( 'slider_ui' );

@@ -12,7 +12,7 @@ class Heartbeat {
 
 		if ( ! empty( $_SERVER['QUERY_STRING'] ) ) {
 			$current_url = $_SERVER['REQUEST_URI'] . '?' . $_SERVER['QUERY_STRING'];
-		}  else {
+		} else {
 			$current_url = $_SERVER['REQUEST_URI'];
 		}
 

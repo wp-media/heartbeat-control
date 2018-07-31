@@ -80,7 +80,7 @@ class Heartbeat_Control {
 					$updated_options['heartbeat_control_behavior'] = 'allow';
 					$updated_options['heartbeat_control_location'] = array( '/wp-admin/post.php' );
 				} else {
-					if ( $old_frequency = get_option('heartbeat_frequency') ) {
+					if ( $old_frequency == get_option( 'heartbeat_frequency' ) ) {
 						$updated_options['heartbeat_control_behavior'] = 'modify';
 						$updated_options['heartbeat_control_location'] = array( 'frontend', 'admin', '/wp-admin/post.php' );
 						$updated_options['heartbeat_control_frequency'] = $old_frequency;
