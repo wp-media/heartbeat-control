@@ -55,6 +55,11 @@ class Heartbeat {
 	public function maybe_disable() {
 		foreach ( $this->settings as $rule ) {
 			if ( array_key_exists( 'heartbeat_control_behavior', $rule ) && $rule['heartbeat_control_behavior']  === 'disable' ) {
+
+				if ( ! array_key_exists( 'heartbeat_control_location', $rule ) ) {
+					return;
+				}
+
 				if ( $this->check_location( $rule['heartbeat_control_location'] ) ) {
 					wp_deregister_script( 'heartbeat' );
 					return;
@@ -68,6 +73,11 @@ class Heartbeat {
 
 		foreach ( $this->settings as $rule ) {
 			if ( array_key_exists( 'heartbeat_control_behavior', $rule ) && $rule['heartbeat_control_behavior'] === 'modify' ) {
+
+				if ( ! array_key_exists( 'heartbeat_control_location', $rule ) ) {
+					return;
+				}
+
 				if ( $this->check_location( $rule['heartbeat_control_location'] ) ) {
 					$settings['interval'] = intval( $rule['heartbeat_control_frequency'] );
 					return $settings;
