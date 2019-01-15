@@ -130,7 +130,7 @@ class Heartbeat_Control {
 			?>
 			<div id="heartbeat_control_update_notice" class="notice notice-success is-dismissible">
 				<p><?php esc_html_e( 'Heartbeat Control has updated to a new version!', 'heartbeat-control' ); ?></p>
-				<p><?php esc_html_e( 'Love it? Does it save you money and valuable server resources? Consider <a href="https://paypal.me/JeffMatson">sending me a donation</a>. The plugin is entirely developed in my spare time and every little bit helps to motivate me to add more features and bug fixes.', 'heartbeat-control' ); ?></p>
+				<p><?php _e( 'Love it? Does it save you money and valuable server resources? Consider <a href="https://paypal.me/JeffMatson">sending me a donation</a>. The plugin is entirely developed in my spare time and every little bit helps to motivate me to add more features and bug fixes.', 'heartbeat-control' ); ?></p>
 			</div>
 			<?php
 		}
