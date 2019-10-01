@@ -16,6 +16,7 @@ namespace Heartbeat_Control;
 
 define( 'HBC_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'HBC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+$loader = require dirname(__FILE__) . "/vendor/autoload.php";
 
 /**
  * The primary Heartbeat Control class.
@@ -44,9 +45,6 @@ class Heartbeat_Control {
 	 * @return void
 	 */
 	public function register_dependencies() {
-		// Main plugin autoloader.
-		require_once dirname( __FILE__ ) . '/autoloader.php';
-
 		//Initialize CMB2 for the new settings page.
 		require_once dirname( __FILE__ ) . '/vendor/webdevstudios/cmb2/init.php';
 		add_action( 'cmb2_admin_init', array( new WPM_Settings(), 'init_metaboxes' ) );
