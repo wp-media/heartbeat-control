@@ -45,20 +45,13 @@ class Heartbeat {
 		}
 
 		$this->current_screen = wp_parse_url( $current_url );
-
 		if ( $this->current_screen === '/wp-admin/admin-ajax.php' ) {
 			return;
 		}
-
 		$settings = get_option( 'heartbeat_control_settings' );
-
-		if ( ( ! is_array( $settings['rules'] ) ) || ( empty( $settings['rules'] ) ) ) {
-			return;
-		}
-
-		array_reverse( $settings['rules'] );
-		$this->settings = $settings['rules'];
-
+		if ( false === $settings ) { return; }
+		$this->settings = $settings;
+		
 		add_action( 'admin_enqueue_scripts', array( $this, 'maybe_disable' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_disable' ), 99 );
 		add_filter( 'heartbeat_settings', array( $this, 'maybe_modify' ), 99, 1 );
@@ -71,19 +64,15 @@ class Heartbeat {
 	 *
 	 * @return bool
 	 */
-	public function check_location( $locations ) {
-		if ( ! isset( $locations ) || ! is_array( $locations ) ) {
-			return false;
+	public function check_location( $location ) {
+		$location_test = array(
+			'rules_dash' => function(){ return is_admin(); },
+			'rules_front' => function(){ return !is_admin(); },
+			'rules_editor' => function(){ return ( '/wp-admin/post.php' === $this->current_screen['path'] ); }
+		);
+		if( isset( $location_test[$location] ) ){
+			return $location_test[$location]();
 		}
-
-		if ( in_array( $this->current_screen['path'], $locations ) ) {
-			return true;
-		} elseif ( ( ! is_admin() ) && ( in_array( 'frontend', $locations ) ) ) {
-			return true;
-		} elseif ( ( is_admin() ) && ( in_array( 'admin', $locations ) ) ) {
-			return true;
-		}
-
 		return false;
 	}
 
@@ -93,20 +82,15 @@ class Heartbeat {
 	 * @return void
 	 */
 	public function maybe_disable() {
-		foreach ( $this->settings as $rule ) {
+		foreach ( $this->settings as $location => $r ) {
+			$rule = reset( $r );
 			if ( array_key_exists( 'heartbeat_control_behavior', $rule ) && $rule['heartbeat_control_behavior'] === 'disable' ) {
-
-				if ( ! array_key_exists( 'heartbeat_control_location', $rule ) ) {
-					return;
-				}
-
-				if ( $this->check_location( $rule['heartbeat_control_location'] ) ) {
+				if ( $this->check_location( $location ) ) {
 					wp_deregister_script( 'heartbeat' );
 					return;
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -117,21 +101,15 @@ class Heartbeat {
 	 * @return array
 	 */
 	public function maybe_modify( $settings ) {
-
-		foreach ( $this->settings as $rule ) {
+		foreach ( $this->settings as $location => $r ) {
+			$rule = reset( $r );
 			if ( array_key_exists( 'heartbeat_control_behavior', $rule ) && $rule['heartbeat_control_behavior'] === 'modify' ) {
-
-				if ( ! array_key_exists( 'heartbeat_control_location', $rule ) ) {
-					return;
-				}
-
-				if ( $this->check_location( $rule['heartbeat_control_location'] ) ) {
+				if ( $this->check_location( $location ) ) {
 					$settings['interval'] = intval( $rule['heartbeat_control_frequency'] );
 					return $settings;
 				}
 			}
 		}
-
 		return $settings;
 	}
 
