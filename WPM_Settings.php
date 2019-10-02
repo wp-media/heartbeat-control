@@ -84,7 +84,7 @@ class WPM_Settings {
 		wp_enqueue_style( 'slider_ui' );
 		wp_register_style( 'hbc_admin_style', HBC_PLUGIN_URL.'assets/css/style.min.css' , array(), '1.0' );
 		wp_enqueue_style( 'hbc_admin_style' );
-		
+
 	}
 
 	/**
@@ -126,7 +126,7 @@ class WPM_Settings {
 
 		$cmb_options = new_cmb2_box(array(
 			'id'			=> 'heartbeat_control_settings',
-			'title'			=> __( 'Heartbeat Control Settings', 'heartbeat-control' ),
+			'title'			=> __( 'Heartbeat Control', 'heartbeat-control' ),
 			'object_types' 	=> array( 'options-page' ),
 			'option_key'	=> 'heartbeat_control_settings',
 			'capability'	=> 'manage_options',
