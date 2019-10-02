@@ -30,7 +30,8 @@ COLORS
     display: flex;
     width: 50%;
     -ms-flex-direction: column;
-        flex-direction: column; }
+        flex-direction: column;
+    font-weight: 400; }
     @media only screen and (max-width: 860px) {
       .wrapper-top .top-txt {
         margin-top: 20px;
@@ -40,8 +41,9 @@ COLORS
       font-weight: 700;
       margin-top: 0; }
     .wrapper-top .top-txt p {
-      font-size: 15px;
-      line-height: 17px; }
+      font-size: 16px;
+      line-height: 24px;
+      margin: 10px 0; }
 
 .wrapper-bottom {
   display: -ms-flexbox;
@@ -65,7 +67,7 @@ COLORS
     text-decoration: none;
     color: #494949;
     position: relative;
-    height: 280px;
+    height: 250px;
     margin-top: 0 !important;
     border: none !important; }
     @media only screen and (max-width: 860px) {
@@ -75,28 +77,32 @@ COLORS
     .wrapper-bottom .single-link .link-infos {
       display: -ms-flexbox;
       display: flex;
-      margin-bottom: 20px; }
+      margin-bottom: 15px; }
       .wrapper-bottom .single-link .link-infos .link-infos-logo {
         width: 64px;
         height: 64px;
-        margin-right: 20px; }
+        margin-right: 15px; }
         .wrapper-bottom .single-link .link-infos .link-infos-logo img {
           width: 100%; }
       .wrapper-bottom .single-link .link-infos .link-infos-txt {
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
-            flex-direction: column; }
+            flex-direction: column;
+        -ms-flex-pack: center;
+            justify-content: center; }
         .wrapper-bottom .single-link .link-infos .link-infos-txt h3 {
           color: #f56640;
           margin-bottom: 0;
           margin-top: 0; }
         .wrapper-bottom .single-link .link-infos .link-infos-txt p {
-          margin-top: 0; }
+          margin-top: 0;
+          margin-bottom: 0; }
     .wrapper-bottom .single-link .link-content {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 18px;
-      margin-bottom: 20px; }
+      margin-bottom: 20px;
+      font-weight: 400; }
     .wrapper-bottom .single-link .link-btn {
       padding: 10px 20px;
       background: #494949;
@@ -143,6 +149,13 @@ COLORS
   .wrapper-bottom .single-link.imagify .link-infos .link-infos-txt h3 {
     color: #00B3D4; }
 
+.imagify-welcome .button-primary.button-primary {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content; }
+  .imagify-welcome .button-primary.button-primary:hover {
+    background: #338ea6 !important; }
+
 .heartbeat-control-settings {
   width: 860px;
   overflow: hidden;
@@ -160,6 +173,8 @@ COLORS
   margin-top: 9px !important;
   margin-left: 20px !important;
   margin-right: 20px !important; }
+  .nav-tab-wrapper:first-child {
+    padding-left: 0; }
   .nav-tab-wrapper:before {
     content: ""; }
   .nav-tab-wrapper:after {
@@ -173,6 +188,8 @@ COLORS
     padding: 10px 10px;
     margin-left: 0;
     margin-right: 2px; }
+    .nav-tab-wrapper .nav-tab:first-child {
+      padding-left: 0; }
   .nav-tab-wrapper .nav-tab-active {
     color: #f56640;
     border-bottom: 2px solid #f56640; }
@@ -311,16 +328,24 @@ COLORS
         .wrapper-numbers .bottom-part ul li .visuel {
           text-align: center;
           margin-bottom: 20px;
-          height: 60px; }
+          height: 60px;
+          -ms-flex-align: center;
+              align-items: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+          display: -ms-flexbox;
+          display: flex; }
         .wrapper-numbers .bottom-part ul li .visuel-chiffre {
           background-image: url(../img/80.svg);
-          background-repeat: no-repeat; }
+          background-repeat: no-repeat;
+          background-position: center; }
         .wrapper-numbers .bottom-part ul li .txt {
           font-size: 14px;
           text-align: center; }
         .wrapper-numbers .bottom-part ul li:first-child .visuel {
-          font-size: 40px;
-          font-weight: 700; }
+          font-size: 50px;
+          font-weight: 700;
+          line-height: 33px; }
 
 .wrapper-video {
   padding: 0 60px; }
@@ -333,8 +358,6 @@ COLORS
     padding-bottom: 40px; }
     .wrapper-video .wrapper-iframe .wistia_responsive_padding {
       width: 100%; }
-    .wrapper-video .wrapper-iframe .w-bottom-bar.w-css-reset {
-      display: none !important; }
     .wrapper-video .wrapper-iframe .w-big-play-button.w-css-reset-button-important.w-vulcan-v2-button {
       height: 52px !important;
       width: 75px !important;
@@ -423,10 +446,10 @@ CMB PART...
   text-transform: uppercase;
   font-weight: 600;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 0 20px;
   font-size: 15px;
   margin-bottom: 20px;
-  height: 50px;
+  height: 40px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;

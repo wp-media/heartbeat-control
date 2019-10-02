@@ -20,7 +20,7 @@ $helper->set_button_text( array(
 	<div class="link-content">
 		<?php echo sprintf(
 				__( '%1$sReduces image file sizes%2$s  without loosing quality. By compressing your images our speed up your website and boost your SEO.', 'heartbeat-control' ),
-				'<b>', '</b>'
+				'<strong>', '</strong>'
 			);
 		?>
 	</div>

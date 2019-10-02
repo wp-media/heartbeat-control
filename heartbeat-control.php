@@ -3,7 +3,7 @@
  * Plugin Name: Heartbeat Control by WP Rocket
  * Plugin URI: https://wordpress.org/plugins/heartbeat-control/
  * Description: Completely controls the WordPress heartbeat.
- * Version: 1.3.0
+ * Version: 2.0
  * Author: WP Rocket
  * Author URI: https://wp-rocket.me
  * License: GPL2
@@ -28,7 +28,7 @@ class Heartbeat_Control {
 	 *
 	 * @var string
 	 */
-	public $version = '1.3.0';
+	public $version = '2.0';
 
 	/**
 	 * Heartbeat_Control Constructor.
@@ -105,7 +105,7 @@ class Heartbeat_Control {
 		 * you can have only one behavior for each location now, it simpler and less misleading.
 		 * So this code check for rules by location and take one for each based on there order.
 		 */
-		if ( version_compare( $version, '1.3', '<' ) ) {
+		if ( version_compare( $version, '2.0', '<' ) ) {
 			$os = get_option( 'heartbeat_control_settings', array() );
 			$new_mapping = array( array( 
 				'heartbeat_control_behavior' => 'allow',

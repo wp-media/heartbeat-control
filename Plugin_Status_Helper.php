@@ -15,7 +15,6 @@ class Plugin_Status_Helper {
 
 	//TODO:: it's a mess, cleanup please !
 	protected $nonce = 'psh_wpnonce';
-	protected $helper_callback;
 	protected $slug;
 	protected $plugin_file_path;
 	protected $plugin_information;
@@ -32,8 +31,8 @@ class Plugin_Status_Helper {
 		'button_text' => null,
 		'install_url' => null,
 	);
+	protected $helper_callback;
 	protected $template_args;
-	protected $message = '';
 	protected $init = false;
 
 	/**

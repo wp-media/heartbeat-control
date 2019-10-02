@@ -23,6 +23,7 @@
         display: flex;
         width: 50%;
         flex-direction: column;
+        font-weight: 400;
         @media only screen and (max-width: 860px) {
             margin-top: 20px;
             width: 100%;
@@ -90,6 +91,7 @@
             font-size: 15px;
             line-height: 18px;
             margin-bottom: 20px;
+            font-weight: 400;
         }
         .link-btn {
             padding: 10px 20px;
@@ -144,3 +146,5 @@
         }
     }
 }
+
+

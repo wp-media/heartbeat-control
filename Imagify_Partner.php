@@ -497,7 +497,7 @@ class Imagify_Partner {
 		clearstatcache();
 
 		if ( ! self::is_imagify_installed() ) {
-			return new WP_Error( 'process_failed', $this->get_message( 'process_failed' ) );
+			return new \WP_Error( 'process_failed', $this->get_message( 'process_failed' ) );
 		}
 
 		return null;

@@ -6,8 +6,8 @@
 	$helper->set_icon('<img src="'.HBC_PLUGIN_URL.'assets/img/logo-rocket.jpg" alt="">');
 	$helper->set_description(
 		sprintf(
-			__( 'Integrate more than 80% of web performance good practices automatically to %1$sreduce your website\'s loading time.%2$s', 'heartbeat-control' ),
-			'<b>', '</b>'
+			__( 'Integrate more than 80&#x25; of web performance good practices automatically to %1$sreduce your website\'s loading time.%2$s', 'heartbeat-control' ),
+			'<strong>', '</strong>'
 		)
 	);
 ?>

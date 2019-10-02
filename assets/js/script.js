@@ -70,4 +70,19 @@
         switch_tab();
     });
 
+
+    //video subtitles
+    window._wq = window._wq || [];
+    _wq.push({
+      id: "s3jveyzr5h",
+      options: {
+        plugin: {
+          "captions-v1": {
+            onByDefault: true,
+            
+          }
+        }
+      }
+    });
+
 })( jQuery );
