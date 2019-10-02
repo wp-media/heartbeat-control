@@ -87,7 +87,7 @@ $notices->echoNotices( true, true );
 							<div class="txt">
 								<?php
 									printf(
-										__( 'Automatically apply more than %1$s80 &#x25;%2$s of web performance best practices', 'heartbeat-control' ),
+										__( 'Automatically apply more than %1$s80&#x25;%2$s of web performance best practices', 'heartbeat-control' ),
 										'<strong>', '</strong>'
 									);
 								?>
@@ -108,7 +108,7 @@ $notices->echoNotices( true, true );
 						</li>
 						<li>
 							<div class="visuel">
-								<img src="https://wp-media-plugins.whostaging.fr/wp-content/plugins/heartbeat-control/assets/img/noun_SEO_737036.svg" alt="">
+								<img src="<?php echo $asset_image_url.'noun_SEO_737036.svg'; ?>" alt="">
 							</div>
 							<div class="txt">
 								<?php
