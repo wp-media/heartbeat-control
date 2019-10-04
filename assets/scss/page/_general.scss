@@ -22,6 +22,7 @@
         content: "";
     }    
     .nav-tab {
+        cursor: pointer;
         background: #fff;
         border: none;
         color: $grisfonce;
@@ -30,6 +31,9 @@
         padding: 10px 10px;
         margin-left: 0;
         margin-right: 2px;
+        &:hover {
+            color: $orange;
+        }
     }
     .nav-tab-active {
         color: $orange;

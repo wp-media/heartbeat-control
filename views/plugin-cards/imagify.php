@@ -2,9 +2,9 @@
 /**
  * Plugin card template imagify
  */
-$status = $template_args['imagify_partner']::is_imagify_installed()?( $template_args['imagify_partner']::is_imagify_activated()?'actived':'installed' ):'not_installed';
+$status = $template_args['imagify_partner']::is_imagify_installed()?( $template_args['imagify_partner']::is_imagify_activated()?'activated':'installed' ):'not_installed';
 $helper->set_button_text( array(
-	'actived' => esc_html__( 'Already activated', 'heartbeat-control' ),
+	'activated' => esc_html__( 'Already activated', 'heartbeat-control' ),
 	'installed' =>  esc_html__( 'Activate Imagify', 'heartbeat-control' ),
 	'not_installed' => esc_html__( 'Install Imagify', 'heartbeat-control' ),
 ) );
@@ -24,10 +24,10 @@ $helper->set_button_text( array(
 			);
 		?>
 	</div>
-<?php if( 'actived' === $status ): ?>
+<?php if( 'activated' === $status ): ?>
 	<span class="wrapper-infos-active"><span class="dashicons dashicons-yes"></span><span class="info-active"><?php echo $helper->get_button_text( $status ); ?></span></span>
 <?php else: ?>
-	<a class="link-btn button-primary <?php echo esc_attr( $status ); ?>" href="<?php echo esc_url( $template_args['imagify_partner']->get_post_install_url() ); ?>">
+	<a class="link-btn button-primary referer-link <?php echo esc_attr( $status ); ?>" href="<?php echo esc_url( $template_args['imagify_partner']->get_post_install_url() ); ?>">
 		<?php echo $helper->get_button_text( $status ); ?>
 	</a>
 <?php endif; ?>

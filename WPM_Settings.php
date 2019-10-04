@@ -27,11 +27,11 @@ class WPM_Settings {
 		$imagify_partner = new Imagify_Partner( 'heartbeat-control' );
 		$imagify_partner->init();
 		$this->plugins_block = array(
-			'lazy' 		=> new Plugin_Status_Helper( 'rocket-lazy-load' ),
-			'imagify'	=> new Plugin_Status_Helper( 'imagify', array(
+			'rocket-lazy-load' 	=> new Plugin_Card_Helper( array( 'plugin_slug' => 'rocket-lazy-load' ) ),
+			'wp-rocket'			=> new Plugin_Card_Helper( array( 'plugin_slug' => 'wp-rocket' ) ),
+			'imagify'			=> new Plugin_Card_Helper( array( 'plugin_slug' => 'imagify' ), array(
 				'imagify_partner' => $imagify_partner,
 			) ),
-			'wp-rocket'	=> new Plugin_Status_Helper( 'wp-rocket' ),
 		);
 	}
 

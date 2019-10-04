@@ -3,7 +3,7 @@ Contributors: wp_rocket, wp_media
 Tags: heartbeat, admin-ajax, server resources, heartbeat control, heartbeat api, performance, debugging, javascript
 Requires at least: 3.6
 Tested up to: 5.2.3
-Stable tag: 1.3
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,7 +44,7 @@ All options are located within Settings > Heartbeat Control.
 If you commonly leave your WordPress admin up for long periods of time, especially while writing or editing a post, the repeated POST requests can cause high resource usage.  To avoid this, the heartbeat can be modified or even disabled to lower your server resource usage.
 
 == Changelog ==
-= 1.3 =
+= 2.0 =
 * Revamp the settings page.
 
 = 1.2.5 =

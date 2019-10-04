@@ -5,12 +5,19 @@
     background: #fff;
     width: 100%;
     padding-top: 20px;
+    overflow: hidden;
+    @media only screen and (max-width: 860px) {
+        margin-bottom: 60px;
+    }
     .wrapper-left {
         display: flex;
         flex-direction: column;
-        width: 375px;
+        width: 335px;
         justify-content: center;
         padding-left: 40px;
+        @media only screen and (max-width: 860px) {
+            width: 100%;
+        }
         .wrapper-txt {
             p {
                 font-size: 16px!important;
@@ -31,13 +38,15 @@
         width: 485px;
         height: 370px;
         position: relative;
+        @media only screen and (max-width: 860px) {
+            display: none;
+        }
         .wrapper-right-img {
             background-image : url(../img/laptop.png);
             background-repeat: no-repeat;
             height: 100%;
             width: 100%;
             position: absolute;
-            right: -30px;
             top: 0;
         }
     }
@@ -86,6 +95,7 @@
                 .visuel-chiffre {
                     background-image : url(../img/80.svg);
                     background-repeat: no-repeat;
+                    background-position: center;
                 }
                 .txt {
                     font-size: 14px;

@@ -6,7 +6,7 @@
 defined('ABSPATH') || die('Cheatin\' uh?');
 global $wp_version;
 $heading_tag = version_compare( $wp_version, '4.3' ) >= 0 ? 'h1' : 'h2';
-$notices->echoNotices();
+$notices->echoNotices( true, true );
 ?>
 <div class="wrap">
 	<div class="heartbeat-control-settings">
@@ -41,13 +41,13 @@ $notices->echoNotices();
 		</div>
 		<div class="wrapper-nav">
 			<h2 class="nav-tab-wrapper">
-				<span class="nav-tab nav-tab-active" data-tab="general-settings"><?php esc_html_e( 'General settings', 'heartbeat-control' ); ?></span>
-				<span class="nav-tab" data-tab="more-optimization"><?php esc_html_e( 'More optimization', 'heartbeat-control' ); ?></span>
-				<span class="nav-tab" data-tab="about-us" ><?php esc_html_e( 'About us', 'heartbeat-control' ); ?></span>
+				<a href="#tab1" class="nav-tab nav-tab-active"><?php esc_html_e( 'General settings', 'heartbeat-control' ); ?></a>
+				<a href="#tab2" class="nav-tab"><?php esc_html_e( 'More optimization', 'heartbeat-control' ); ?></a>
+				<a href="#tab3" class="nav-tab"><?php esc_html_e( 'About us', 'heartbeat-control' ); ?></a>
 			</h2>		
 		</div>
-		<div id="tab_general-settings" class="tab tab-active"><?php  echo $cmb_form; ?></div>
-		<div id="tab_more-optimization" class="tab">
+		<div id="tab1" class="tab tab-active"><?php  echo $cmb_form; ?></div>
+		<div id="tab2" class="tab">
 			<div class="wrapper-content wrapper-intro">
 				<div class="wrapper-left">
 					<div class="wrapper-img">
@@ -169,7 +169,7 @@ $notices->echoNotices();
 				</div>
 			</div>
 		</div>
-		<div id="tab_about-us" class="tab">
+		<div id="tab3" class="tab">
 			<div class="wrapper-top wrapper-info">
 				<div class="top-img">
 					<img src="<?php echo $asset_image_url.'team.jpg'; ?>" alt="">
@@ -181,7 +181,8 @@ $notices->echoNotices();
 					<p><?php esc_html_e( 'Check out our other plugins: we built them all to give a boost to the performance of your website!', 'heartbeat-control' ); ?></p>
 				</div>
 			</div>
-			<div class="wrapper-bottom wrapper-link">				
+			<div class="wrapper-bottom wrapper-link">
+				<?php $plugins_block['cookie-law-info']->helper(); ?>
 				<?php $plugins_block['wp-rocket']->helper(); ?>
 				<?php $plugins_block['imagify']->helper(); ?>
 				<?php $plugins_block['rocket-lazy-load']->helper(); ?>

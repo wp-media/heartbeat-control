@@ -10,6 +10,11 @@
 			'<strong>', '</strong>'
 		)
 	);
+	$helper->set_button_text( array(
+		'activated' => esc_html__( 'Already activated', 'heartbeat-control' ),
+		'installed' =>  esc_html__( 'Activate WP Rocket', 'heartbeat-control' ),
+		'not_installed' => esc_html__( 'get WP Rocket', 'heartbeat-control' ),
+	) );
 ?>
 <div class="card single-link wp-rocket">
 	<div class="link-infos">
@@ -20,9 +25,20 @@
 		</span>
 	</div>
 	<div class="link-content"><?php echo $helper->get_description(); ?></div>
-	<?php if( 'actived' === $helper->get_status() ): ?>
-		<span class="wrapper-infos-active"><span class="dashicons dashicons-yes"></span><span class="info-active"><?php echo $helper->get_button_text(); ?></span></span>
+	<?php if( 'activated' === $helper->get_status() ): ?>
+		<span class="wrapper-infos-active">
+			<span class="dashicons dashicons-yes"></span>
+			<span class="info-active">
+				<?php echo $helper->get_button_text(); ?>
+			</span>
+		</span>
+	<?php elseif( 'installed' === $helper->get_status() ): ?>
+		<a class="link-btn button-primary referer-link <?php echo esc_attr( $helper->get_status() ); ?>" href="<?php echo $helper->get_install_url(); ?>">
+			<?php echo $helper->get_button_text(); ?>
+		</a>
 	<?php else: ?>
-		<a class="link-btn button-primary <?php echo esc_attr( $helper->get_status() ); ?>" href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat"><?php _e( 'get WP Rocket', 'heartbeat-control' ); ?></a>
+		<a class="link-btn button-primary <?php echo esc_attr( $helper->get_status() ); ?>" href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat">
+			<?php echo $helper->get_button_text(); ?>
+		</a>
 	<?php endif; ?>
 </div>

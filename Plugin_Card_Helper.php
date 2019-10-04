@@ -11,18 +11,18 @@ namespace Heartbeat_Control;
 
 defined('ABSPATH') || die('Cheatin\' uh?');
 
-class Plugin_Status_Helper {
+class Plugin_Card_Helper {
 
-	//TODO:: it's a mess, cleanup please !
-	protected $nonce = 'psh_wpnonce';
-	protected $slug;
+	protected $nonce = 'plugin_card_helper_wpnonce';
+	protected $plugin_slug;
 	protected $plugin_file_path;
 	protected $plugin_information;
-	protected $wp_compatibility;
-	protected $php_compatibility;
 	protected $activated;
 	protected $installed;
+	protected $wp_compatibility;
+	protected $php_compatibility;
 	protected $can_install;
+	protected $args;
 	protected $params = array(
 		'title' => null,
 		'description' => null,
@@ -43,13 +43,21 @@ class Plugin_Status_Helper {
 	 * @param $template_args mixed, what ever param you want to pass for the template.
 	 * @return void
 	 */
-	public function __construct( $plugin_slug, $template_args = null ){
-		$this->slug = preg_replace( '@[^a-z0-9_-]@', '', strtolower( (string) $plugin_slug ) );
+	public function __construct( $args = null, $template_args = null ){
+		$this->args = wp_parse_args( $args, array(
+			'plugin_slug' => null,
+			'force_activation' => true,
+		) );
+		if( is_null( $this->args['plugin_slug'] ) ){ return; }
+		$this->plugin_slug = preg_replace( '@[^a-z0-9_-]@', '', strtolower( (string)$this->args['plugin_slug'] ) );
 		$this->template_args = $template_args;
 
-		//TODO::do not register if not needed
-		add_action( 'admin_post_install_plugin_'.$this->slug, array( $this, 'install_callback' ) );
-		add_action( 'admin_post_activate_plugin_'.$this->slug, array( $this, 'activate_callback' ) );
+		if( !$this->is_installed() ){
+			add_action( 'admin_post_install_plugin_'.$this->plugin_slug, array( $this, 'install_callback' ) );
+		}
+		if( !$this->is_activated() ) {
+			add_action( 'admin_post_activate_plugin_' . $this->plugin_slug, array($this, 'activate_callback') );
+		}
 	}
 
 	/**
@@ -63,31 +71,26 @@ class Plugin_Status_Helper {
 		require_once ABSPATH.'wp-admin/includes/plugin-install.php';
 		require_once ABSPATH.'wp-admin/includes/plugin.php';
 
-		$install_plugins = get_plugins();
-		$this->plugin_file_path = $this->slug.DIRECTORY_SEPARATOR.$this->slug.'.php';
-		//TODO::this is not strict enough, wp-rocket find lazy load for example
+		$this->is_installed();
+		$this->is_activated();
+
 		$this->plugin_information = plugins_api( 'plugin_information', array(
-			'slug'   => $this->slug,
-			'fields' => array(
+			'slug'		=> $this->plugin_slug,
+			'fields' 	=> array(
 				'short_description' => true,
-				'icons' => true,
-				'sections' => false,
-				'rating' => false,
-				'ratings' => false,
-				'downloaded' => false,
-				'last_updated' => false,
-				'added' => false,
-				'tags' => false,
-				'homepage' => false,
-				'donate_link' => false,
+				'icons' 			=> true,
+				'sections' 			=> false,
+				'rating' 			=> false,
+				'ratings' 			=> false,
+				'downloaded' 		=> false,
+				'last_updated' 		=> false,
+				'added' 			=> false,
+				'tags' 				=> false,
+				'homepage' 			=> false,
+				'donate_link' 		=> false,
 			)
 		) );
-
-		//TODO::take network into consideration
-		$this->activated = is_plugin_active( $this->plugin_file_path );
-		$this->installed = isset( $install_plugins[$this->plugin_file_path] );
-
-		//TODO::do something with this.
+		
 		if( is_wp_error( $this->plugin_information ) ){
 			$this->can_install = false;
 		}else{
@@ -139,10 +142,10 @@ class Plugin_Status_Helper {
 
 	/**
 	 * get the plugin activation ans installation status
-	 * @return string, the plugin status as a one of this string [ 'actived', 'installed', 'not_installed' ]
+	 * @return string, the plugin status as a one of this string [ 'activated', 'installed', 'not_installed' ]
 	 */
 	public function get_status(){
-		return $this->is_installed()?( $this->is_activated()?'actived':'installed' ):'not_installed';
+		return $this->is_installed()?( $this->is_activated()?'activated':'installed' ):'not_installed';
 	}
 
 	/**
@@ -153,7 +156,7 @@ class Plugin_Status_Helper {
 	public function get_status_text( $status = null ){
 		$s = ( is_string( $status ) && !empty( $status ) )?$status:$this->get_status();
 		$st = array(
-			'actived' => __( 'actived', 'heartbeat-control' ),
+			'activated' => __( 'activated', 'heartbeat-control' ),
 			'installed' =>  __( 'installed', 'heartbeat-control' ),
 			'not_installed' => __( 'not installed', 'heartbeat-control' ),
 		);
@@ -171,7 +174,7 @@ class Plugin_Status_Helper {
 	public function get_button_text( $status = null ){
 		$s = ( is_string( $status ) && !empty( $status ) )?$status:$this->get_status();
 		$bt = array(
-			'actived' => __( 'Already activated', 'heartbeat-control' ),
+			'activated' => __( 'Already activated', 'heartbeat-control' ),
 			'installed' =>  __( 'Activate plugin', 'heartbeat-control' ),
 			'not_installed' => __( 'Install plugin', 'heartbeat-control' ),
 		);
@@ -189,14 +192,14 @@ class Plugin_Status_Helper {
 	public function get_install_url( $status = null ){
 		$s = ( is_string( $status ) && !empty( $status ) )?$status:$this->get_status();
 		$bl = array(
-			'actived' => "#",
+			'activated' => "#",
 			'installed' => add_query_arg( array(
-				'action' => 'activate_plugin_'.$this->slug,
+				'action' => 'activate_plugin_'.$this->plugin_slug,
 				'_wpnonce' => wp_create_nonce( $this->nonce ),
 				'_wp_http_referer' => rawurlencode( $this->get_current_url() ),
 			), admin_url( 'admin-post.php' )),
 			'not_installed' => add_query_arg( array(
-				'action' => 'install_plugin_'.$this->slug,
+				'action' => 'install_plugin_'.$this->plugin_slug,
 				'_wpnonce' => wp_create_nonce( $this->nonce ),
 				'_wp_http_referer' => rawurlencode( $this->get_current_url() ),
 			), admin_url( 'admin-post.php' ) ),
@@ -212,6 +215,12 @@ class Plugin_Status_Helper {
 	 * @return boolean, true if plugin is activated false if not
 	 */
 	public function is_activated(){
+		if( is_null( $this->activated ) ) {
+			require_once ABSPATH.'wp-admin/includes/plugin.php';
+			if( is_null( $this->installed ) ) { $this->is_installed(); }
+			$this->activated = is_plugin_active( $this->plugin_file_path );
+		}
+		
 		return $this->activated;
 	}
 
@@ -220,6 +229,19 @@ class Plugin_Status_Helper {
 	 * @return boolean, true if plugin is installed false if not
 	 */
 	public function is_installed(){
+		if( is_null( $this->installed ) ) {
+			require_once ABSPATH.'wp-admin/includes/plugin.php';
+			$installed_plugins = get_plugins();
+			$m = array();
+			foreach ( $installed_plugins as $k => $p ) {
+				preg_match('/([a-zA-Z0-9-_\s]+)\/([a-zA-Z0-9-_]+)\.php/', $k, $m );
+				if( isset( $m[2] ) &&  $this->plugin_slug === $m[2] ){
+					$this->plugin_file_path = $k;
+					$this->installed = true;
+					break;
+				}
+			}
+		}
 		return $this->installed;
 	}
 
@@ -261,7 +283,7 @@ class Plugin_Status_Helper {
 
 	/**
 	 * set status text override
-	 * @param $array array, a array of strings key must be valid status [ 'actived', 'installed', 'not_installed' ]
+	 * @param $array array, a array of strings key must be valid status [ 'activated', 'installed', 'not_installed' ]
 	 * @return void
 	 */
 	public function set_status_text( $array ){
@@ -272,7 +294,7 @@ class Plugin_Status_Helper {
 
 	/**
 	 * set button text override
-	 * @param $array array, a array of strings key must be valid status [ 'actived', 'installed', 'not_installed' ]
+	 * @param $array array, a array of strings key must be valid status [ 'activated', 'installed', 'not_installed' ]
 	 * @return void
 	 */
 	public function set_button_text( $array ){
@@ -299,16 +321,29 @@ class Plugin_Status_Helper {
 	 * @return void
 	 */
 	public function install_callback(){
-		if ( ! check_ajax_referer( $this->nonce, false ) ) { return false; }
+		if ( !check_admin_referer( $this->nonce ) ) { return false; }
 		if ( !current_user_can( is_multisite() ? 'manage_network_plugins' : 'install_plugins' ) ){ return false; }
-		$result = $this->install();
+		
 		$notices = Notices::get_instance();
+		$result = $this->install();
+		
 		if ( is_wp_error( $result ) ) {
 			$notices->append( 'error', $result->get_error_code().' : '.$result->get_error_message() );
+			wp_safe_redirect( wp_get_referer() );
 		}
-		$this->installed = true;
-		$notices->append( 'success', __( 'This plugin has been successfully installed.', 'heartbeat-control' ) );
-		wp_safe_redirect( wp_get_referer().'#tab3' );
+		
+		if( $this->args['force_activation'] ){
+			$result = $this->activate();
+			if ( is_wp_error( $result ) ) {
+				$notices->append( 'error', $result->get_error_code().' : '.$result->get_error_message() );
+				wp_safe_redirect( wp_get_referer() );
+			}
+			$notices->append( 'success', __( 'This plugin has been successfully installed and activated.', 'heartbeat-control' ) );
+		}else{
+			$notices->append( 'success', __( 'This plugin has been successfully installed.', 'heartbeat-control' ) );
+		}
+		
+		wp_safe_redirect( wp_get_referer() );
 	}
 
 	/**
@@ -316,16 +351,18 @@ class Plugin_Status_Helper {
 	 * @return void
 	 */
 	public function activate_callback(){
-		if ( !check_ajax_referer( $this->nonce, false ) ) { return false; }
+		if ( !check_admin_referer( $this->nonce ) ) { return false; }
 		if ( !current_user_can( is_multisite()?'manage_network_plugins':'install_plugins' ) ){ return false; }
-		$result = $this->activate();
+		
 		$notices = Notices::get_instance();
+		$result = $this->activate();
+		
 		if ( is_wp_error( $result ) ) {
 			$notices->append( 'error', $result->get_error_code().' : '.$result->get_error_message() );
+			wp_safe_redirect( wp_get_referer() );
 		}
-		$this->activated = true;
 		$notices->append( 'success', __( 'This plugin has been successfully activated.', 'heartbeat-control' ) );
-		wp_safe_redirect( wp_get_referer().'#tab3' );
+		wp_safe_redirect( wp_get_referer() );
 	}
 
 	/**
@@ -339,16 +376,12 @@ class Plugin_Status_Helper {
 
 		ob_start();
 		@set_time_limit( 0 );
-
 		$upgrader = new \Plugin_Upgrader( new \Automatic_Upgrader_Skin() );
 		$result = $upgrader->install( $this->plugin_information->download_link );
 		ob_end_clean();
-		
-		if ( is_wp_error( $result ) ) {
-			return $result;
-		}
+		if ( is_wp_error( $result ) ) { return $result; }
 		clearstatcache();
-		
+		$this->plugin_file_path = $upgrader->plugin_info();
 		return null;
 	}
 
@@ -360,7 +393,10 @@ class Plugin_Status_Helper {
 		$this->init();
 		if( $this->is_activated() ){ return null; }
 		require_once ABSPATH.'wp-admin/includes/plugin-install.php';
-		return activate_plugin( $this->plugin_file_path, false, is_multisite() );
+		$result = activate_plugin( $this->plugin_file_path, false, is_multisite() );
+		if ( is_wp_error( $result ) ) { return $result; }
+		$this->activate = true;
+		return null;
 	}
 
 	//-- Helper
@@ -393,9 +429,7 @@ class Plugin_Status_Helper {
 		$template_args = $this->template_args;
 		$helper = $this;
 		$file_paths = array(
-			//TODO::check in active theme,
-			//TODO::replace constant HBC_PLUGIN_PATH
-			HBC_PLUGIN_PATH.'views/plugin-cards/'.$this->slug.'.php',
+			HBC_PLUGIN_PATH.'views/plugin-cards/'.$this->plugin_slug.'.php',
 			HBC_PLUGIN_PATH.'views/plugin-cards/default.php',
 		);
 		foreach ( $file_paths as $fp ){

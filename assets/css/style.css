@@ -3,7 +3,7 @@
 COLORS
 
 */
-#tab3 {
+#tab_about-us {
   background: #fff; }
 
 .wrapper-top {
@@ -41,9 +41,8 @@ COLORS
       font-weight: 700;
       margin-top: 0; }
     .wrapper-top .top-txt p {
-      font-size: 16px;
-      line-height: 24px;
-      margin: 10px 0; }
+      font-size: 15px;
+      line-height: 17px; }
 
 .wrapper-bottom {
   display: -ms-flexbox;
@@ -77,20 +76,20 @@ COLORS
     .wrapper-bottom .single-link .link-infos {
       display: -ms-flexbox;
       display: flex;
-      margin-bottom: 15px; }
+      margin-bottom: 20px;
+      -ms-flex-align: center;
+          align-items: center; }
       .wrapper-bottom .single-link .link-infos .link-infos-logo {
         width: 64px;
         height: 64px;
-        margin-right: 15px; }
+        margin-right: 10px; }
         .wrapper-bottom .single-link .link-infos .link-infos-logo img {
           width: 100%; }
       .wrapper-bottom .single-link .link-infos .link-infos-txt {
         display: -ms-flexbox;
         display: flex;
         -ms-flex-direction: column;
-            flex-direction: column;
-        -ms-flex-pack: center;
-            justify-content: center; }
+            flex-direction: column; }
         .wrapper-bottom .single-link .link-infos .link-infos-txt h3 {
           color: #f56640;
           margin-bottom: 0;
@@ -149,13 +148,6 @@ COLORS
   .wrapper-bottom .single-link.imagify .link-infos .link-infos-txt h3 {
     color: #00B3D4; }
 
-.imagify-welcome .button-primary.button-primary {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content; }
-  .imagify-welcome .button-primary.button-primary:hover {
-    background: #338ea6 !important; }
-
 .heartbeat-control-settings {
   width: 860px;
   overflow: hidden;
@@ -173,13 +165,12 @@ COLORS
   margin-top: 9px !important;
   margin-left: 20px !important;
   margin-right: 20px !important; }
-  .nav-tab-wrapper:first-child {
-    padding-left: 0; }
   .nav-tab-wrapper:before {
     content: ""; }
   .nav-tab-wrapper:after {
     content: ""; }
   .nav-tab-wrapper .nav-tab {
+    cursor: pointer;
     background: #fff;
     border: none;
     color: #494949;
@@ -188,8 +179,8 @@ COLORS
     padding: 10px 10px;
     margin-left: 0;
     margin-right: 2px; }
-    .nav-tab-wrapper .nav-tab:first-child {
-      padding-left: 0; }
+    .nav-tab-wrapper .nav-tab:hover {
+      color: #f56640; }
   .nav-tab-wrapper .nav-tab-active {
     color: #f56640;
     border-bottom: 2px solid #f56640; }
@@ -250,16 +241,23 @@ COLORS
   margin-top: -26px;
   background: #fff;
   width: 100%;
-  padding-top: 20px; }
+  padding-top: 20px;
+  overflow: hidden; }
+  @media only screen and (max-width: 860px) {
+    .wrapper-intro {
+      margin-bottom: 60px; } }
   .wrapper-intro .wrapper-left {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
-    width: 375px;
+    width: 335px;
     -ms-flex-pack: center;
         justify-content: center;
     padding-left: 40px; }
+    @media only screen and (max-width: 860px) {
+      .wrapper-intro .wrapper-left {
+        width: 100%; } }
     .wrapper-intro .wrapper-left .wrapper-txt p {
       font-size: 16px !important; }
     .wrapper-intro .wrapper-left .btn {
@@ -276,13 +274,15 @@ COLORS
     width: 485px;
     height: 370px;
     position: relative; }
+    @media only screen and (max-width: 860px) {
+      .wrapper-intro .wrapper-right {
+        display: none; } }
     .wrapper-intro .wrapper-right .wrapper-right-img {
       background-image: url(../img/laptop.png);
       background-repeat: no-repeat;
       height: 100%;
       width: 100%;
       position: absolute;
-      right: -30px;
       top: 0; }
 
 .wrapper-numbers {
@@ -328,13 +328,7 @@ COLORS
         .wrapper-numbers .bottom-part ul li .visuel {
           text-align: center;
           margin-bottom: 20px;
-          height: 60px;
-          -ms-flex-align: center;
-              align-items: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-          display: -ms-flexbox;
-          display: flex; }
+          height: 60px; }
         .wrapper-numbers .bottom-part ul li .visuel-chiffre {
           background-image: url(../img/80.svg);
           background-repeat: no-repeat;
@@ -343,9 +337,8 @@ COLORS
           font-size: 14px;
           text-align: center; }
         .wrapper-numbers .bottom-part ul li:first-child .visuel {
-          font-size: 50px;
-          font-weight: 700;
-          line-height: 33px; }
+          font-size: 40px;
+          font-weight: 700; }
 
 .wrapper-video {
   padding: 0 60px; }
