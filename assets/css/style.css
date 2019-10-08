@@ -42,7 +42,8 @@ COLORS
       margin-top: 0; }
     .wrapper-top .top-txt p {
       font-size: 15px;
-      line-height: 17px; }
+      line-height: 25px;
+      margin: 5px 0; }
 
 .wrapper-bottom {
   display: -ms-flexbox;
