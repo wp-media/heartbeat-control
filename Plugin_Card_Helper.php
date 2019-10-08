@@ -1,9 +1,7 @@
 <?php
 /**
- * Contains the Heartbeat_Control\Plugin_Status_Helper class.
- *
+ * Contains the Heartbeat_Control\Plugin_Card_Helper class.
  * This check plugin info from plugins_api and help to build a functional installation plugin card
- *
  * @package Heartbeat_Control
  */
 
@@ -39,7 +37,7 @@ class Plugin_Card_Helper {
 	 * constructor method, it's construct things.
 	 * Set some basic parameters and register controller soon as possible.
 	 * Else in some context install and activation route will not be register.
-	 * @param $plugin_slug string, required plugin slug name.
+	 * @param $args array, required index plugin_slug. use this array to pass param ( force_activation active and install )
 	 * @param $template_args mixed, what ever param you want to pass for the template.
 	 * @return void
 	 */
@@ -382,6 +380,7 @@ class Plugin_Card_Helper {
 		if ( is_wp_error( $result ) ) { return $result; }
 		clearstatcache();
 		$this->plugin_file_path = $upgrader->plugin_info();
+		$this->installed = true;
 		return null;
 	}
 
@@ -395,7 +394,7 @@ class Plugin_Card_Helper {
 		require_once ABSPATH.'wp-admin/includes/plugin-install.php';
 		$result = activate_plugin( $this->plugin_file_path, false, is_multisite() );
 		if ( is_wp_error( $result ) ) { return $result; }
-		$this->activate = true;
+		$this->activated = true;
 		return null;
 	}
 
