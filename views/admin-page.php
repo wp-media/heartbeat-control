@@ -42,11 +42,14 @@ $notices->echoNotices();
 		<div class="wrapper-nav">
 			<h2 class="nav-tab-wrapper">
 				<span class="nav-tab nav-tab-active" data-tab="general-settings"><?php esc_html_e( 'General settings', 'heartbeat-control' ); ?></span>
+<?php if( !$plugins_block['wp-rocket']->is_activated() ): ?>
 				<span class="nav-tab" data-tab="more-optimization"><?php esc_html_e( 'More optimization', 'heartbeat-control' ); ?></span>
+<?php endif; ?>
 				<span class="nav-tab" data-tab="about-us" ><?php esc_html_e( 'About us', 'heartbeat-control' ); ?></span>
 			</h2>		
 		</div>
 		<div id="tab_general-settings" class="tab tab-active"><?php  echo $cmb_form; ?></div>
+<?php if( !$plugins_block['wp-rocket']->is_activated() ): ?>
 		<div id="tab_more-optimization" class="tab">
 			<div class="wrapper-content wrapper-intro">
 				<div class="wrapper-left">
@@ -62,9 +65,15 @@ $notices->echoNotices();
 								);
 							?>
 					</div>
+<?php 	if( 'installed' === $plugins_block['wp-rocket']->get_status() ): ?>
+					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo $plugins_block['wp-rocket']->get_install_url(); ?>">
+						<?php esc_html_e( 'Activate wp rocket', 'heartbeat-control' ); ?>
+					</a>
+<?php 	else: ?>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank">
 						<?php esc_html_e( 'Get wp rocket', 'heartbeat-control' ); ?>
 					</a>
+<?php 	endif; ?>
 					<div class="wrapper-img"></div>
 				</div>
 				<div class="wrapper-right">
@@ -165,10 +174,19 @@ $notices->echoNotices();
 					?>
 				</div>
 				<div class="contact-btn">
-					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class=" btn" target="_blank"><?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?></a>
+<?php 	if( 'installed' === $plugins_block['wp-rocket']->get_status() ): ?>
+					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo $plugins_block['wp-rocket']->get_install_url(); ?>">
+						<?php esc_html_e( 'Activate wp rocket', 'heartbeat-control' ); ?>
+					</a>
+<?php 	else: ?>
+					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank">
+						<?php esc_html_e( 'Get wp rocket', 'heartbeat-control' ); ?>
+					</a>
+<?php 	endif; ?>
 				</div>
 			</div>
 		</div>
+<?php endif; ?>
 		<div id="tab_about-us" class="tab">
 			<div class="wrapper-top wrapper-info">
 				<div class="top-img">
