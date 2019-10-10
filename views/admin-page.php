@@ -46,7 +46,7 @@ $notices->echoNotices();
 				<span class="nav-tab" data-tab="more-optimization"><?php esc_html_e( 'More optimization', 'heartbeat-control' ); ?></span>
 <?php endif; ?>
 				<span class="nav-tab" data-tab="about-us" ><?php esc_html_e( 'About us', 'heartbeat-control' ); ?></span>
-			</h2>		
+			</h2>
 		</div>
 		<div id="tab_general-settings" class="tab tab-active"><?php  echo $cmb_form; ?></div>
 <?php if( !$plugins_block['wp-rocket']->is_activated() ): ?>
@@ -67,7 +67,7 @@ $notices->echoNotices();
 					</div>
 <?php 	if( 'installed' === $plugins_block['wp-rocket']->get_status() ): ?>
 					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo $plugins_block['wp-rocket']->get_install_url(); ?>">
-						<?php esc_html_e( 'Activate wp rocket', 'heartbeat-control' ); ?>
+						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?>
 					</a>
 <?php 	else: ?>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank">
@@ -141,7 +141,7 @@ $notices->echoNotices();
 								?>
 							</div>
 						</li>
-						
+
 					</ul>
 				</div>
 			</div>
@@ -176,7 +176,7 @@ $notices->echoNotices();
 				<div class="contact-btn">
 <?php 	if( 'installed' === $plugins_block['wp-rocket']->get_status() ): ?>
 					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo $plugins_block['wp-rocket']->get_install_url(); ?>">
-						<?php esc_html_e( 'Activate wp rocket', 'heartbeat-control' ); ?>
+						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?>
 					</a>
 <?php 	else: ?>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank">
@@ -199,7 +199,7 @@ $notices->echoNotices();
 					<p><?php esc_html_e( 'Check out our other plugins: we built them all to give a boost to the performance of your website!', 'heartbeat-control' ); ?></p>
 				</div>
 			</div>
-			<div class="wrapper-bottom wrapper-link">				
+			<div class="wrapper-bottom wrapper-link">
 				<?php $plugins_block['wp-rocket']->helper(); ?>
 				<?php $plugins_block['imagify']->helper(); ?>
 				<?php $plugins_block['rocket-lazy-load']->helper(); ?>
