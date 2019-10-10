@@ -49,9 +49,10 @@ class Heartbeat {
 			return;
 		}
 		$settings = get_option( 'heartbeat_control_settings' );
-		if ( false === $settings ) { return; }
+		if ( false === $settings ) {
+			return; }
 		$this->settings = $settings;
-		
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'maybe_disable' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_disable' ), 99 );
 		add_filter( 'heartbeat_settings', array( $this, 'maybe_modify' ), 99, 1 );
@@ -66,12 +67,15 @@ class Heartbeat {
 	 */
 	public function check_location( $location ) {
 		$location_test = array(
-			'rules_dash' => function(){ return is_admin(); },
-			'rules_front' => function(){ return !is_admin(); },
-			'rules_editor' => function(){ return ( '/wp-admin/post.php' === $this->current_screen['path'] ); }
+			'rules_dash'   => function() {
+				return is_admin(); },
+			'rules_front'  => function() {
+				return ! is_admin(); },
+			'rules_editor' => function() {
+				return ( '/wp-admin/post.php' === $this->current_screen['path'] ); },
 		);
-		if( isset( $location_test[$location] ) ){
-			return $location_test[$location]();
+		if ( isset( $location_test[ $location ] ) ) {
+			return $location_test[ $location ]();
 		}
 		return false;
 	}

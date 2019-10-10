@@ -16,7 +16,7 @@ namespace Heartbeat_Control;
 
 define( 'HBC_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'HBC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-$loader = require dirname(__FILE__) . "/vendor/autoload.php";
+$loader = require dirname( __FILE__ ) . '/vendor/autoload.php';
 
 /**
  * The primary Heartbeat Control class.
@@ -38,18 +38,18 @@ class Heartbeat_Control {
 		$this->maybe_upgrade();
 		new Heartbeat();
 	}
-	
+
 	/**
 	 * Register additional plugin dependencies.
 	 *
 	 * @return void
 	 */
 	public function register_dependencies() {
-		//Initialize CMB2 for the new settings page.
+		// Initialize CMB2 for the new settings page.
 		require_once dirname( __FILE__ ) . '/vendor/webdevstudios/cmb2/init.php';
 		add_action( 'cmb2_admin_init', array( new WPM_Settings(), 'init_metaboxes' ) );
 	}
-	
+
 	/**
 	 * Check the version and update as needed.
 	 *
@@ -99,58 +99,67 @@ class Heartbeat_Control {
 			$original_settings = get_option( 'heartbeat_control_settings' );
 			update_option( 'heartbeat_control_settings', array( 'rules' => array( $original_settings ) ) );
 		}
-		
+
 		/*
 		 * in version 1.3.0 we remove the ordering and overwriting of rules,
 		 * you can have only one behavior for each location now, it simpler and less misleading.
 		 * So this code check for rules by location and take one for each based on there order.
 		 */
 		if ( version_compare( $version, '2.0', '<' ) ) {
-			$os = get_option( 'heartbeat_control_settings', array() );
-			$new_mapping = array( array( 
-				'heartbeat_control_behavior' => 'allow',
-				'heartbeat_control_frequency' => 0
-			) );
-			$ns = array(
-				'rules_dash' => $new_mapping,
-				'rules_front' => $new_mapping,
+			$os          = get_option( 'heartbeat_control_settings', array() );
+			$new_mapping = array(
+				array(
+					'heartbeat_control_behavior'  => 'allow',
+					'heartbeat_control_frequency' => 0,
+				),
+			);
+			$ns          = array(
+				'rules_dash'   => $new_mapping,
+				'rules_front'  => $new_mapping,
 				'rules_editor' => $new_mapping,
 			);
-			
-			if( !isset( $os['rules'] ) || empty( $os['rules'] ) ){ 
+
+			if ( ! isset( $os['rules'] ) || empty( $os['rules'] ) ) {
 				update_option( 'heartbeat_control_settings', $ns );
-			}else{
-				$v = array( false,false,false );
-				foreach( $os['rules'] as $rules ){
-					foreach( $rules['heartbeat_control_location'] as $location ){
-						if( 'frontend' === $location && false === $v[0] ){
-							$ns['rules_front'] = array( array(
-								'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
-								'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
-							) ); 
-							$v[0] = true;
+			} else {
+				$v = array( false, false, false );
+				foreach ( $os['rules'] as $rules ) {
+					foreach ( $rules['heartbeat_control_location'] as $location ) {
+						if ( 'frontend' === $location && false === $v[0] ) {
+							$ns['rules_front'] = array(
+								array(
+									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
+									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+								),
+							);
+							$v[0]              = true;
 						}
-						if( 'admin' === $location && false === $v[1] ){
-							$ns['rules_dash'] = array( array(
-								'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
-								'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
-							) );
-							$v[1] = true;
+						if ( 'admin' === $location && false === $v[1] ) {
+							$ns['rules_dash'] = array(
+								array(
+									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
+									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+								),
+							);
+							$v[1]             = true;
 						}
-						if( '/wp-admin/post.php' === $location && false === $v[2] ){
-							$ns['rules_editor'] = array( array(
-								'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
-								'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
-							) );
-							$v[2] = true;
+						if ( '/wp-admin/post.php' === $location && false === $v[2] ) {
+							$ns['rules_editor'] = array(
+								array(
+									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
+									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+								),
+							);
+							$v[2]               = true;
 						}
-						if( !in_array( false, $v ) ){ break 2; }
+						if ( ! in_array( false, $v ) ) {
+							break 2; }
 					}
 				}
 			}
 			update_option( 'heartbeat_control_settings', $ns );
 		}
-		
+
 		update_option( 'heartbeat_control_version', $this->version );
 		$notices = Notices::get_instance();
 		$notices->append( 'success', __( 'Heartbeat Control data have been migrated successfully !', 'heartbeat-control' ) );

@@ -3,7 +3,7 @@
  * Admin Page view
  */
 
-defined('ABSPATH') || die('Cheatin\' uh?');
+defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
 global $wp_version;
 $heading_tag = version_compare( $wp_version, '4.3' ) >= 0 ? 'h1' : 'h2';
 $notices->echoNotices( true, true );
@@ -14,18 +14,18 @@ $notices->echoNotices( true, true );
 		<div class="header">
 			<div class="header-left">
 				<div class="visuel">
-					<img src="<?php echo $asset_image_url.'logo-heartbeat.svg' ?>" alt="">
+					<img src="<?php echo $asset_image_url . 'logo-heartbeat.svg'; ?>" alt="">
 				</div>
 			</div>
 			<div class="header-right">
 				<div class="txt-1"><?php esc_html_e( 'Do you like this plugin ?', 'heartbeat-control' ); ?></div>
 				<div class="txt-2">
 					<?php
-						printf(
-							__( 'Please, take a few seconds to %1$srate it on WordPress.org%2$s', 'heartbeat-control' ),
-							'<a href="https://wordpress.org/support/plugin/heartbeat-control/reviews/?filter=5"><strong>',
-							'</strong></a>'
-						);
+					printf(
+						__( 'Please, take a few seconds to %1$srate it on WordPress.org%2$s', 'heartbeat-control' ),
+						'<a href="https://wordpress.org/support/plugin/heartbeat-control/reviews/?filter=5"><strong>',
+						'</strong></a>'
+					);
 					?>
 				</div>
 				<div class="txt-3">
@@ -44,22 +44,24 @@ $notices->echoNotices( true, true );
 				<a href="#tab1" class="nav-tab nav-tab-active"><?php esc_html_e( 'General settings', 'heartbeat-control' ); ?></a>
 				<a href="#tab2" class="nav-tab"><?php esc_html_e( 'More optimization', 'heartbeat-control' ); ?></a>
 				<a href="#tab3" class="nav-tab"><?php esc_html_e( 'About us', 'heartbeat-control' ); ?></a>
-			</h2>		
+			</h2>
 		</div>
-		<div id="tab1" class="tab tab-active"><?php  echo $cmb_form; ?></div>
+		<div id="tab1" class="tab tab-active"><?php echo $cmb_form; ?></div>
 		<div id="tab2" class="tab">
 			<div class="wrapper-content wrapper-intro">
 				<div class="wrapper-left">
 					<div class="wrapper-img">
-						<img src="<?php echo $asset_image_url.'logo-wprocket.svg'; ?>" alt="">
+						<img src="<?php echo $asset_image_url . 'logo-wprocket.svg'; ?>" alt="">
 					</div>
 					<div class="wrapper-txt">
 						<p>
 							<?php
-								printf(
-									__( 'Looking for more optimization? %1$sThen you should use %2$sWP Rocket%3$s, and your site will be cached and optimized without you lifting a finger!', 'heartbeat-control' ),
-									'<br>', '<strong>', '</strong>'
-								);
+							printf(
+								__( 'Looking for more optimization? %1$sThen you should use %2$sWP Rocket%3$s, and your site will be cached and optimized without you lifting a finger!', 'heartbeat-control' ),
+								'<br>',
+								'<strong>',
+								'</strong>'
+							);
 							?>
 					</div>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank">
@@ -74,10 +76,11 @@ $notices->echoNotices( true, true );
 			<div class="wrapper-content wrapper-numbers">
 				<div class="top-part">
 					<?php
-						printf(
-							__( 'Recognized as the %1$smost powerful caching plugin%2$s by WordPress experts', 'heartbeat-control' ),
-							'<strong>', '</strong>'
-						);
+					printf(
+						__( 'Recognized as the %1$smost powerful caching plugin%2$s by WordPress experts', 'heartbeat-control' ),
+						'<strong>',
+						'</strong>'
+					);
 					?>
 				</div>
 				<div class="bottom-part">
@@ -88,51 +91,55 @@ $notices->echoNotices( true, true );
 								<?php
 									printf(
 										__( 'Automatically apply more than %1$s80&#x25;%2$s of web performance best practices', 'heartbeat-control' ),
-										'<strong>', '</strong>'
+										'<strong>',
+										'</strong>'
 									);
+									?>
+							</div>
+						</li>
+						<li>
+							<div class="visuel">
+								<img src="<?php echo $asset_image_url . 'noun_performance_1221123.svg'; ?>" alt="">
+							</div>
+							<div class="txt">
+								<?php
+								printf(
+									__( 'Help improve your %1$sGoogle PageSpeed%2$s score', 'heartbeat-control' ),
+									'<strong>',
+									'</strong>'
+								);
 								?>
 							</div>
 						</li>
 						<li>
 							<div class="visuel">
-								<img src="<?php echo $asset_image_url.'noun_performance_1221123.svg'; ?>" alt="">
+								<img src="<?php echo $asset_image_url . 'noun_SEO_737036.svg'; ?>" alt="">
 							</div>
 							<div class="txt">
 								<?php
-									printf(
-										__( 'Help improve your %1$sGoogle PageSpeed%2$s score', 'heartbeat-control' ),
-										'<strong>', '</strong>'
-									);
+								printf(
+									__( '%1$sBoost your SEO%2$s by preloading your pages and make them faster for Google\'s bots', 'heartbeat-control' ),
+									'<strong>',
+									'</strong>'
+								);
 								?>
 							</div>
 						</li>
 						<li>
 							<div class="visuel">
-								<img src="<?php echo $asset_image_url.'noun_SEO_737036.svg'; ?>" alt="">
+								<img src="<?php echo $asset_image_url . 'noun_revenue_949180.svg'; ?>" alt="">
 							</div>
 							<div class="txt">
 								<?php
-									printf(
-										__( '%1$sBoost your SEO%2$s by preloading your pages and make them faster for Google\'s bots', 'heartbeat-control' ),
-										'<strong>', '</strong>'
-									);
+								printf(
+									__( 'Improve %1$sconversions and revenue%2$s thanks to a stunning web performance', 'heartbeat-control' ),
+									'<strong>',
+									'</strong>'
+								);
 								?>
 							</div>
 						</li>
-						<li>
-							<div class="visuel">
-								<img src="<?php echo $asset_image_url.'noun_revenue_949180.svg'; ?>" alt="">
-							</div>
-							<div class="txt">
-								<?php
-									printf(
-										__( 'Improve %1$sconversions and revenue%2$s thanks to a stunning web performance', 'heartbeat-control' ),
-										'<strong>', '</strong>'
-									);
-								?>
-							</div>
-						</li>
-						
+
 					</ul>
 				</div>
 			</div>
@@ -160,9 +167,10 @@ $notices->echoNotices( true, true );
 					<?php
 						printf(
 							__( 'Forget complicated settings and headaches, and %1$senjoy the fastest speed results%2$s your site has ever had!', 'heartbeat-control' ),
-							'<strong>', '</strong>'
+							'<strong>',
+							'</strong>'
 						);
-					?>
+						?>
 				</div>
 				<div class="contact-btn">
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class=" btn" target="_blank"><?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?></a>
@@ -172,7 +180,7 @@ $notices->echoNotices( true, true );
 		<div id="tab3" class="tab">
 			<div class="wrapper-top wrapper-info">
 				<div class="top-img">
-					<img src="<?php echo $asset_image_url.'team.jpg'; ?>" alt="">
+					<img src="<?php echo $asset_image_url . 'team.jpg'; ?>" alt="">
 				</div>
 				<div class="top-txt">
 					<h2><?php esc_html_e( 'Welcome to WP Media!', 'heartbeat-control' ); ?></h2>

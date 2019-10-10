@@ -7,13 +7,13 @@
 
 namespace Heartbeat_Control;
 
-defined('ABSPATH') || die('Cheatin\' uh?');
+defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
 
 /**
-	* Class allowing to download, install, and activate Imagify plugin.
-	*
-	* @author Grégory Viguier
-	*/
+ * Class allowing to download, install, and activate Imagify plugin.
+ *
+ * @author Grégory Viguier
+ */
 class Imagify_Partner {
 
 	/**
@@ -66,11 +66,11 @@ class Imagify_Partner {
 	const FALLBACK_MESSAGE = 'Unknown message';
 
 	/**
-		* Partner identifier.
-		*
-		* @var    string
-		* @access protected
-		*/
+	 * Partner identifier.
+	 *
+	 * @var    string
+	 * @access protected
+	 */
 	protected $partner;
 
 
@@ -79,25 +79,25 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Class constructor: sanitize and set the partner identifier.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @param string $partner Partner identifier.
-		*/
+	 * Class constructor: sanitize and set the partner identifier.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @param string $partner Partner identifier.
+	 */
 	public function __construct( $partner ) {
 		$this->partner = self::sanitize_partner( $partner );
 	}
 
 	/**
-		* Class init.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*/
+	 * Class init.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 */
 	public function init() {
 		if ( ! $this->get_partner() ) {
 			return;
@@ -108,12 +108,12 @@ class Imagify_Partner {
 		}
 
 		if ( ! self::has_imagify_api_key() ) {
-			add_action( 'wp_ajax_' . $this->get_post_action(),    array( $this, 'post_callback' ) );
+			add_action( 'wp_ajax_' . $this->get_post_action(), array( $this, 'post_callback' ) );
 			add_action( 'admin_post_' . $this->get_post_action(), array( $this, 'post_callback' ) );
 		}
 
 		if ( self::is_success() || self::is_error() ) {
-			add_action( 'all_admin_notices',    array( __CLASS__, 'error_notice' ) );
+			add_action( 'all_admin_notices', array( __CLASS__, 'error_notice' ) );
 			add_filter( 'removable_query_args', array( __CLASS__, 'add_query_args' ) );
 		}
 	}
@@ -124,14 +124,14 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Tell if Imagify's API key is set.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return bool
-		*/
+	 * Tell if Imagify's API key is set.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return bool
+	 */
 	public static function has_imagify_api_key() {
 		static $has;
 
@@ -173,27 +173,27 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Tell if Imagify is activated.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return bool
-		*/
+	 * Tell if Imagify is activated.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return bool
+	 */
 	public static function is_imagify_activated() {
 		return defined( 'IMAGIFY_VERSION' );
 	}
 
 	/**
-		* Tell if Imagify is installed.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return bool
-		*/
+	 * Tell if Imagify is installed.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return bool
+	 */
 	public static function is_imagify_installed() {
 		if ( self::is_imagify_activated() ) {
 			return true;
@@ -203,40 +203,40 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Tell if Imagify has been successfully installed.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return bool
-		*/
+	 * Tell if Imagify has been successfully installed.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return bool
+	 */
 	public static function is_success() {
 		return ! empty( $_GET[ self::SUCCESS_ARG ] ); // WPCS: CSRF ok.
 	}
 
 	/**
-		* Tell if Imagify install failed.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return bool
-		*/
+	 * Tell if Imagify install failed.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return bool
+	 */
 	public static function is_error() {
 		return ! empty( $_GET[ self::ERROR_ARG ] ); // WPCS: CSRF ok.
 	}
 
 	/**
-		* Get the URL to install and activate Imagify.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string The URL.
-		*/
+	 * Get the URL to install and activate Imagify.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string The URL.
+	 */
 	public function get_post_install_url() {
 		if ( ! $this->get_partner() || ! self::current_user_can() ) {
 			return '';
@@ -254,14 +254,14 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Get the partner identifier.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string Partner identifier.
-		*/
+	 * Get the partner identifier.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string Partner identifier.
+	 */
 	public function get_partner() {
 		return $this->partner;
 	}
@@ -272,12 +272,12 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Post callback to install and activate Imagify.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*/
+	 * Post callback to install and activate Imagify.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 */
 	public function post_callback() {
 		if ( ! check_ajax_referer( self::NONCE_NAME, '_wpnonce', false ) ) {
 			$this->error_die();
@@ -325,13 +325,13 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Maybe print an error notice on the plugins install page.
-		* We add the query argument we use to display an error message.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*/
+	 * Maybe print an error notice on the plugins install page.
+	 * We add the query argument we use to display an error message.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 */
 	public static function error_notice() {
 		if ( ! self::is_error() ) {
 			// No URL argument.
@@ -385,17 +385,17 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Filter the list of query variables to remove from admin area URLs.
-		* We add the query arguments we use on success or error.
-		*
-		* @since  1.0
-		* @access public
-		* @see    wp_removable_query_args()
-		* @author Grégory Viguier
-		*
-		* @param  array $removable_query_args An array of query variables to remove from a URL.
-		* @return array
-		*/
+	 * Filter the list of query variables to remove from admin area URLs.
+	 * We add the query arguments we use on success or error.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @see    wp_removable_query_args()
+	 * @author Grégory Viguier
+	 *
+	 * @param  array $removable_query_args An array of query variables to remove from a URL.
+	 * @return array
+	 */
 	public static function add_query_args( $removable_query_args ) {
 		$removable_query_args[] = self::SUCCESS_ARG;
 		$removable_query_args[] = self::ERROR_ARG;
@@ -408,14 +408,14 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Get Imagify infos from the repository.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @return object The plugin infos on success. A WP_Error object on failure.
-		*/
+	 * Get Imagify infos from the repository.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @return object The plugin infos on success. A WP_Error object on failure.
+	 */
 	protected function get_imagify_infos() {
 		static $infos;
 
@@ -426,48 +426,51 @@ class Imagify_Partner {
 		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 		// Get Plugin Infos.
-		$infos = plugins_api( 'plugin_information', array(
-			'slug'   => 'imagify',
-			'fields' => array(
-				'short_description' => false,
-				'sections'          => false,
-				'rating'            => false,
-				'ratings'           => false,
-				'downloaded'        => false,
-				'last_updated'      => false,
-				'added'             => false,
-				'tags'              => false,
-				'homepage'          => false,
-				'donate_link'       => false,
-			),
-		) );
+		$infos = plugins_api(
+			'plugin_information',
+			array(
+				'slug'   => 'imagify',
+				'fields' => array(
+					'short_description' => false,
+					'sections'          => false,
+					'rating'            => false,
+					'ratings'           => false,
+					'downloaded'        => false,
+					'last_updated'      => false,
+					'added'             => false,
+					'tags'              => false,
+					'homepage'          => false,
+					'donate_link'       => false,
+				),
+			)
+		);
 
 		return $infos;
 	}
 
 	/**
-		* Get the URL to download Imagify.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @return string The URL. An empty string on error.
-		*/
+	 * Get the URL to download Imagify.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @return string The URL. An empty string on error.
+	 */
 	protected function get_download_url() {
 		$infos = $this->get_imagify_infos();
 		return ! empty( $infos->download_link ) ? $infos->download_link : '';
 	}
 
 	/**
-		* Install Imagify.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @return object|null A WP_Object on failure, null on success.
-		*/
+	 * Install Imagify.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @return object|null A WP_Object on failure, null on success.
+	 */
 	protected function install_imagify() {
 		if ( self::is_imagify_installed() ) {
 			// Imagify is already installed.
@@ -504,28 +507,28 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Activate Imagify.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @return object|null A WP_Object on failure, null on success.
-		*/
+	 * Activate Imagify.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @return object|null A WP_Object on failure, null on success.
+	 */
 	protected function activate_imagify() {
 		return activate_plugin( self::get_imagify_path(), false, is_multisite() );
 	}
 
 	/**
-		* Get a message used by the class.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @param  string $message_id A message ID.
-		* @return string             A message.
-		*/
+	 * Get a message used by the class.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @param  string $message_id A message ID.
+	 * @return string             A message.
+	 */
 	protected function get_message( $message_id ) {
 		$messages = array(
 			'success'        => __( 'Plugin installed successfully.' ),
@@ -555,12 +558,12 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Send a JSON response back to an Ajax request, indicating success.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*/
+	 * Send a JSON response back to an Ajax request, indicating success.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 */
 	protected function send_json_success() {
 		delete_transient( self::ERROR_TRANSIENT_NAME );
 
@@ -568,12 +571,12 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Redirect the user after Imagify is successfully installed and activated.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*/
+	 * Redirect the user after Imagify is successfully installed and activated.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 */
 	protected function success_redirect() {
 		delete_transient( self::ERROR_TRANSIENT_NAME );
 
@@ -582,20 +585,23 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Get the URL to redirect the user to after Imagify is successfully installed and activated: the referrer (partner's page URL).
-		* A "success" argument is added.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string
-		*/
+	 * Get the URL to redirect the user to after Imagify is successfully installed and activated: the referrer (partner's page URL).
+	 * A "success" argument is added.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string
+	 */
 	public function get_success_redirection_url() {
-		$success_url = add_query_arg( array(
-			self::SUCCESS_ARG => 1,
-			self::ERROR_ARG   => false,
-		), wp_get_referer() );
+		$success_url = add_query_arg(
+			array(
+				self::SUCCESS_ARG => 1,
+				self::ERROR_ARG   => false,
+			),
+			wp_get_referer()
+		);
 
 		/**
 			* Filter the URL to redirect the user to after Imagify is successfully installed and activated.
@@ -615,14 +621,14 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Die on error.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @param string $message_id An error message ID.
-		*/
+	 * Die on error.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @param string $message_id An error message ID.
+	 */
 	protected function error_die( $message_id = 'not_allowed' ) {
 		$message = $this->get_message( $message_id );
 
@@ -633,7 +639,8 @@ class Imagify_Partner {
 
 		if ( wp_get_referer() ) {
 			$message .= '</p><p>';
-			$message .= sprintf( '<a href="%s">%s</a>',
+			$message .= sprintf(
+				'<a href="%s">%s</a>',
 				esc_url( remove_query_arg( 'updated', wp_get_referer() ) ),
 				$this->get_message( 'go_back' )
 			);
@@ -643,15 +650,15 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Send a JSON response back to an Ajax request, indicating failure.
-		* This is a backward compatible version of wp_send_json_error(): WP_Error object handling was introduced in WP 4.1.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @param mixed $data Data to encode as JSON, then print and die.
-		*/
+	 * Send a JSON response back to an Ajax request, indicating failure.
+	 * This is a backward compatible version of wp_send_json_error(): WP_Error object handling was introduced in WP 4.1.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @param mixed $data Data to encode as JSON, then print and die.
+	 */
 	protected function send_json_error( $data ) {
 		if ( is_wp_error( $data ) ) {
 			$result = array();
@@ -671,14 +678,14 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Store an error message in a transient then redirect the user.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @param object $error A WP_Error object.
-		*/
+	 * Store an error message in a transient then redirect the user.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @param object $error A WP_Error object.
+	 */
 	protected function error_redirect( $error ) {
 		set_transient( self::ERROR_TRANSIENT_NAME, $error, 30 );
 
@@ -687,15 +694,15 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Get the URL to redirect the user to after Imagify installation failure: the plugins search page URL, searching for Imagify.
-		* An "error" argument is added, to display an error notice.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string
-		*/
+	 * Get the URL to redirect the user to after Imagify installation failure: the plugins search page URL, searching for Imagify.
+	 * An "error" argument is added, to display an error notice.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string
+	 */
 	public function get_error_redirection_url() {
 		$error_url = 'plugin-install.php?s=imagify&tab=search&type=term&' . self::ERROR_ARG . '=1';
 		$error_url = is_multisite() ? network_admin_url( $error_url ) : admin_url( $error_url );
@@ -718,14 +725,14 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Get the partner identifier stored in the Database.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string|bool The partner identifier, or false if none is stored.
-		*/
+	 * Get the partner identifier stored in the Database.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string|bool The partner identifier, or false if none is stored.
+	 */
 	public static function get_stored_partner() {
 		$partner = get_option( self::OPTION_NAME );
 
@@ -737,12 +744,12 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Delete the partner identifier stored in the Database.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*/
+	 * Delete the partner identifier stored in the Database.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 */
 	public static function delete_stored_partner() {
 		if ( false !== get_option( self::OPTION_NAME ) ) {
 			delete_option( self::OPTION_NAME );
@@ -750,14 +757,14 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Store the partner identifier in Database.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @param string $partner The partner identifier to store.
-		*/
+	 * Store the partner identifier in Database.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @param string $partner The partner identifier to store.
+	 */
 	protected static function store_partner( $partner ) {
 		if ( false === get_option( self::OPTION_NAME ) ) {
 			add_option( self::OPTION_NAME, $partner );
@@ -767,15 +774,15 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Sanitize a partner ID.
-		*
-		* @since  1.0
-		* @access protected
-		* @author Grégory Viguier
-		*
-		* @param  string $partner Partner identifier.
-		* @return string
-		*/
+	 * Sanitize a partner ID.
+	 *
+	 * @since  1.0
+	 * @access protected
+	 * @author Grégory Viguier
+	 *
+	 * @param  string $partner Partner identifier.
+	 * @return string
+	 */
 	protected static function sanitize_partner( $partner ) {
 		return preg_replace( '@[^a-z0-9_-]@', '', strtolower( (string) $partner ) );
 	}
@@ -786,28 +793,28 @@ class Imagify_Partner {
 	/** ----------------------------------------------------------------------------------------- */
 
 	/**
-		* Get the action.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string Partner identifier.
-		*/
+	 * Get the action.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string Partner identifier.
+	 */
 	public function get_post_action() {
 		return 'install_imagify_from_partner_' . $this->get_partner();
 	}
 
 	/**
-		* Determines whether the current request is a WordPress Ajax request.
-		* This is a clone of wp_doing_ajax(), intriduced in WP 4.7.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return bool True if it's a WordPress Ajax request, false otherwise.
-		*/
+	 * Determines whether the current request is a WordPress Ajax request.
+	 * This is a clone of wp_doing_ajax(), intriduced in WP 4.7.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return bool True if it's a WordPress Ajax request, false otherwise.
+	 */
 	public static function doing_ajax() {
 		/**
 			* Filters whether the current request is a WordPress Ajax request.
@@ -820,14 +827,14 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Get Imagify's file path.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string The file path.
-		*/
+	 * Get Imagify's file path.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string The file path.
+	 */
 	public static function get_imagify_path() {
 		if ( defined( 'IMAGIFY_FILE' ) ) {
 			return IMAGIFY_FILE;
@@ -837,14 +844,14 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Tell if the current user can install and activate Imagify.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return bool
-		*/
+	 * Tell if the current user can install and activate Imagify.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return bool
+	 */
 	public static function current_user_can() {
 		static $can;
 
@@ -857,14 +864,14 @@ class Imagify_Partner {
 	}
 
 	/**
-		* Get the current URL.
-		*
-		* @since  1.0
-		* @access public
-		* @author Grégory Viguier
-		*
-		* @return string
-		*/
+	 * Get the current URL.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @author Grégory Viguier
+	 *
+	 * @return string
+	 */
 	public static function get_current_url() {
 		$port = (int) $_SERVER['SERVER_PORT'];
 		$port = 80 !== $port && 443 !== $port ? ( ':' . $port ) : '';
