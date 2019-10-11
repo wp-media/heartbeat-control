@@ -17,7 +17,7 @@ class WPM_Settings {
 	protected $plugins_block = array();
 
 	/**
-	 * WPM_Settings constructor.
+	 * Constructor.
 	 *
 	 * @return void
 	 */
@@ -25,7 +25,7 @@ class WPM_Settings {
 		add_action( 'cmb2_render_slider', array( $this, 'render_slider_field' ), 10, 5 );
 
 		// we need this objects to declare there controller right now.
-		$imagify_partner = new Imagify_Partner( 'heartbeat-control' );
+		$imagify_partner = new \Imagify_Partner( 'heartbeat-control' );
 		$imagify_partner->init();
 		$this->plugins_block = array(
 			'rocket-lazy-load' => new Plugin_Card_Helper( array( 'plugin_slug' => 'rocket-lazy-load' ) ),
@@ -40,7 +40,7 @@ class WPM_Settings {
 	}
 
 	/**
-	 * slider field render.
+	 * Slider field render.
 	 *
 	 * @return void
 	 */
@@ -63,9 +63,9 @@ class WPM_Settings {
 	}
 
 	/**
-	 * option admin page controller
+	 * Option admin page controller.
 	 *
-	 * @param $hookup CMB2_hookup
+	 * @param  obj $hookup CMB2_hookup.
 	 * @return void
 	 */
 	public function admin_controller_options( $hookup ) {
@@ -84,15 +84,17 @@ class WPM_Settings {
 	}
 
 	/**
-	 * option admin page enqueue script and style
+	 * Option admin page enqueue script and style.
 	 *
-	 * @param $hook string, use for context validation
+	 * @param  string $hook Use for context validation.
 	 * @return void
 	 */
 	public function enqueue_scripts( $hook ) {
-		if ( $hook !== 'settings_page_heartbeat_control_settings' ) {
-			return; }
-		wp_register_script( 'hbc_admin_script', HBC_PLUGIN_URL . 'assets/js/script.js', array( 'jquery', 'jquery-ui-slider' ), '1.0.0' );
+		if ( 'settings_page_heartbeat_control_settings' !== $hook ) {
+			return;
+		}
+
+		wp_register_script( 'hbc_admin_script', HBC_PLUGIN_URL . 'assets/js/script.js', array( 'jquery', 'jquery-ui-slider' ), '1.0.0', false );
 		wp_enqueue_script( 'hbc_admin_script' );
 		wp_register_style( 'slider_ui', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css', array(), '1.0' );
 		wp_enqueue_style( 'slider_ui' );
@@ -102,7 +104,7 @@ class WPM_Settings {
 	}
 
 	/**
-	 * declare cmb2 metaboxes
+	 * Declare cmb2 metaboxes.
 	 *
 	 * @return void
 	 */

@@ -35,12 +35,12 @@ class Plugin_Card_Helper {
 	protected $init = false;
 
 	/**
-	 * constructor method, it's construct things.
+	 * Constructor method, it's construct things.
 	 * Set some basic parameters and register controller soon as possible.
 	 * Else in some context install and activation route will not be register.
 	 *
-	 * @param $args array, required index plugin_slug. use this array to pass param ( force_activation active and install )
-	 * @param $template_args mixed, what ever param you want to pass for the template.
+	 * @param  array $args          Required index plugin_slug. Use this array to pass param (force_activation active and install).
+	 * @param  mixed $template_args What ever param you want to pass for the template.
 	 * @return void
 	 */
 	public function __construct( $args = null, $template_args = null ) {
@@ -69,7 +69,7 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * init method, initialise things.
+	 * Init method, initialise things.
 	 * Separate init form constructor, because route registering need to be early and this do not.
 	 * This is execute only if install or activation route are reached or helper method is call.
 	 *
@@ -119,8 +119,8 @@ class Plugin_Card_Helper {
 	// -- GETTER
 
 	/**
-	 * get plugin information return by WordPress function plugins_api()
-	 * check https://developer.wordpress.org/reference/functions/plugins_api/ form more information
+	 * Get plugin information return by WordPress function plugins_api().
+	 * Check https://developer.wordpress.org/reference/functions/plugins_api/ form more information
 	 *
 	 * @return array if the instance has reach information from WordPress plugin repository, null if not.
 	 */
@@ -133,9 +133,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * get the plugin title
+	 * Get the plugin title.
 	 *
-	 * @return string, the plugin title
+	 * @return string The plugin title.
 	 */
 	public function get_title() {
 		$pi = ( is_wp_error( $this->plugin_information ) ) ? '' : $this->plugin_information->name;
@@ -143,9 +143,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * get the plugin description
+	 * Get the plugin description.
 	 *
-	 * @return string, the plugin short description
+	 * @return string The plugin short description.
 	 */
 	public function get_description() {
 		$pi = ( is_wp_error( $this->plugin_information ) ) ? '' : $this->plugin_information->short_description;
@@ -153,9 +153,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * get the plugin icon
+	 * Get the plugin icon.
 	 *
-	 * @return string, the plugin icon as a img tag
+	 * @return string The plugin icon as a img tag.
 	 */
 	public function get_icon() {
 		$pi = ( is_wp_error( $this->plugin_information ) ) ? '' : '<img src="' . $this->plugin_information->icons['2x'] . '"/>';
@@ -163,19 +163,19 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * get the plugin activation ans installation status
+	 * Get the plugin activation ans installation status.
 	 *
-	 * @return string, the plugin status as a one of this string [ 'activated', 'installed', 'not_installed' ]
+	 * @return string The plugin status as a one of this string ['activated', 'installed', 'not_installed'].
 	 */
 	public function get_status() {
 		return $this->is_installed() ? ( $this->is_activated() ? 'activated' : 'installed' ) : 'not_installed';
 	}
 
 	/**
-	 * get the plugin status text
+	 * Get the plugin status text.
 	 *
-	 * @param $status string, override the current status by this param
-	 * @return string, the plugin status text based on the current or given one.
+	 * @param  string $status Override the current status by this param.
+	 * @return string         The plugin status text based on the current or given one.
 	 */
 	public function get_status_text( $status = null ) {
 		$s  = ( is_string( $status ) && ! empty( $status ) ) ? $status : $this->get_status();
@@ -191,10 +191,10 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * get the plugin button text
+	 * Get the plugin button text.
 	 *
-	 * @param $status string, override the current status by this param
-	 * @return string, the plugin button text based on the current or given one.
+	 * @param  string $status Override the current status by this param
+	 * @return string         The plugin button text based on the current or given one.
 	 */
 	public function get_button_text( $status = null ) {
 		$s  = ( is_string( $status ) && ! empty( $status ) ) ? $status : $this->get_status();
@@ -203,17 +203,19 @@ class Plugin_Card_Helper {
 			'installed'     => __( 'Activate plugin', 'heartbeat-control' ),
 			'not_installed' => __( 'Install plugin', 'heartbeat-control' ),
 		);
+
 		if ( isset( $this->params['button_text'][ $s ] ) ) {
 			return $this->params['button_text'][ $s ];
 		}
+
 		return ( isset( $bt[ $s ] ) ) ? $bt[ $s ] : $bt;
 	}
 
 	/**
-	 * get the plugin activation or installation url
+	 * Get the plugin activation or installation url.
 	 *
-	 * @param $status string, override the current status by this param
-	 * @return string, the appropriate activation/installation url based on the current or given one.
+	 * @param  string $status Override the current status by this param.
+	 * @return string         The appropriate activation/installation url based on the current or given one.
 	 */
 	public function get_install_url( $status = null ) {
 		$s  = ( is_string( $status ) && ! empty( $status ) ) ? $status : $this->get_status();
@@ -245,9 +247,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * get the plugin activation status as a boolean
+	 * Get the plugin activation status as a boolean.
 	 *
-	 * @return boolean, true if plugin is activated false if not
+	 * @return boolean True if plugin is activated false if not.
 	 */
 	public function is_activated() {
 		if ( is_null( $this->activated ) ) {
@@ -264,9 +266,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * get the plugin installation status as a boolean
+	 * Get the plugin installation status as a boolean.
 	 *
-	 * @return boolean, true if plugin is installed false if not
+	 * @return boolean True if plugin is installed false if not.
 	 */
 	public function is_installed() {
 		if ( is_null( $this->installed ) ) {
@@ -293,9 +295,9 @@ class Plugin_Card_Helper {
 	// -- SETTER
 
 	/**
-	 * set a title override
+	 * Set a title override.
 	 *
-	 * @param $title string, whatever you want, a appropriate title preferably
+	 * @param  string $title Whatever you want, a appropriate title preferably.
 	 * @return void
 	 */
 	public function set_title( $title ) {
@@ -304,9 +306,10 @@ class Plugin_Card_Helper {
 		}
 	}
 
-	/*
-	 * set a description override
-	 * @param $desc string, your description
+	/**
+	 * Set a description override.
+	 *
+	 * @param  string $desc The description.
 	 * @return void
 	 */
 	public function set_description( $desc ) {
@@ -316,9 +319,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * set a icon override
+	 * Set a icon override.
 	 *
-	 * @param $string string, your icon, has a tag... no ? whatever.
+	 * @param  string $string The icon, has a tag... no ? whatever.
 	 * @return void
 	 */
 	public function set_icon( $string ) {
@@ -328,9 +331,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * set status text override
+	 * Set status text override.
 	 *
-	 * @param $array array, a array of strings key must be valid status [ 'activated', 'installed', 'not_installed' ]
+	 * @param array $array An array of strings key must be valid status ['activated', 'installed', 'not_installed'].
 	 * @return void
 	 */
 	public function set_status_text( $array ) {
@@ -340,9 +343,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * set button text override
+	 * Set button text override.
 	 *
-	 * @param $array array, a array of strings key must be valid status [ 'activated', 'installed', 'not_installed' ]
+	 * @param array $array An array of strings key must be valid status ['activated', 'installed', 'not_installed'].
 	 * @return void
 	 */
 	public function set_button_text( $array ) {
@@ -352,9 +355,9 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * override helper default behavior with a callable
+	 * Override helper default behavior with a callable.
 	 *
-	 * @param $callback callable, your callable.
+	 * @param  callable $callback The callable.
 	 * @return void
 	 */
 	public function set_helper_callback( $callback ) {
@@ -366,7 +369,7 @@ class Plugin_Card_Helper {
 	// -- Install and activation route and logic
 
 	/**
-	 * install plugin controller
+	 * Install plugin controller.
 	 *
 	 * @return void
 	 */
@@ -404,7 +407,7 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * activate plugin controller
+	 * Activate plugin controller.
 	 *
 	 * @return void
 	 */
@@ -432,7 +435,7 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * install plugin
+	 * Install plugin.
 	 *
 	 * @return void
 	 */
@@ -446,7 +449,7 @@ class Plugin_Card_Helper {
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
 		ob_start();
-		@set_time_limit( 0 );
+		@set_time_limit( 0 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 		$upgrader = new \Plugin_Upgrader( new \Automatic_Upgrader_Skin() );
 		$result   = $upgrader->install( $this->plugin_information->download_link );
 		ob_end_clean();
@@ -464,12 +467,13 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * activate plugin
+	 * Activate plugin.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	protected function activate() {
 		$this->init();
+
 		if ( $this->is_activated() ) {
 			return null;
 		}
@@ -490,10 +494,10 @@ class Plugin_Card_Helper {
 	// -- Helper
 
 	/**
-	 * card helper, construct a functional card.
+	 * Card helper, construct a functional card.
 	 *
-	 * @param $echo boolean, echo the result if true
-	 * @return void if echo is false, else it's return the card as a sting.
+	 * @param  boolean $echo Print the result if true.
+	 * @return void          If echo is false, else it's return the card as a sting.
 	 */
 	public function helper( $echo = true ) {
 		$this->init();
@@ -516,7 +520,7 @@ class Plugin_Card_Helper {
 	}
 
 	/**
-	 * card helper, the real one.
+	 * Card helper, the real one.
 	 *
 	 * @return void
 	 */
@@ -539,14 +543,15 @@ class Plugin_Card_Helper {
 	// -- tools
 
 	/**
-	 * rebuilt current url
+	 * Rebuilt current url.
 	 *
-	 * @return string, the current url.
+	 * @return string The current url.
 	 */
 	public function get_current_url() {
 		$port = (int) $_SERVER['SERVER_PORT'];
 		$port = 80 !== $port && 443 !== $port ? ( ':' . $port ) : '';
 		$url  = ! empty( $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'] ) ? $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'] : ( ! empty( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' );
+
 		return 'http' . ( is_ssl() ? 's' : '' ) . '://' . $_SERVER['HTTP_HOST'] . $port . $url;
 	}
 

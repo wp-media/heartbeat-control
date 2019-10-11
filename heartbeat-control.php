@@ -22,7 +22,6 @@ $loader = require dirname( __FILE__ ) . '/vendor/autoload.php';
  * The primary Heartbeat Control class.
  */
 class Heartbeat_Control {
-
 	/**
 	 * The current version.
 	 *
@@ -31,7 +30,7 @@ class Heartbeat_Control {
 	public $version = '2.0';
 
 	/**
-	 * Heartbeat_Control Constructor.
+	 * Constructor.
 	 */
 	public function __construct() {
 		$this->register_dependencies();
@@ -65,7 +64,7 @@ class Heartbeat_Control {
 	/**
 	 * Upgrades the database from older versions.
 	 *
-	 * @param string $version The current DB version.
+	 * @param  string $version The current DB version.
 	 * @return void
 	 */
 	public function upgrade_db( $version ) {
@@ -73,18 +72,18 @@ class Heartbeat_Control {
 
 			$updated_options = array();
 
-			if ( $old_location === get_option( 'heartbeat_location' ) ) {
-				if ( $old_location === 'disable-heartbeat-everywhere' ) {
+			if ( get_option( 'heartbeat_location' ) === $old_location ) {
+				if ( 'disable-heartbeat-everywhere' === $old_location ) {
 					$updated_options['heartbeat_control_behavior'] = 'disable';
 					$updated_options['heartbeat_control_location'] = array( 'frontend', 'admin', '/wp-admin/post.php' );
-				} elseif ( $old_location === 'disable-heartbeat-dashboard' ) {
+				} elseif ( 'disable-heartbeat-dashboard' === $old_location ) {
 					$updated_options['heartbeat_control_behavior'] = 'disable';
 					$updated_options['heartbeat_control_location'] = array( 'admin' );
-				} elseif ( $old_location === 'allow-heartbeat-post-edit' ) {
+				} elseif ( 'allow-heartbeat-post-edit' === $old_location ) {
 					$updated_options['heartbeat_control_behavior'] = 'allow';
 					$updated_options['heartbeat_control_location'] = array( '/wp-admin/post.php' );
 				} else {
-					if ( $old_frequency === get_option( 'heartbeat_frequency' ) ) {
+					if ( get_option( 'heartbeat_frequency' ) === $old_frequency ) {
 						$updated_options['heartbeat_control_behavior']  = 'modify';
 						$updated_options['heartbeat_control_location']  = array( 'frontend', 'admin', '/wp-admin/post.php' );
 						$updated_options['heartbeat_control_frequency'] = $old_frequency;
@@ -101,7 +100,7 @@ class Heartbeat_Control {
 		}
 
 		/*
-		 * in version 1.3.0 we remove the ordering and overwriting of rules,
+		 * In version 1.3.0 we remove the ordering and overwriting of rules,
 		 * you can have only one behavior for each location now, it simpler and less misleading.
 		 * So this code check for rules by location and take one for each based on there order.
 		 */
@@ -123,6 +122,7 @@ class Heartbeat_Control {
 				update_option( 'heartbeat_control_settings', $ns );
 			} else {
 				$v = array( false, false, false );
+
 				foreach ( $os['rules'] as $rules ) {
 					foreach ( $rules['heartbeat_control_location'] as $location ) {
 						if ( 'frontend' === $location && false === $v[0] ) {
@@ -134,6 +134,7 @@ class Heartbeat_Control {
 							);
 							$v[0]              = true;
 						}
+
 						if ( 'admin' === $location && false === $v[1] ) {
 							$ns['rules_dash'] = array(
 								array(
@@ -143,6 +144,7 @@ class Heartbeat_Control {
 							);
 							$v[1]             = true;
 						}
+
 						if ( '/wp-admin/post.php' === $location && false === $v[2] ) {
 							$ns['rules_editor'] = array(
 								array(
@@ -152,15 +154,19 @@ class Heartbeat_Control {
 							);
 							$v[2]               = true;
 						}
-						if ( ! in_array( false, $v ) ) {
-							break 2; }
+
+						if ( ! in_array( false, $v ) ) { // phpcs:ignore WordPress.PHP.StrictInArray
+							break 2;
+						}
 					}
 				}
 			}
+
 			update_option( 'heartbeat_control_settings', $ns );
 		}
 
 		update_option( 'heartbeat_control_version', $this->version );
+
 		$notices = Notices::get_instance();
 		$notices->append( 'success', __( 'Heartbeat Control data have been migrated successfully !', 'heartbeat-control' ) );
 	}

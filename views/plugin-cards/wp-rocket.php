@@ -2,29 +2,39 @@
 /**
  * Plugin card template wp-rocket
  */
-	$helper->set_title( 'WP Rocket' );
-	$helper->set_icon( '<img src="' . HBC_PLUGIN_URL . 'assets/img/logo-rocket.jpg" alt="">' );
-	$helper->set_description(
-		sprintf(
-			__( 'Integrate more than 80&#x25; of web performance good practices automatically to %1$sreduce your website\'s loading time.%2$s', 'heartbeat-control' ),
-			'<strong>',
-			'</strong>'
-		)
-	);
-	$helper->set_button_text(
-		array(
-			'activated'     => esc_html__( 'Already activated', 'heartbeat-control' ),
-			'installed'     => esc_html__( 'Activate WP Rocket', 'heartbeat-control' ),
-			'not_installed' => esc_html__( 'get WP Rocket', 'heartbeat-control' ),
-		)
-	);
-	?>
+
+$helper->set_title( 'WP Rocket' );
+$helper->set_icon( '<img src="' . HBC_PLUGIN_URL . 'assets/img/logo-rocket.jpg" alt="">' );
+$helper->set_description(
+	sprintf(
+		// translators: %1$s %2$s: link markup.
+		__( 'Integrate more than 80&#x25; of web performance good practices automatically to %1$sreduce your website\'s loading time.%2$s', 'heartbeat-control' ),
+		'<strong>',
+		'</strong>'
+	)
+);
+$helper->set_button_text(
+	array(
+		'activated'     => esc_html__( 'Already activated', 'heartbeat-control' ),
+		'installed'     => esc_html__( 'Activate WP Rocket', 'heartbeat-control' ),
+		'not_installed' => esc_html__( 'Get WP Rocket', 'heartbeat-control' ),
+	)
+);
+?>
 <div class="card single-link wp-rocket">
 	<div class="link-infos">
 		<div class="link-infos-logo"><?php echo $helper->get_icon(); ?></div>
 		<span class="link-infos-txt">
 			<h3><?php echo $helper->get_title(); ?></h3>
-			<p><?php printf( __( 'Status : %1$s', 'heartbeat-control' ), $helper->get_status_text() ); ?></p>
+			<p>
+			<?php
+			printf(
+				// translators: %1$s: status (not installed, installed or activated).
+				__( 'Status : %1$s', 'heartbeat-control' ),
+				$helper->get_status_text()
+			);
+			?>
+			</p>
 		</span>
 	</div>
 	<div class="link-content"><?php echo $helper->get_description(); ?></div>

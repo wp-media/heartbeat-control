@@ -9,7 +9,15 @@
 		<div class="link-infos-logo"><?php echo $helper->get_icon(); ?></div>
 		<span class="link-infos-txt">
 			<h3><?php echo $helper->get_title(); ?></h3>
-			<p><?php printf( __( 'Status : %1$s', 'heartbeat-control' ), $helper->get_status_text() ); ?></p>
+			<p>
+			<?php
+			printf(
+				// translators: %1$s: status (not installed, installed or activated).
+				__( 'Status : %1$s', 'heartbeat-control' ),
+				$helper->get_status_text()
+			);
+			?>
+			</p>
 		</span>
 	</div>
 	<div class="link-content"><?php echo $helper->get_description(); ?></div>
