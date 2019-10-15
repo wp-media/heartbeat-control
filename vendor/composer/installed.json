@@ -1,6 +1,6 @@
 [
     {
-        "name": "webdevstudios/cmb2",
+        "name": "cmb2/cmb2",
         "version": "v2.6.0",
         "version_normalized": "2.6.0.0",
         "source": {
@@ -52,7 +52,6 @@
             "metabox",
             "plugin",
             "wordpress"
-        ],
-        "abandoned": "cmb2/cmb2"
+        ]
     }
 ]

@@ -10,7 +10,9 @@
 namespace Heartbeat_Control;
 
 defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
-
+/**
+ * Simple notification flashbag
+ */
 class Notices {
 	/**
 	 * The single instance of the class.
@@ -28,6 +30,12 @@ class Notices {
 	 */
 	protected $transient = 'heartbeat-contol_notices';
 
+	/**
+	 * Store notices.
+	 *
+	 * @var int
+	 * @access protected
+	 */
 	protected $notices = false;
 
 	/**
@@ -56,7 +64,7 @@ class Notices {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $transient
+	 * @param string $transient overwrite default transient value.
 	 */
 	public function __construct( $transient = null ) {
 		if ( ! is_null( $transient ) ) {

@@ -36,10 +36,15 @@ class Heartbeat {
 	 * Constructor.
 	 */
 	public function __construct() {
-		if ( ! empty( $_SERVER['QUERY_STRING'] ) ) {
-			$current_url = $_SERVER['REQUEST_URI'] . '?' . $_SERVER['QUERY_STRING'];
+		$_query_string = filter_input( INPUT_SERVER, 'QUERY_STRING', FILTER_SANITIZE_URL );
+		$_request_uri  = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+
+		if ( $_query_string && $_request_uri ) {
+			$current_url = wp_unslash( $_query_string . '?' . $_request_uri );
+		} elseif ( $_query_string ) {
+			$current_url = wp_unslash( $_request_uri );
 		} else {
-			$current_url = $_SERVER['REQUEST_URI'];
+			$current_url = admin_url();
 		}
 
 		$this->current_screen = wp_parse_url( $current_url );

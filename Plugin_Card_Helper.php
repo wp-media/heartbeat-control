@@ -10,18 +10,100 @@ namespace Heartbeat_Control;
 
 defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
 
+/**
+ * Class Plugin_Card_Helper
+ * This check plugin info from plugins_api and help to build a functional installation plugin card
+ *
+ * @package Heartbeat_Control
+ */
 class Plugin_Card_Helper {
 
+	/**
+	 * Store nonce action.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $nonce = 'plugin_card_helper_wpnonce';
+
+	/**
+	 * Store plugin slug.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $plugin_slug;
+
+	/**
+	 * Store plugin's main file path.
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $plugin_file_path;
+
+	/**
+	 * Store plugins_api result, all plugin information from WordPress plugin repository.
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	protected $plugin_information;
+
+	/**
+	 * Boolean is plugin is activated.
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
 	protected $activated;
+
+	/**
+	 * Boolean is plugin is installed.
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
 	protected $installed;
+
+	/**
+	 * Boolean is plugin is compatible with installed WordPress version.
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
 	protected $wp_compatibility;
+
+	/**
+	 * Boolean is plugin is compatible with installed php version.
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
 	protected $php_compatibility;
+
+	/**
+	 * Boolean is plugin can be install.
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
 	protected $can_install;
+
+	/**
+	 * Store setup arguments.
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	protected $args;
+
+	/**
+	 * Store overwrite variables.
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	protected $params = array(
 		'title'       => null,
 		'description' => null,
@@ -30,8 +112,29 @@ class Plugin_Card_Helper {
 		'button_text' => null,
 		'install_url' => null,
 	);
+
+	/**
+	 * Store a callback to overwrite default templating behavior.
+	 *
+	 * @var callable
+	 * @access protected
+	 */
 	protected $helper_callback;
+
+	/**
+	 * Store and pass variables to the template.
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	protected $template_args;
+
+	/**
+	 * Is this card have been initialised.
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
 	protected $init = false;
 
 	/**
@@ -108,8 +211,9 @@ class Plugin_Card_Helper {
 
 		if ( is_wp_error( $this->plugin_information ) ) {
 			$this->can_install = false;
-		} else {
-			$this->wp_compatibility  = ( $this->plugin_information->requires <= get_bloginfo( 'version' ) );
+		} elseif ( isset( $this->plugin_information->requires ) ) {
+			$this->wp_compatibility = ( $this->plugin_information->requires <= get_bloginfo( 'version' ) );
+		} elseif ( isset( $this->plugin_information->requires_php ) ) {
 			$this->php_compatibility = ( $this->plugin_information->requires_php <= phpversion() );
 		}
 
@@ -138,7 +242,7 @@ class Plugin_Card_Helper {
 	 * @return string The plugin title.
 	 */
 	public function get_title() {
-		$pi = ( is_wp_error( $this->plugin_information ) ) ? '' : $this->plugin_information->name;
+		$pi = ( ! is_wp_error( $this->plugin_information ) && isset( $this->plugin_information->name ) ) ? $this->plugin_information->name : '';
 		return ( ! is_null( $this->params['title'] ) ) ? $this->params['title'] : $pi;
 	}
 
@@ -148,7 +252,7 @@ class Plugin_Card_Helper {
 	 * @return string The plugin short description.
 	 */
 	public function get_description() {
-		$pi = ( is_wp_error( $this->plugin_information ) ) ? '' : $this->plugin_information->short_description;
+		$pi = ( ! is_wp_error( $this->plugin_information ) && isset( $this->plugin_information->short_description ) ) ? $this->plugin_information->short_description : '';
 		return ( ! is_null( $this->params['description'] ) ) ? $this->params['description'] : $pi;
 	}
 
@@ -158,7 +262,7 @@ class Plugin_Card_Helper {
 	 * @return string The plugin icon as a img tag.
 	 */
 	public function get_icon() {
-		$pi = ( is_wp_error( $this->plugin_information ) ) ? '' : '<img src="' . $this->plugin_information->icons['2x'] . '"/>';
+		$pi = ( ! is_wp_error( $this->plugin_information ) && isset( $this->plugin_information->icons ) ) ? '<img src="' . $this->plugin_information->icons['2x'] . '"/>' : '';
 		return ( ! is_null( $this->params['icon'] ) ) ? $this->params['icon'] : $pi;
 	}
 
@@ -193,7 +297,7 @@ class Plugin_Card_Helper {
 	/**
 	 * Get the plugin button text.
 	 *
-	 * @param  string $status Override the current status by this param
+	 * @param  string $status Override the current status by this param.
 	 * @return string         The plugin button text based on the current or given one.
 	 */
 	public function get_button_text( $status = null ) {
@@ -371,7 +475,7 @@ class Plugin_Card_Helper {
 	/**
 	 * Install plugin controller.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function install_callback() {
 		if ( ! check_admin_referer( $this->nonce ) ) {
@@ -409,7 +513,7 @@ class Plugin_Card_Helper {
 	/**
 	 * Activate plugin controller.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function activate_callback() {
 		if ( ! check_admin_referer( $this->nonce ) ) {
@@ -437,7 +541,7 @@ class Plugin_Card_Helper {
 	/**
 	 * Install plugin.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	protected function install() {
 		$this->init();
@@ -497,7 +601,7 @@ class Plugin_Card_Helper {
 	 * Card helper, construct a functional card.
 	 *
 	 * @param  boolean $echo Print the result if true.
-	 * @return void          If echo is false, else it's return the card as a sting.
+	 * @return mixed         If echo is false, else it's return the card as a sting.
 	 */
 	public function helper( $echo = true ) {
 		$this->init();
@@ -548,11 +652,17 @@ class Plugin_Card_Helper {
 	 * @return string The current url.
 	 */
 	public function get_current_url() {
-		$port = (int) $_SERVER['SERVER_PORT'];
-		$port = 80 !== $port && 443 !== $port ? ( ':' . $port ) : '';
-		$url  = ! empty( $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'] ) ? $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'] : ( ! empty( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' );
+		$_server_port = filter_input( INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT );
+		$_request_uri = ( ! empty( $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'] ) )
+			? $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']
+			: filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+		$_http_host   = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
 
-		return 'http' . ( is_ssl() ? 's' : '' ) . '://' . $_SERVER['HTTP_HOST'] . $port . $url;
+		$port = (int) $_server_port;
+		$port = 80 !== $port && 443 !== $port ? ( ':' . $port ) : '';
+		$url  = $_request_uri ? $_request_uri : '';
+
+		return 'http' . ( is_ssl() ? 's' : '' ) . '://' . $_http_host . $port . $url;
 	}
 
 }

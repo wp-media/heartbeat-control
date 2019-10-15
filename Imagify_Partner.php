@@ -5,9 +5,11 @@
  * @package wp-media/wp-imagify-partner
  */
 
+namespace Heartbeat_Control;
+ 
 defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
 
-if ( ! class_exists( 'Imagify_Partner' ) ) :
+if ( ! class_exists( 'Heartbeat_Control/Imagify_Partner' ) ) :
 
 	/**
 	 * Class allowing to download, install, and activate Imagify plugin.

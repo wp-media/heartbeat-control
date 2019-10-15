@@ -42,13 +42,16 @@ $notices->echo_notices();
 		</div>
 		<div class="wrapper-nav">
 			<h2 class="nav-tab-wrapper">
-				<a href="#tab1" class="nav-tab nav-tab-active"><?php esc_html_e( 'General settings', 'heartbeat-control' ); ?></a>
-				<a href="#tab2" class="nav-tab"><?php esc_html_e( 'More optimization', 'heartbeat-control' ); ?></a>
-				<a href="#tab3" class="nav-tab"><?php esc_html_e( 'About us', 'heartbeat-control' ); ?></a>
+				<span class="nav-tab nav-tab-active" data-tab="general-settings"><?php esc_html_e( 'General settings', 'heartbeat-control' ); ?></span> 
+<?php if ( ! $plugins_block['wp-rocket']->is_activated() ) : ?> 
+				<span class="nav-tab" data-tab="more-optimization"><?php esc_html_e( 'More optimization', 'heartbeat-control' ); ?></span> 
+<?php endif; ?> 
+				<span class="nav-tab" data-tab="about-us" ><?php esc_html_e( 'About us', 'heartbeat-control' ); ?></span> 
 			</h2>
 		</div>
-		<div id="tab1" class="tab tab-active"><?php echo $cmb_form; ?></div>
-		<div id="tab2" class="tab">
+		<div id="tab_general-settings" class="tab tab-active"><?php echo $cmb_form; ?></div> 
+<?php if ( ! $plugins_block['wp-rocket']->is_activated() ) : ?> 
+		<div id="tab_more-optimization" class="tab"> 
 			<div class="wrapper-content wrapper-intro">
 				<div class="wrapper-left">
 					<div class="wrapper-img">
@@ -66,9 +69,15 @@ $notices->echo_notices();
 							);
 							?>
 					</div>
-					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank" rel="noopener">
-						<?php esc_html_e( 'Get wp rocket', 'heartbeat-control' ); ?>
+	<?php if ( 'installed' === $plugins_block['wp-rocket']->get_status() ) : ?> 
+					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo $plugins_block['wp-rocket']->get_install_url(); ?>"> 
+						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?> 
+					</a> 
+	<?php else : ?> 
+					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank" rel="noopener"> 
+						<?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?> 
 					</a>
+	<?php endif; ?> 
 					<div class="wrapper-img"></div>
 				</div>
 				<div class="wrapper-right">
@@ -98,7 +107,7 @@ $notices->echo_notices();
 										'<strong>',
 										'</strong>'
 									);
-									?>
+								?>
 							</div>
 						</li>
 						<li>
@@ -137,22 +146,21 @@ $notices->echo_notices();
 							</div>
 							<div class="txt">
 								<?php
-								printf(
-									// translators: %1$s %2$s: bold markup.
-									__( 'Improve %1$sconversions and revenue%2$s thanks to a stunning web performance', 'heartbeat-control' ),
-									'<strong>',
-									'</strong>'
-								);
+									printf(
+										// translators: %1$s %2$s: bold markup.
+										__( 'Improve %1$sconversions and revenue%2$s thanks to a stunning web performance', 'heartbeat-control' ),
+										'<strong>',
+										'</strong>'
+									);
 								?>
 							</div>
 						</li>
-
 					</ul>
 				</div>
 			</div>
 			<div class="wrapper-content wrapper-video">
 				<div class="wrapper-iframe">
-					<script src="https://fast.wistia.com/embed/medias/s3jveyzr5h.json" async></script> <?php // phpcs:ignore WordPress.WP.EnqueuedResources ?>
+					<script src="https://fast.wistia.com/embed/medias/s3jveyzr5h.json" async></script> <?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
 					<script src="https://fast.wistia.com/assets/external/E-v1.js" async></script> <?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
 					<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
 						<div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
@@ -178,14 +186,23 @@ $notices->echo_notices();
 							'<strong>',
 							'</strong>'
 						);
-						?>
+					?>
 				</div>
 				<div class="contact-btn">
-					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class=" btn" target="_blank" rel="noopener"><?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?></a>
+	<?php if ( 'installed' === $plugins_block['wp-rocket']->get_status() ) : ?> 
+					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo $plugins_block['wp-rocket']->get_install_url(); ?>"> 
+						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?> 
+					</a> 
+	<?php else : ?> 
+					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank" rel="noopener"> 
+						<?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?> 
+					</a> 
+	<?php endif; ?> 
 				</div>
 			</div>
 		</div>
-		<div id="tab3" class="tab">
+<?php endif; ?> 
+		<div id="tab_about-us" class="tab">
 			<div class="wrapper-top wrapper-info">
 				<div class="top-img">
 					<img src="<?php echo $asset_image_url . 'team.jpg'; ?>" alt="">
@@ -198,7 +215,6 @@ $notices->echo_notices();
 				</div>
 			</div>
 			<div class="wrapper-bottom wrapper-link">
-				<?php $plugins_block['cookie-law-info']->helper(); ?>
 				<?php $plugins_block['wp-rocket']->helper(); ?>
 				<?php $plugins_block['imagify']->helper(); ?>
 				<?php $plugins_block['rocket-lazy-load']->helper(); ?>

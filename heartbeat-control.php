@@ -45,7 +45,7 @@ class Heartbeat_Control {
 	 */
 	public function register_dependencies() {
 		// Initialize CMB2 for the new settings page.
-		require_once dirname( __FILE__ ) . '/vendor/webdevstudios/cmb2/init.php';
+		require_once dirname( __FILE__ ) . '/vendor/cmb2/cmb2/init.php';
 		add_action( 'cmb2_admin_init', array( new WPM_Settings(), 'init_metaboxes' ) );
 	}
 

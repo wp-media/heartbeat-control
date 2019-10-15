@@ -10,10 +10,15 @@ namespace Heartbeat_Control;
 defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
 
 /**
- * Primary settings page class.
+ * Admin page handler class
  */
 class WPM_Settings {
 
+	/**
+	 * A array of plugin card.
+	 *
+	 * @var array of Plugin_Card_Helper Object
+	 */
 	protected $plugins_block = array();
 
 	/**
@@ -25,7 +30,7 @@ class WPM_Settings {
 		add_action( 'cmb2_render_slider', array( $this, 'render_slider_field' ), 10, 5 );
 
 		// we need this objects to declare there controller right now.
-		$imagify_partner = new \Imagify_Partner( 'heartbeat-control' );
+		$imagify_partner = new Imagify_Partner( 'heartbeat-control' );
 		$imagify_partner->init();
 		$this->plugins_block = array(
 			'rocket-lazy-load' => new Plugin_Card_Helper( array( 'plugin_slug' => 'rocket-lazy-load' ) ),
@@ -40,8 +45,17 @@ class WPM_Settings {
 	}
 
 	/**
-	 * Slider field render.
+	 * HOOKED, Slider field render.
 	 *
+	 * Refer to the links for documentation on cmb2 cmb2_render_<field_type> hook
+	 * https://github.com/CMB2/CMB2/wiki
+	 * http://hookr.io/plugins/cmb2/2.2.3.beta/actions/cmb2_render_fieldtype/
+	 *
+	 * @param obj CMB2_Field $field               see CMB2 wiki.
+	 * @param mixed          $field_escaped_value unused.
+	 * @param integer        $field_object_id     unused.
+	 * @param string         $field_object_type   unused.
+	 * @param obj CMB2_Types $field_type_object   see CMB2 wiki.
 	 * @return void
 	 */
 	public function render_slider_field( $field, $field_escaped_value, $field_object_id, $field_object_type, $field_type_object ) {
