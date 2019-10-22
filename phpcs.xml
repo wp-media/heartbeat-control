@@ -18,7 +18,6 @@
         <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
         <exclude name="Squiz.Commenting.FunctionCommentThrowTag"/>
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-        <exclude name="WordPress.Security.EscapeOutput"/>
     </rule>
 
     <rule ref="WordPress.Files.FileName">

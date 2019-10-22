@@ -107,7 +107,7 @@ class Notices {
 			$notices = json_decode( $this->notices, true );
 			if ( isset( $notices[ $this->user_id ] ) ) {
 				foreach ( $notices[ $this->user_id ] as $n ) {
-					echo '<div class="notice notice-' . $n['class'] . ' is-dismissible"><p>' . $n['notice'] . '</p></div>';
+					echo '<div class="notice notice-' . esc_attr( $n['class'] ) . ' is-dismissible"><p>' . esc_html( $n['notice'] ) . '</p></div>';
 				}
 
 				if ( $trash ) {

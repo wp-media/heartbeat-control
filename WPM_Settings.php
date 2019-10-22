@@ -60,7 +60,7 @@ class WPM_Settings {
 	 */
 	public function render_slider_field( $field, $field_escaped_value, $field_object_id, $field_object_type, $field_type_object ) {
 		echo '<div class="slider-field"></div>';
-		echo $field_type_object->input(
+		echo $field_type_object->input( // phpcs:ignore WordPress.Security.EscapeOutput
 			array(
 				'type'       => 'hidden',
 				'class'      => 'slider-field-value',
@@ -129,7 +129,7 @@ class WPM_Settings {
 			function( $object_id, $cmb_id, $updated, $t ) {
 				if ( 'heartbeat_control_settings' === $object_id && $updated ) {
 					$notices = Notices::get_instance();
-					$notices->append( 'success', __( 'Your changes have been saved successfully !', 'heartbeat-control' ) );
+					$notices->append( 'success', __( 'Your changes have been saved successfully!', 'heartbeat-control' ) );
 				}
 			},
 			10,

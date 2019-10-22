@@ -168,7 +168,7 @@ class Heartbeat_Control {
 		update_option( 'heartbeat_control_version', $this->version );
 
 		$notices = Notices::get_instance();
-		$notices->append( 'success', __( 'Heartbeat Control data have been migrated successfully !', 'heartbeat-control' ) );
+		$notices->append( 'success', __( 'Heartbeat Control data have been migrated successfully!', 'heartbeat-control' ) );
 	}
 
 }
