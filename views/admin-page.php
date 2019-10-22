@@ -195,7 +195,7 @@ $notices->echo_notices();
 					</a>
 	<?php else : ?>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank" rel="noopener">
-						<?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?>
+						<?php esc_html_e( 'Get WP Rocket', 'heartbeat-control' ); ?>
 					</a>
 	<?php endif; ?>
 				</div>
