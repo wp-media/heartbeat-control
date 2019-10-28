@@ -14,8 +14,9 @@ $helper->set_button_text(
 );
 $helper->set_description(
 	sprintf(
-		// translators: %1$s %2$s: bold markup.
-		esc_html__( '%1$sReduces image file sizes%2$s without loosing quality. By compressing your images our speed up your website and boost your SEO.', 'heartbeat-control' ),
+		// translators: %1$s: line break, %2$s %3$s: bold markup.
+		esc_html__( '%2$sReduces image file sizes%3$s without losing quality. %1$sBy compressing your images you speed up your website and boost your SEO.', 'heartbeat-control' ),
+		'<br>',
 		'<strong>',
 		'</strong>'
 	)

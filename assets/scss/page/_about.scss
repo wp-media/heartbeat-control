@@ -35,10 +35,10 @@
         }
         p {
             font-size: 15px;
-            line-height: 24px;
+            line-height: 25px;
             margin: 5px 0;
         }
-    }
+    }    
 }
 .wrapper-bottom {
     display: flex;
@@ -57,7 +57,7 @@
         text-decoration: none;
         color: $grisfonce;
         position: relative;
-        height: 250px;
+        height: 270px;
         margin-top: 0!important;
         border: none!important;
          @media only screen and (max-width: 860px) {
@@ -144,7 +144,7 @@
             .link-infos-txt {
                 h3 {
                     color: #00B3D4;
-                }
+                }                
             }
         }
     }
