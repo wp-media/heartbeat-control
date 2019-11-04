@@ -53,7 +53,7 @@ class Settings {
 							'</strong>'
 						),
 						'install_url' => array(
-							'not_installed' => 'https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=upload_max_file_size',
+							'not_installed' => 'https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control',
 						),
 						'button_text' => array(
 							'not_installed' => __( 'Get WP Rocket', 'upload-max-file-size' ),
