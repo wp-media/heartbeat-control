@@ -108,11 +108,11 @@ class WPM_Settings {
 			return;
 		}
 
-		wp_register_script( 'hbc_admin_script', HBC_PLUGIN_URL . 'assets/js/script.js', array( 'jquery', 'jquery-ui-slider' ), '1.0.0', false );
+		wp_register_script( 'hbc_admin_script', HBC_PLUGIN_URL . 'assets/js/script.js', array( 'jquery', 'jquery-ui-slider' ), HBC_VERSION, false );
 		wp_enqueue_script( 'hbc_admin_script' );
-		wp_register_style( 'slider_ui', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css', array(), '1.0' );
+		wp_register_style( 'slider_ui', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css', array(), '1.12.1' );
 		wp_enqueue_style( 'slider_ui' );
-		wp_register_style( 'hbc_admin_style', HBC_PLUGIN_URL . 'assets/css/style.min.css', array(), '1.0' );
+		wp_register_style( 'hbc_admin_style', HBC_PLUGIN_URL . 'assets/css/style.min.css', array(), HBC_VERSION );
 		wp_enqueue_style( 'hbc_admin_style' );
 
 	}

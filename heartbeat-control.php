@@ -14,6 +14,7 @@
 
 namespace Heartbeat_Control;
 
+define( 'HBC_VERSION', '2.0' );
 define( 'HBC_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'HBC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 $loader = require dirname( __FILE__ ) . '/vendor/autoload.php';
@@ -27,7 +28,7 @@ class Heartbeat_Control {
 	 *
 	 * @var string
 	 */
-	public $version = '2.0';
+	public $version = HBC_VERSION;
 
 	/**
 	 * Constructor.
