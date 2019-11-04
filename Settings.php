@@ -48,7 +48,7 @@ class Settings {
 						'title'       => 'WP Rocket',
 						'description' => sprintf(
 							// translators: %1$s %2$s: link markup.
-							esc_html__( 'Integrate more than 80&#x25; of web performance good practices automatically to %1$sreduce your website\'s loading time.%2$s', 'upload-max-file-size' ),
+							esc_html__( 'Integrate more than 80&#x25; of web performance good practices automatically to %1$sreduce your website\'s loading time.%2$s', 'heartbeat-control' ),
 							'<strong>',
 							'</strong>'
 						),
@@ -56,7 +56,7 @@ class Settings {
 							'not_installed' => 'https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control',
 						),
 						'button_text' => array(
-							'not_installed' => __( 'Get WP Rocket', 'upload-max-file-size' ),
+							'not_installed' => __( 'Get WP Rocket', 'heartbeat-control' ),
 						),
 					),
 				)
@@ -68,7 +68,7 @@ class Settings {
 						'title'       => 'Imagify',
 						'description' => sprintf(
 							// translators: %1$s: line break, %2$s %3$s: bold markup.
-							esc_html__( '%2$sReduces image file sizes%3$s without losing quality.%1$sBy compressing your images you speed up your website and boost your SEO.', 'upload-max-file-size' ),
+							esc_html__( '%2$sReduces image file sizes%3$s without losing quality.%1$sBy compressing your images you speed up your website and boost your SEO.', 'heartbeat-control' ),
 							'<br>',
 							'<strong>',
 							'</strong>'
