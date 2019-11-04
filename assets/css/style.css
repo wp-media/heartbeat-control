@@ -149,12 +149,19 @@ COLORS
   .wrapper-bottom .single-link.imagify .link-infos .link-infos-txt h3 {
     color: #00B3D4; }
 
-.heartbeat-control-settings {
+.imagify-welcome .button-primary.button-primary {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content; }
+  .imagify-welcome .button-primary.button-primary:hover {
+    background: #338ea6 !important; }
+
+.wrapper-settings {
   width: 860px;
   overflow: hidden;
   margin-top: 20px; }
   @media only screen and (max-width: 860px) {
-    .heartbeat-control-settings {
+    .wrapper-settings {
       width: 100%; } }
 
 .wrapper-nav {
@@ -431,7 +438,7 @@ CMB PART...
 .ui-slider-horizontal .ui-slider-range {
   background: #494949; }
 
-.wp-core-ui .button-primary {
+.wrapper-settings .button-primary {
   background: #f56640;
   border: none;
   text-shadow: none;
@@ -448,7 +455,7 @@ CMB PART...
   -ms-flex-align: center;
       align-items: center;
   transition: all .275s; }
-  .wp-core-ui .button-primary:hover {
+  .wrapper-settings .button-primary:hover {
     background: #FC8665 !important;
     -ms-transform: translateY(-2px);
         transform: translateY(-2px); }

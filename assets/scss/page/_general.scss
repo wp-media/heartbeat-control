@@ -1,4 +1,13 @@
-.heartbeat-control-settings {
+.imagify-welcome {
+    .button-primary.button-primary {
+        width: max-content;
+        &:hover {
+            background: #338ea6!important;
+        }
+    }
+}
+
+.wrapper-settings {
     width: 860px;
     overflow: hidden;
     margin-top: 20px;
@@ -20,7 +29,7 @@
     }
     &:after {
         content: "";
-    }    
+    }
     .nav-tab {
         cursor: pointer;
         background: #fff;
@@ -94,5 +103,5 @@
             margin-left: 5px;
         }
     }
-    
+
 }
