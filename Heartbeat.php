@@ -128,5 +128,4 @@ class Heartbeat {
 
 		return $settings;
 	}
-
 }

@@ -4,6 +4,7 @@
  */
 
 defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
+
 global $wp_version;
 $heading_tag = version_compare( $wp_version, '4.3' ) >= 0 ? 'h1' : 'h2';
 $notices->echo_notices();
@@ -62,22 +63,23 @@ $notices->echo_notices();
 							<?php
 							printf(
 								// translators: %1$s: line break, %2$s %3$s: bold markup.
-								esc_html__( 'Looking for more optimization? %1$sThen you should use %2$sWP Rocket%3$s, and your site will be cached and optimized without you lifting a finger!', 'heartbeat-control' ),
+								esc_html__( 'Looking for more optimization?%1$sThen you should use %2$sWP Rocket%3$s, and your site will be cached and optimized without you lifting a finger!', 'heartbeat-control' ),
 								'<br>',
 								'<strong>',
 								'</strong>'
 							);
 							?>
+						</p>
 					</div>
-	<?php if ( 'installed' === $plugins_block['wp-rocket']->get_status() ) : ?>
+					<?php if ( 'installed' === $plugins_block['wp-rocket']->get_status() ) : ?>
 					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo esc_url( $plugins_block['wp-rocket']->get_install_url() ); ?>">
 						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?>
 					</a>
-	<?php else : ?>
+					<?php else : ?>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control" class="btn" target="_blank" rel="noopener">
 						<?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?>
 					</a>
-	<?php endif; ?>
+					<?php endif; ?>
 					<div class="wrapper-img"></div>
 				</div>
 				<div class="wrapper-right">
