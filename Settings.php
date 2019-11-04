@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the Heartbeat_Control\WPM_Settings class.
+ * Contains the Heartbeat_Control\Settings class.
  *
  * @package Heartbeat_Control
  */
@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || die( 'Cheatin\' uh?' );
 /**
  * Admin page handler class
  */
-class WPM_Settings {
+class Settings {
 
 	/**
 	 * A array of plugin card.
