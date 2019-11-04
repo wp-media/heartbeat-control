@@ -10,8 +10,8 @@ $heading_tag = version_compare( $wp_version, '4.3' ) >= 0 ? 'h1' : 'h2';
 $notices->echo_notices();
 ?>
 <div class="wrap">
-	<div class="heartbeat-control-settings">
-		<<?php echo $heading_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="screen-reader-text"><?php echo esc_html( get_admin_page_title() ); ?></<?php echo $heading_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+	<<?php echo $heading_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="screen-reader-text"><?php echo esc_html( get_admin_page_title() ); ?></<?php echo $heading_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+	<div class="wrapper-settings">
 		<div class="header">
 			<div class="header-left">
 				<div class="visuel">
