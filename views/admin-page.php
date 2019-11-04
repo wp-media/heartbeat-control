@@ -74,7 +74,7 @@ $notices->echo_notices();
 						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?>
 					</a>
 	<?php else : ?>
-					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank" rel="noopener">
+					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control" class="btn" target="_blank" rel="noopener">
 						<?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?>
 					</a>
 	<?php endif; ?>
@@ -194,7 +194,7 @@ $notices->echo_notices();
 						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?>
 					</a>
 	<?php else : ?>
-					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" class="btn" target="_blank" rel="noopener">
+					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control" class="btn" target="_blank" rel="noopener">
 						<?php esc_html_e( 'Get WP Rocket', 'heartbeat-control' ); ?>
 					</a>
 	<?php endif; ?>

@@ -50,7 +50,7 @@ $helper->set_button_text(
 			<?php echo esc_html( $helper->get_button_text() ); ?>
 		</a>
 	<?php else : ?>
-		<a class="link-btn button-primary <?php echo esc_attr( $helper->get_status() ); ?>" href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=rocket_heartbeat" target="_blank" rel="noopener">
+		<a class="link-btn button-primary <?php echo esc_attr( $helper->get_status() ); ?>" href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control" target="_blank" rel="noopener">
 			<?php echo esc_html( $helper->get_button_text() ); ?>
 		</a>
 	<?php endif; ?>
