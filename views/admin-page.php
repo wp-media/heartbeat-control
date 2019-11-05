@@ -73,11 +73,11 @@ $notices->echo_notices();
 					</div>
 					<?php if ( 'installed' === $plugins_block['wp-rocket']->get_status() ) : ?>
 					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo esc_url( $plugins_block['wp-rocket']->get_install_url() ); ?>">
-						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?>
+						<?php esc_html_e( 'Activate Now', 'heartbeat-control' ); ?>
 					</a>
 					<?php else : ?>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control" class="btn" target="_blank" rel="noopener">
-						<?php esc_html_e( 'Get Wp Rocket', 'heartbeat-control' ); ?>
+						<?php esc_html_e( 'Get WP Rocket', 'heartbeat-control' ); ?>
 					</a>
 					<?php endif; ?>
 					<div class="wrapper-img"></div>
@@ -193,7 +193,7 @@ $notices->echo_notices();
 				<div class="contact-btn">
 	<?php if ( 'installed' === $plugins_block['wp-rocket']->get_status() ) : ?>
 					<a class="btn referer-link <?php echo esc_attr( $plugins_block['wp-rocket']->get_status() ); ?>" href="<?php echo esc_url( $plugins_block['wp-rocket']->get_install_url() ); ?>">
-						<?php esc_html_e( 'Activate WP Rocket', 'heartbeat-control' ); ?>
+						<?php esc_html_e( 'Activate Now', 'heartbeat-control' ); ?>
 					</a>
 	<?php else : ?>
 					<a href="https://wp-rocket.me/?utm_source=wp_plugin&utm_medium=heartbeat_control" class="btn" target="_blank" rel="noopener">
