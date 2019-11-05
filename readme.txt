@@ -44,7 +44,7 @@ All options are located within Settings > Heartbeat Control.
 If you commonly leave your WordPress admin up for long periods of time, especially while writing or editing a post, the repeated POST requests can cause high resource usage.  To avoid this, the heartbeat can be modified or even disabled to lower your server resource usage.
 
 == Changelog ==
-= 2.0 =
+= 2.0 - 2019/11/04 =
 * Revamp the settings page.
 
 = 1.2.5 =
