@@ -1,30 +1,32 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae70281166205196febfc905a448c904",
+    "content-hash": "2c395ac792987c1eb6acb88ed07340e2",
     "packages": [
         {
-            "name": "webdevstudios/cmb2",
-            "version": "v2.4.2",
+            "name": "cmb2/cmb2",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CMB2/CMB2.git",
-                "reference": "fdcb80985e4b4a4c7118b2ecce090af4a3309958"
+                "reference": "008d9b83263d971d6bd41c27e31113db852d5ef3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/fdcb80985e4b4a4c7118b2ecce090af4a3309958",
-                "reference": "fdcb80985e4b4a4c7118b2ecce090af4a3309958",
+                "url": "https://api.github.com/repos/CMB2/CMB2/zipball/008d9b83263d971d6bd41c27e31113db852d5ef3",
+                "reference": "008d9b83263d971d6bd41c27e31113db852d5ef3",
                 "shasum": ""
             },
             "require": {
                 "php": ">5.2.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "apigen/apigen": "4.1.2",
+                "nette/utils": "2.5.3",
+                "phpunit/phpunit": "6.5.13"
             },
             "suggest": {
                 "composer/installers": "~1.0"
@@ -46,12 +48,6 @@
                     "email": "justin@dsgnwrks.pro",
                     "homepage": "https://dsgnwrks.pro",
                     "role": "Developer"
-                },
-                {
-                    "name": "Zao",
-                    "email": "office@zao.com",
-                    "homepage": "http://zao.is",
-                    "role": "Developer"
                 }
             ],
             "description": "CMB2 is a metabox, custom fields, and forms library for WordPress that will blow your mind.",
@@ -61,7 +57,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-05-29T14:23:29+00:00"
+            "time": "2019-01-21T04:30:08+00:00"
         }
     ],
     "packages-dev": [],

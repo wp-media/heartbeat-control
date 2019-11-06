@@ -1,0 +1,192 @@
+
+/*
+
+CMB PART...
+
+*/
+
+#cmb2-metabox-settings_page_heartbeat_control_settings {
+    padding: 20px;
+    margin-top: -30px;
+}
+.cmb-type-group .cmb-th+.cmb-td {
+    float: left!important;
+    padding-left: 70px;
+}
+
+.cmb-row {
+    h3 {
+        span {
+            &:first-of-type {
+                display: flex;
+                align-items: center;               
+                .dashicons {
+                    font-size: 30px!important;
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+}
+.js .closed .inside {
+    display: block!important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default {
+    background: $grisfonce;
+    border: 1px solid #979797;
+}
+.ui-widget.ui-widget-content {
+    background: #D8D8D8;
+}
+.ui-slider-horizontal .ui-slider-range {
+    background: $grisfonce;
+}
+.wrapper-settings .button-primary {
+    background: $orange;   
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0 20px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    transition: all .275s;
+    &:hover {
+        background: #FC8665!important;
+        transform: translateY(-2px);
+    }
+}
+
+input[type=radio]:checked:before {
+    background: $grisfonce!important;
+}
+.cmb-type-group .cmb-repeat-group-field {
+    padding-top: 10px!important;
+}
+.cmb-type-group .cmb-repeatable-group:not(:last-of-type), .cmb-type-group .cmb-row:not(:last-of-type), .cmb2-postbox .cmb-repeatable-group:not(:last-of-type), .cmb2-postbox .cmb-row:not(:last-of-type) {
+    border: none;
+    background: #f7f7f7;
+}
+.cmb2-metabox .cmb-field-list>.cmb-row:first-of-type>.cmb-td {
+    margin-top: 0!important;
+}
+.cmb2-metabox .cmb-field-list>.cmb-row:first-of-type>.cmb-td {
+    padding: 0!important;
+}
+
+.cmb-repeatable-group:last-of-type {
+    background: #f7f7f7;
+}
+
+.cmb-type-radio-inline {
+    .cmb-th {
+        display: none;
+    }
+}
+.cmb-row.cmb-type-slider.cmb2-id-rules-dash-0-heartbeat-control-frequency.cmb-repeat-group-field.heartbeat_frequency {
+    display: flex;
+    padding-left: 60px!important;
+    @media only screen and (max-width: 860px) {
+        flex-direction: column;
+    }
+}
+.cmb-row.cmb-type-slider.cmb2-id-rules-front-0-heartbeat-control-frequency.cmb-repeat-group-field.heartbeat_frequency {
+    display: flex;
+    padding-left: 60px!important;
+    @media only screen and (max-width: 860px) {
+        flex-direction: column;
+    }
+}
+.cmb-row.cmb-type-slider.cmb2-id-rules-editor-0-heartbeat-control-frequency.cmb-repeat-group-field.heartbeat_frequency {
+    display: flex;
+    padding-left: 60px!important;
+    @media only screen and (max-width: 860px) {
+        flex-direction: column;
+    }
+}
+
+.cmb-type-group .cmb-row:not(:last-of-type) {
+    border-bottom: none!important;
+    margin-bottom: 0!important;
+}
+
+.cmb-inline ul {
+    padding-left: 60px!important;
+}
+.cmb-row:last-of-type, .cmb2-wrap .cmb-row:last-of-type {
+    padding: 0!important;
+    background: #f7f7f7;
+}
+
+.cmb-type-group .cmb-th {
+    width: 220px!important;
+    padding: 0!important;
+}
+.cmb2-wrap .cmb-row:after {
+    width: 1px!important;
+}
+.cmb-row.cmb-type-slider.cmb2-id-rules-dash-0-heartbeat-control-frequency.cmb-repeat-group-field.heartbeat_frequency .cmb-td {
+    padding-left: 5px!important;
+    width: 65%!important;
+    padding-top: 7px!important;
+}
+
+.cmb-row.cmb-type-slider.cmb2-id-rules-front-0-heartbeat-control-frequency.cmb-repeat-group-field.heartbeat_frequency  .cmb-td {
+    padding-left: 5px!important;
+    width: 65%!important;
+    padding-top: 7px!important;
+}
+.cmb-row.cmb-type-slider.cmb2-id-rules-editor-0-heartbeat-control-frequency.cmb-repeat-group-field.heartbeat_frequency .cmb-td {
+    padding-left: 5px!important;
+    width: 65%!important;
+    padding-top: 7px!important;
+}
+
+
+.cmb2-wrap {
+    padding: 20px;
+    box-sizing: border-box;
+    background: #fff;
+    margin-bottom: 20px!important;
+    .cmb-row {
+        margin-bottom: 20px!important;
+        .cmb-repeatable-group {
+            .postbox {
+                box-shadow: none;
+                .cmbhandle {
+                    display: none;
+                }
+            }
+            .cmb-repeatable-grouping {
+                border: none;
+                padding: 0!important;
+                overflow: hidden;
+            }
+            .cmb-group-title {
+                background: #f7f7f7;
+                padding-top: 15px;
+                span {
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: $grisfonce;
+                }
+            }
+        }
+    }
+    .inside {
+        padding: 0 40px;
+    }
+    .cmb-type-radio-inline {
+        margin-bottom: 0;
+    }    
+}  
+
+.cmb-type-group .cmb-repeatable-group:not(:last-of-type), .cmb-type-group .cmb-row:not(:last-of-type), .cmb2-postbox .cmb-repeatable-group:not(:last-of-type), .cmb2-postbox .cmb-row:not(:last-of-type) {
+    border: none;
+}

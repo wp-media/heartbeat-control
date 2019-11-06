@@ -1,54 +1,43 @@
 <?php
 /**
- * Plugin Name: Heartbeat Control
- * Plugin URI: https://jeffmatson.net/heartbeat-control
+ * Plugin Name: Heartbeat Control by WP Rocket
+ * Plugin URI: https://wordpress.org/plugins/heartbeat-control/
  * Description: Completely controls the WordPress heartbeat.
- * Version: 1.2.4
- * Author: Jeff Matson
- * Author URI: http://jeffmatson.net
+ * Version: 2.0
+ * Author: WP Rocket
+ * Author URI: https://wp-rocket.me
  * License: GPL2
  * Text Domain: heartbeat-control
- * Domain Path: /languages
  *
  * @package Heartbeat_Control
  */
 
 namespace Heartbeat_Control;
 
+define( 'HBC_VERSION', '2.0' );
+define( 'HBC_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'HBC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+
 /**
  * The primary Heartbeat Control class.
  */
 class Heartbeat_Control {
-
 	/**
 	 * The current version.
 	 *
 	 * @var string
 	 */
-	public $version = '1.2.4';
+	public $version = HBC_VERSION;
 
 	/**
-	 * Heartbeat_Control Constructor.
+	 * Constructor.
 	 */
 	public function __construct() {
-		$this->maybe_upgrade();
 		$this->register_dependencies();
-		add_action( 'wp_ajax_dismiss_heartbeat_control_update_notice', array( $this, 'dismiss_update_notice' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'maybe_enqueue_scripts' ) );
-
+		$this->maybe_upgrade();
 		new Heartbeat();
-	}
-
-	/**
-	 * Enqueue additional scrips if needed.
-	 *
-	 * @return void
-	 */
-	public function maybe_enqueue_scripts() {
-		if ( get_option( 'heartbeat_control_update_notice' ) ) {
-			wp_enqueue_script( 'heartbeat-control-notices', plugins_url( '/assets/js/bundle.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
-			wp_localize_script( 'heartbeat-control-notices', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
-		}
 	}
 
 	/**
@@ -57,11 +46,8 @@ class Heartbeat_Control {
 	 * @return void
 	 */
 	public function register_dependencies() {
-		// Main plugin autoloader.
-		require_once dirname( __FILE__ ) . '/autoloader.php';
-
-		// Initialize CMB2 for settings pages.
-		require_once dirname( __FILE__ ) . '/vendor/webdevstudios/cmb2/init.php';
+		// Initialize CMB2 for the new settings page.
+		require_once dirname( __FILE__ ) . '/vendor/cmb2/cmb2/init.php';
 		add_action( 'cmb2_admin_init', array( new Settings(), 'init_metaboxes' ) );
 	}
 
@@ -71,7 +57,6 @@ class Heartbeat_Control {
 	 * @return void
 	 */
 	public function maybe_upgrade() {
-		add_action( 'admin_notices', array( $this, 'heartbeat_control_updated' ) );
 		$db_version = get_option( 'heartbeat_control_version', '1.0' );
 		if ( version_compare( $db_version, $this->version, '<' ) ) {
 			$this->upgrade_db( $db_version );
@@ -81,7 +66,7 @@ class Heartbeat_Control {
 	/**
 	 * Upgrades the database from older versions.
 	 *
-	 * @param string $version The current DB version.
+	 * @param  string $version The current DB version.
 	 * @return void
 	 */
 	public function upgrade_db( $version ) {
@@ -89,18 +74,18 @@ class Heartbeat_Control {
 
 			$updated_options = array();
 
-			if ( $old_location === get_option( 'heartbeat_location' ) ) {
-				if ( $old_location === 'disable-heartbeat-everywhere' ) {
+			if ( get_option( 'heartbeat_location' ) === $old_location ) {
+				if ( 'disable-heartbeat-everywhere' === $old_location ) {
 					$updated_options['heartbeat_control_behavior'] = 'disable';
 					$updated_options['heartbeat_control_location'] = array( 'frontend', 'admin', '/wp-admin/post.php' );
-				} elseif ( $old_location === 'disable-heartbeat-dashboard' ) {
+				} elseif ( 'disable-heartbeat-dashboard' === $old_location ) {
 					$updated_options['heartbeat_control_behavior'] = 'disable';
 					$updated_options['heartbeat_control_location'] = array( 'admin' );
-				} elseif ( $old_location === 'allow-heartbeat-post-edit' ) {
+				} elseif ( 'allow-heartbeat-post-edit' === $old_location ) {
 					$updated_options['heartbeat_control_behavior'] = 'allow';
 					$updated_options['heartbeat_control_location'] = array( '/wp-admin/post.php' );
 				} else {
-					if ( $old_frequency === get_option( 'heartbeat_frequency' ) ) {
+					if ( get_option( 'heartbeat_frequency' ) === $old_frequency ) {
 						$updated_options['heartbeat_control_behavior']  = 'modify';
 						$updated_options['heartbeat_control_location']  = array( 'frontend', 'admin', '/wp-admin/post.php' );
 						$updated_options['heartbeat_control_frequency'] = $old_frequency;
@@ -116,33 +101,76 @@ class Heartbeat_Control {
 			update_option( 'heartbeat_control_settings', array( 'rules' => array( $original_settings ) ) );
 		}
 
-		update_option( 'heartbeat_control_version', $this->version );
-		update_option( 'heartbeat_control_update_notice', true );
-	}
+		/*
+		 * In version 1.3.0 we remove the ordering and overwriting of rules,
+		 * you can have only one behavior for each location now, it simpler and less misleading.
+		 * So this code check for rules by location and take one for each based on there order.
+		 */
+		if ( version_compare( $version, '2.0', '<' ) ) {
+			$os          = get_option( 'heartbeat_control_settings', array() );
+			$new_mapping = array(
+				array(
+					'heartbeat_control_behavior'  => 'allow',
+					'heartbeat_control_frequency' => 0,
+				),
+			);
+			$ns          = array(
+				'rules_dash'   => $new_mapping,
+				'rules_front'  => $new_mapping,
+				'rules_editor' => $new_mapping,
+			);
 
-	/**
-	 * Displays the update notice.
-	 *
-	 * @return void
-	 */
-	public function heartbeat_control_updated() {
-		if ( get_option( 'heartbeat_control_update_notice' ) ) {
-			?>
-			<div id="heartbeat_control_update_notice" class="notice notice-success is-dismissible">
-				<p><?php esc_html_e( 'Heartbeat Control has updated to a new version!', 'heartbeat-control' ); ?></p>
-				<p><?php esc_html_e( 'Love it? Does it save you money and valuable server resources? Consider <a href="https://paypal.me/JeffMatson">sending me a donation</a>. The plugin is entirely developed in my spare time and every little bit helps to motivate me to add more features and bug fixes.', 'heartbeat-control' ); ?></p>
-			</div>
-			<?php
+			if ( ! isset( $os['rules'] ) || empty( $os['rules'] ) ) {
+				update_option( 'heartbeat_control_settings', $ns );
+			} else {
+				$v = array( false, false, false );
+
+				foreach ( $os['rules'] as $rules ) {
+					foreach ( $rules['heartbeat_control_location'] as $location ) {
+						if ( 'frontend' === $location && false === $v[0] ) {
+							$ns['rules_front'] = array(
+								array(
+									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
+									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+								),
+							);
+							$v[0]              = true;
+						}
+
+						if ( 'admin' === $location && false === $v[1] ) {
+							$ns['rules_dash'] = array(
+								array(
+									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
+									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+								),
+							);
+							$v[1]             = true;
+						}
+
+						if ( '/wp-admin/post.php' === $location && false === $v[2] ) {
+							$ns['rules_editor'] = array(
+								array(
+									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
+									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+								),
+							);
+							$v[2]               = true;
+						}
+
+						if ( ! in_array( false, $v ) ) { // phpcs:ignore WordPress.PHP.StrictInArray
+							break 2;
+						}
+					}
+				}
+			}
+
+			update_option( 'heartbeat_control_settings', $ns );
 		}
-	}
 
-	/**
-	 * Dismisses the update notice.
-	 *
-	 * @return void
-	 */
-	public function dismiss_update_notice() {
-		delete_option( 'heartbeat_control_update_notice' );
+		update_option( 'heartbeat_control_version', $this->version );
+
+		$notices = Notices::get_instance();
+		$notices->append( 'success', __( 'Heartbeat Control data have been migrated successfully!', 'heartbeat-control' ) );
 	}
 
 }

@@ -1,29 +1,31 @@
 [
     {
-        "name": "webdevstudios/cmb2",
-        "version": "v2.4.2",
-        "version_normalized": "2.4.2.0",
+        "name": "cmb2/cmb2",
+        "version": "v2.6.0",
+        "version_normalized": "2.6.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/CMB2/CMB2.git",
-            "reference": "fdcb80985e4b4a4c7118b2ecce090af4a3309958"
+            "reference": "008d9b83263d971d6bd41c27e31113db852d5ef3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/CMB2/CMB2/zipball/fdcb80985e4b4a4c7118b2ecce090af4a3309958",
-            "reference": "fdcb80985e4b4a4c7118b2ecce090af4a3309958",
+            "url": "https://api.github.com/repos/CMB2/CMB2/zipball/008d9b83263d971d6bd41c27e31113db852d5ef3",
+            "reference": "008d9b83263d971d6bd41c27e31113db852d5ef3",
             "shasum": ""
         },
         "require": {
             "php": ">5.2.4"
         },
         "require-dev": {
-            "phpunit/phpunit": "3.7.*"
+            "apigen/apigen": "4.1.2",
+            "nette/utils": "2.5.3",
+            "phpunit/phpunit": "6.5.13"
         },
         "suggest": {
             "composer/installers": "~1.0"
         },
-        "time": "2018-05-29T14:23:29+00:00",
+        "time": "2019-01-21T04:30:08+00:00",
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -41,12 +43,6 @@
                 "name": "Justin Sternberg",
                 "email": "justin@dsgnwrks.pro",
                 "homepage": "https://dsgnwrks.pro",
-                "role": "Developer"
-            },
-            {
-                "name": "Zao",
-                "email": "office@zao.com",
-                "homepage": "http://zao.is",
                 "role": "Developer"
             }
         ],

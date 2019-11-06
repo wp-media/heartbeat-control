@@ -1,10 +1,9 @@
 === Heartbeat Control ===
-Contributors: JeffMatson
-Donate link: https://paypal.me/JeffMatson
+Contributors: wp_rocket, wp_media
 Tags: heartbeat, admin-ajax, server resources, heartbeat control, heartbeat api, performance, debugging, javascript
 Requires at least: 3.6
-Tested up to: 4.9.7
-Stable tag: 1.2.4
+Tested up to: 5.2.3
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,11 +11,21 @@ Allows you to easily manage the frequency of the WordPress heartbeat API.
 
 == Description ==
 
-Allows you to easily manage the frequency of the WordPress heartbeat API with just a few clicks.
+Heartbeat Control by WP Rocket allows you to manage the frequency of the WordPress heartbeat API in a few clicks.
 
-The heartbeat API can be disabled entirely and allowed for only specific locations.
+The WordPress Heartbeat API is a great feature that provides real-time communication between the server and the browser when you are logged into your WordPress admin panel. It uses the file /wp-admin/admin-ajax.php to run AJAX calls from the browser. By default, AJAX requests are sent every 15 seconds on post edit pages, and every 60 seconds on the dashboard.
 
-Heartbeat intervals can be modified between 15 and 300 seconds between requests, saving on server resources.
+This is indeed helpful; but if you usually leave your WordPress admin open for long periods (for example when you write or edit posts), the AJAX requests from the API can pile up and generate high CPU usage, leading to server performance issues and even hosting account suspensions.
+
+With Heartbeat Control by WP Rocket, you can easily choose to limit or completely stop the activity of the WordPress Heartbeat API. You can also add rules for specific locations only (Dashboard, Frontend or Post Editor).
+
+To learn more about WordPress performance optimization and make your website faster, join our [WP Rocket Facebook Community](https://www.facebook.com/groups/WPRocketUsers/)!
+
+= Related Plugins =
+
+* [WP Rocket](https://wp-rocket.me/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=HeartBeatPlugin): Best caching plugin to speed-up your WordPress website.
+* [Lazy Load by WP Rocket](https://wordpress.org/plugins/rocket-lazy-load/): Best Lazy Load script to reduce the number of HTTP requests and improves the websites loading time.
+* [Imagify](https://wordpress.org/plugins/imagify/): Best Image Optimizer to speed up your website with lighter images.
 
 == Installation ==
 
@@ -35,6 +44,15 @@ All options are located within Settings > Heartbeat Control.
 If you commonly leave your WordPress admin up for long periods of time, especially while writing or editing a post, the repeated POST requests can cause high resource usage.  To avoid this, the heartbeat can be modified or even disabled to lower your server resource usage.
 
 == Changelog ==
+= 2.0 - 2019/11/04 =
+* Revamp the settings page.
+
+= 1.2.5 =
+* Fixed issue caused by previous version deployment.
+* Added hbc_disable_notice hook to force dismissal of update notices.
+* Additional documentation added.
+* Minor standards adjustments.
+
 = 1.2.4 =
 * Updated CMB2 to 2.4.2.
 * Bumpted "tested up to" version.
