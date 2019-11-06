@@ -1,0 +1,7 @@
+/.wordpress-org
+/.github
+/assets/scss
+/.git
+
+.distignore
+.gitattributes
