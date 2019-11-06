@@ -2,7 +2,8 @@
 Contributors: wp_rocket, wp_media
 Tags: heartbeat, admin-ajax, server resources, heartbeat control, heartbeat api, performance, debugging, javascript
 Requires at least: 3.6
-Tested up to: 5.2.3
+Requires PHP: 5.3
+Tested up to: 5.3
 Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -32,6 +33,11 @@ To learn more about WordPress performance optimization and make your website fas
 1.  Upload the plugin folder to the /wp-content/plugins/ directory.
 1.  Activate Heartbeat Control on the Plugins page.
 1.  Adjust any settings within Settings > Heartbeat Control.
+
+== Screenshots ==
+
+1. Heartbeat Settings
+2. Modify Heartbeat frequency precisely
 
 == Frequently Asked Questions ==
 
