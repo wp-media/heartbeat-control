@@ -126,12 +126,15 @@ class Heartbeat_Control {
 				$v = array( false, false, false );
 
 				foreach ( $os['rules'] as $rules ) {
+					if( ! isset( $rules['heartbeat_control_location'] ) ){ continue; }
 					foreach ( $rules['heartbeat_control_location'] as $location ) {
+						$b = ( isset( $rules['heartbeat_control_behavior'] ) ) ? $rules['heartbeat_control_behavior'] : 'allow';
+						$f = ( isset( $rules['heartbeat_control_frequency'] ) ) ? $rules['heartbeat_control_frequency'] : 0;
 						if ( 'frontend' === $location && false === $v[0] ) {
 							$ns['rules_front'] = array(
 								array(
-									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
-									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+									'heartbeat_control_behavior'  => $b,
+									'heartbeat_control_frequency' => $f,
 								),
 							);
 							$v[0]              = true;
@@ -140,8 +143,8 @@ class Heartbeat_Control {
 						if ( 'admin' === $location && false === $v[1] ) {
 							$ns['rules_dash'] = array(
 								array(
-									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
-									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+									'heartbeat_control_behavior'  => $b,
+									'heartbeat_control_frequency' => $f,
 								),
 							);
 							$v[1]             = true;
@@ -150,8 +153,8 @@ class Heartbeat_Control {
 						if ( '/wp-admin/post.php' === $location && false === $v[2] ) {
 							$ns['rules_editor'] = array(
 								array(
-									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
-									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
+									'heartbeat_control_behavior'  => $b,
+									'heartbeat_control_frequency' => $f,
 								),
 							);
 							$v[2]               = true;
