@@ -4,6 +4,8 @@
  * Plugin URI: https://wordpress.org/plugins/heartbeat-control/
  * Description: Completely controls the WordPress heartbeat.
  * Version: 2.0
+ * Requires at least: 3.6
+ * Requires PHP: 5.3
  * Author: WP Rocket
  * Author URI: https://wp-rocket.me
  * License: GPL2
