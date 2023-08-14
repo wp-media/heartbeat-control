@@ -49,6 +49,10 @@ All options are located within Settings > Heartbeat Control.
 
 If you commonly leave your WordPress admin up for long periods of time, especially while writing or editing a post, the repeated POST requests can cause high resource usage.  To avoid this, the heartbeat can be modified or even disabled to lower your server resource usage.
 
+= Where do I report security bugs found in this plugin? =  
+  
+You can report any security bugs found in the source code of the site-reviews plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/heartbeat-control). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
+
 == Changelog ==
 = 2.0 - 2019/11/04 =
 * Revamp the settings page.
