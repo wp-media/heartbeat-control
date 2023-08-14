@@ -241,8 +241,13 @@ class Plugin_Card_Helper {
 	 * @return string The plugin icon as a img tag.
 	 */
 	public function get_icon() {
-		$pi = ( ! is_wp_error( $this->plugin_information ) && isset( $this->plugin_information->icons ) ) ? '<img src="' . $this->plugin_information->icons['2x'] . '"/>' : '';
-		return ( ! is_null( $this->params['icon'] ) ) ? $this->params['icon'] : $pi;
+		$plugin_info = '';
+
+		if ( ! is_wp_error( $this->plugin_information ) && isset( $this->plugin_information->icons['2x'] ) ) {
+			$plugin_info = '<img src="' . $this->plugin_information->icons['2x'] . '"/>';
+		}
+
+		return ( ! is_null( $this->params['icon'] ) ) ? $this->params['icon'] : $plugin_info;
 	}
 
 	/**
