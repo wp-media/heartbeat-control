@@ -72,33 +72,34 @@ class Heartbeat_Control {
 	public function upgrade_db( $version ) {
 		if ( version_compare( $version, '1.1', '<' ) ) {
 
-			$updated_options = array();
+			$updated_options = [];
 
-			if ( get_option( 'heartbeat_location' ) === $old_location ) {
-				if ( 'disable-heartbeat-everywhere' === $old_location ) {
-					$updated_options['heartbeat_control_behavior'] = 'disable';
-					$updated_options['heartbeat_control_location'] = array( 'frontend', 'admin', '/wp-admin/post.php' );
-				} elseif ( 'disable-heartbeat-dashboard' === $old_location ) {
-					$updated_options['heartbeat_control_behavior'] = 'disable';
-					$updated_options['heartbeat_control_location'] = array( 'admin' );
-				} elseif ( 'allow-heartbeat-post-edit' === $old_location ) {
-					$updated_options['heartbeat_control_behavior'] = 'allow';
-					$updated_options['heartbeat_control_location'] = array( '/wp-admin/post.php' );
-				} else {
-					if ( get_option( 'heartbeat_frequency' ) === $old_frequency ) {
-						$updated_options['heartbeat_control_behavior']  = 'modify';
-						$updated_options['heartbeat_control_location']  = array( 'frontend', 'admin', '/wp-admin/post.php' );
-						$updated_options['heartbeat_control_frequency'] = $old_frequency;
-					}
-				}
+			$old_location = get_option( 'heartbeat_location', '' );
+
+			if ( 'disable-heartbeat-everywhere' === $old_location ) {
+				$updated_options['heartbeat_control_behavior'] = 'disable';
+				$updated_options['heartbeat_control_location'] = array( 'frontend', 'admin', '/wp-admin/post.php' );
+			} elseif ( 'disable-heartbeat-dashboard' === $old_location ) {
+				$updated_options['heartbeat_control_behavior'] = 'disable';
+				$updated_options['heartbeat_control_location'] = array( 'admin' );
+			} elseif ( 'allow-heartbeat-post-edit' === $old_location ) {
+				$updated_options['heartbeat_control_behavior'] = 'allow';
+				$updated_options['heartbeat_control_location'] = array( '/wp-admin/post.php' );
+			} else {
+				$old_frequency = get_option( 'heartbeat_frequency', '' );
+
+				$updated_options['heartbeat_control_behavior']  = 'modify';
+				$updated_options['heartbeat_control_location']  = [ 'frontend', 'admin', '/wp-admin/post.php' ];
+				$updated_options['heartbeat_control_frequency'] = $old_frequency;
 			}
 
 			update_option( 'heartbeat_control_settings', $updated_options );
 		}
 
-		if ( version_compare( $version, '1.2', '<' ) && ! array_key_exists( 'rules', get_option( 'heartbeat_control_settings' ) ) ) {
-			$original_settings = get_option( 'heartbeat_control_settings' );
-			update_option( 'heartbeat_control_settings', array( 'rules' => array( $original_settings ) ) );
+		$original_settings = get_option( 'heartbeat_control_settings', [] );
+
+		if ( version_compare( $version, '1.2', '<' ) && ! array_key_exists( 'rules',  $original_settings ) ) {
+			update_option( 'heartbeat_control_settings', [ 'rules' => [ $original_settings ] ] );
 		}
 
 		/*
@@ -107,64 +108,71 @@ class Heartbeat_Control {
 		 * So this code check for rules by location and take one for each based on there order.
 		 */
 		if ( version_compare( $version, '2.0', '<' ) ) {
-			$os          = get_option( 'heartbeat_control_settings', array() );
-			$new_mapping = array(
-				array(
+			$old_settings = get_option( 'heartbeat_control_settings', [] );
+			$new_mapping  = [
+				[
 					'heartbeat_control_behavior'  => 'allow',
 					'heartbeat_control_frequency' => 0,
-				),
-			);
-			$ns          = array(
+				],
+			];
+			$new_settings = [
 				'rules_dash'   => $new_mapping,
 				'rules_front'  => $new_mapping,
 				'rules_editor' => $new_mapping,
-			);
+			];
 
-			if ( ! isset( $os['rules'] ) || empty( $os['rules'] ) ) {
-				update_option( 'heartbeat_control_settings', $ns );
+			if ( ! isset( $old_settings['rules'] ) || empty( $old_settings['rules'] ) ) {
+				update_option( 'heartbeat_control_settings', $new_settings );
 			} else {
-				$v = array( false, false, false );
+				$value = [ false, false, false ];
 
-				foreach ( $os['rules'] as $rules ) {
+				foreach ( $old_settings['rules'] as $rules ) {
+					if ( ! isset( $rules['heartbeat_control_location'] ) ) {
+						continue;
+					}
+
 					foreach ( $rules['heartbeat_control_location'] as $location ) {
-						if ( 'frontend' === $location && false === $v[0] ) {
-							$ns['rules_front'] = array(
-								array(
+						if ( 'frontend' === $location && false === $value[0] ) {
+							$new_settings['rules_front'] = [
+								[
 									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
 									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
-								),
-							);
-							$v[0]              = true;
+								],
+							];
+
+							$value[0] = true;
 						}
 
-						if ( 'admin' === $location && false === $v[1] ) {
-							$ns['rules_dash'] = array(
-								array(
+						if ( 'admin' === $location && false === $value[1] ) {
+							$new_settings['rules_dash'] = [
+								[
 									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
 									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
-								),
-							);
-							$v[1]             = true;
+								],
+							];
+
+							$value[1] = true;
 						}
 
-						if ( '/wp-admin/post.php' === $location && false === $v[2] ) {
-							$ns['rules_editor'] = array(
-								array(
+						if ( '/wp-admin/post.php' === $location && false === $value[2] ) {
+							$new_settings['rules_editor'] = [
+								[
 									'heartbeat_control_behavior' => $rules['heartbeat_control_behavior'],
 									'heartbeat_control_frequency' => $rules['heartbeat_control_frequency'],
-								),
-							);
-							$v[2]               = true;
+								],
+							];
+
+							$value[2] = true;
 						}
 
-						if ( ! in_array( false, $v ) ) { // phpcs:ignore WordPress.PHP.StrictInArray
+						if ( ! in_array( false, $value ) ) { // phpcs:ignore WordPress.PHP.StrictInArray
 							break 2;
 						}
 					}
 				}
 			}
 
-			update_option( 'heartbeat_control_settings', $ns );
+			update_option( 'heartbeat_control_settings', $new_settings );
 		}
 
 		update_option( 'heartbeat_control_version', $this->version );
