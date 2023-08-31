@@ -4,7 +4,7 @@ Tags: heartbeat, admin-ajax, server resources, heartbeat control, heartbeat api,
 Requires at least: 3.6
 Requires PHP: 5.3
 Tested up to: 6.3
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,9 @@ If you commonly leave your WordPress admin up for long periods of time, especial
 You can report any security bugs found in the source code of the site-reviews plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/heartbeat-control). The Patchstack team will assist you with verification, CVE assignment and take care of notifying the developers of this plugin.
 
 == Changelog ==
+= 2.0.1 =
+* Fix PHP warnings & deprecated notices
+
 = 2.0 - 2019/11/04 =
 * Revamp the settings page.
 
