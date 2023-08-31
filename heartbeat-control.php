@@ -3,7 +3,7 @@
  * Plugin Name: Heartbeat Control by WP Rocket
  * Plugin URI: https://wordpress.org/plugins/heartbeat-control/
  * Description: Completely controls the WordPress heartbeat.
- * Version: 2.0
+ * Version: 2.0.1
  * Author: WP Rocket
  * Author URI: https://wp-rocket.me
  * License: GPL2
@@ -14,7 +14,7 @@
 
 namespace Heartbeat_Control;
 
-define( 'HBC_VERSION', '2.0' );
+define( 'HBC_VERSION', '2.0.1' );
 define( 'HBC_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'HBC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
